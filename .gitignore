@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+cache/
+datasets/
+finetuned_models/
+huggingface_cache/
+Model-Cache/
+pip_cache/
+submissions/
+tmp/
+
+# Environments
+shadowKernel
+start_kernel.sh
