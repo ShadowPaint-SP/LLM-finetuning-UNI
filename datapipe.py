@@ -10,36 +10,103 @@ from transformers import ( # type: ignore
 MCQ_TRAINING_PATH = "datasets/train_dataset_mcq.csv"
 SAQ_TRAINING_PATH = "datasets/train_dataset_saq.csv"
 
-def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH):
+def generate_shuffled_variations(options, correct_key):
+    """
+    Generates 4 variations of the options dict, ensuring the correct answer
+    rotates through A, B, C, and D.
+    
+    Args:
+        options (dict): The original options dictionary (e.g., {'A': 'text', ...})
+        correct_key (str): The key of the correct answer in the original dict (e.g., 'A')
+        
+    Returns:
+        dict: A dictionary where keys are the NEW correct letters ('A', 'B', 'C', 'D')
+              and values are the JSON strings of the shuffled options.
+    """
+    
+    correct_text = options[correct_key]
+    distractors = [text for key, text in options.items() if key != correct_key]
+    keys = ["A", "B", "C", "D"]
+    output_variations = {}
+
+    for target_correct_letter in keys:
+
+        current_distractors = distractors[:]
+        random.shuffle(current_distractors)
+        new_options = {}
+        distractor_index = 0
+
+        for key in keys:
+            if key == target_correct_letter:
+                new_options[key] = correct_text
+            else:
+                new_options[key] = current_distractors[distractor_index]
+                distractor_index += 1
+
+        output_variations[target_correct_letter] = new_options
+
+    return output_variations
+
+def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool = False, debug:bool = False):
     """
     Create a Hugging Face Dataset ready for LoRA training (MCQ).
     
     Args:
         csv_path: Path to the CSV file
+        use_all_answers: choose to only use each entry once or shuffel it to multiply the dataset by 4
         
     Returns:
         Hugging Face Dataset object with 'messages' field
     """
     df = pd.read_csv(csv_path)
     training_examples = []
-    
+
     for idx, row in df.iterrows():
         prompt = row['prompt'].strip()
         correct_answer = row['answer_idx'].strip()
-        completion = json.dumps({"answer_choice": correct_answer})
-        
-        # Use messages format instead of manual formatting
-        training_examples.append({
-            'messages': [
-                {"role": "user", "content": prompt},
-                {"role": "assistant", "content": completion}
-            ],
-            'mcqid': row['MCQID']
-        })
+        choices = json.loads(row['choices'])
+        #country = json.loads(row['choice_countries'])
+
+        if use_all_answers:
+            marker = '{"answer_choice":""}'
+            index = prompt.find(marker)
+            if index != -1:
+                prompt = prompt[:index + len(marker)] # removing the choices to add them manually
+
+            answers = generate_shuffled_variations(choices, correct_answer)
+
+            for letter, answer in answers.items():
+                completion = json.dumps({"answer_choice": letter})
+                formatted_options_list = []
+                for key, value in answer.items():
+                    formatted_options_list.append(f"{key}. {value}")
+                formatted_options_str = "\n".join(formatted_options_list)
+                combined_question = prompt + "\n\n" + formatted_options_str
+                training_examples.append({
+                    'messages': [
+                        {"role": "user", "content": combined_question},
+                        {"role": "assistant", "content": completion},
+                        {"role": "user", "content": "Why is this correct"},
+                        {"role": "assistant", "content": f"Because '{answer[letter]}' is the correct answer"}
+                    ],
+                    'mcqid': row['MCQID']
+                })
+                if debug:
+                    print(f"{training_examples[-1]}\n")
+        else:
+            training_examples.append({
+                'messages': [
+                    {"role": "user", "content": prompt},
+                    {"role": "assistant", "content": completion}
+                ],
+                'mcqid': row['MCQID']
+            })
+            if debug:
+                print(f"{training_examples[-1]}\n")
+
     
     dataset = Dataset.from_list(training_examples)
     return dataset
-
 
 def create_saq_prompt(question: str) -> str:
     """
@@ -126,7 +193,7 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
 
 
 def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
-                          use_all_answers: bool = False, weight_sampling: bool = False):
+                          use_all_answers: bool = False, weight_sampling: bool = False, debug:bool = False):
     """
     Create train/validation splits for training.
     
@@ -135,7 +202,7 @@ def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
         task_type: Either 'mcq' or 'saq'
         test_size: Fraction for validation (default 0.1)
         seed: Random seed for reproducibility
-        use_all_answers: (SAQ only) Use all valid answers vs only best answer
+        use_all_answers: enlarge the datasets
         weight_sampling: (SAQ only) Sample proportionally to answer weights
         
     """
@@ -156,7 +223,7 @@ def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
         tokenizer.pad_token = tokenizer.eos_token
 
     if task_type.lower() == 'mcq':
-        dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH)
+        dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, use_all_answers, debug)
     elif task_type.lower() == 'saq':
         dataset = create_training_dataset_saq(
             SAQ_TRAINING_PATH, 
@@ -212,7 +279,7 @@ if __name__ == "__main__":
     print("="*70)
     
     # Create full MCQ training dataset
-    mcq_dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH)
+    mcq_dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, True, True)
     print(f"Total MCQ examples: {len(mcq_dataset)}")
     print(f"Dataset columns: {mcq_dataset.column_names}")
     print("\nFirst MCQ example:")

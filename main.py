@@ -64,15 +64,15 @@ class FineTuningConfig:
     warmup_steps: int = 100 # gradually increases the learning rate from zero over the first N steps (stabilizes early training)
     weight_decay: float = 0.01 # adds L2 regularization to prevent overfitting.
     max_grad_norm: float = 0.3 # clips gradients to prevent extreme updates that could destabilize training
-    
+    safe_steps: int = 100
     # Data Configuration
     max_train_samples: Optional[int] = None
     seed: int = 42
-    use_all_answers: bool = False
+    use_all_answers: bool = True
     weight_sampling: bool = False
 
     # Eval Configuration
-    gen_train_preds: bool = False
+    gen_train_preds: bool = True
     eval_train_samples: int = -1
     gen_test_preds: bool = True
     
@@ -117,9 +117,8 @@ class FineTuningPipeline:
             self.config.model_name,
             dtype=torch.bfloat16,
             cache_dir=self.config.cache_dir,
-            trust_remote_code=True,
-            device_map=self.device,
-        )
+            trust_remote_code=True
+        ).to(self.device)
         print(f"✓ Model loaded from {self.config.model_name}")
         return self.model
     
@@ -174,7 +173,7 @@ class FineTuningPipeline:
             bf16=True, # uses bfloat16 (16-bit) precision instead of float32, reducing memory usage and speeding up computation with minimal accuracy loss
             logging_dir=LOGS_DIR,
             logging_steps=10,
-            save_steps=50,
+            save_steps=self.config.safe_steps,
             save_total_limit=3,
             eval_strategy="no",
             save_strategy="steps",
@@ -236,7 +235,9 @@ class FineTuningPipeline:
                     print("-"*60)
                     data = datapipe.create_training_data_tokenized(
                         task_type='mcq', 
-                        tokenizer=self.tokenizer
+                        tokenizer=self.tokenizer,
+                        use_all_answers=self.config.use_all_answers, 
+                        debug=self.config.debug_mode
                     )
                     
                     self.finetune(data, task_name='mcq')
@@ -264,9 +265,10 @@ class FineTuningPipeline:
                     data = datapipe.create_training_data_tokenized(
                         task_type='saq', 
                         tokenizer=self.tokenizer, 
-                        seed=self.config.seed, 
+                        seed=self.config.seed,
                         use_all_answers=self.config.use_all_answers, 
-                        weight_sampling=self.config.weight_sampling
+                        weight_sampling=self.config.weight_sampling,
+                        debug=self.config.debug_mode
                     )
                     
                     self.finetune(data, task_name='saq')
@@ -291,14 +293,17 @@ class FineTuningPipeline:
                     print("Fine-tuning both MCQ and SAQ is not yet implemented.")
                     data1 = datapipe.create_training_data_tokenized(
                         task_type='mcq', 
-                        tokenizer=self.tokenizer
+                        tokenizer=self.tokenizer,
+                        use_all_answers=self.config.use_all_answers, 
+                        debug=self.config.debug_mode
                     )
                     data2 = datapipe.create_training_data_tokenized(
                         task_type='saq', 
                         tokenizer=self.tokenizer, 
                         seed=self.config.seed, 
                         use_all_answers=self.config.use_all_answers, 
-                        weight_sampling=self.config.weight_sampling
+                        weight_sampling=self.config.weight_sampling, 
+                        debug=self.config.debug_mode
                     )
                     data = concatenate_datasets([data1,data2]).shuffle(seed=self.config.seed)
                     self.finetune(data, task_name='both')
