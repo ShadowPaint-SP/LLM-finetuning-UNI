@@ -47,7 +47,7 @@ def generate_shuffled_variations(options, correct_key):
 
     return output_variations
 
-def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool = False, debug:bool = False):
+def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool = False, seed:int =42):
     """
     Create a Hugging Face Dataset ready for LoRA training (MCQ).
     
@@ -61,10 +61,10 @@ def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool
     df = pd.read_csv(csv_path)
     training_examples = []
 
-    for idx, row in df.iterrows():
-        prompt = row['prompt'].strip()
-        correct_answer = row['answer_idx'].strip()
-        choices = json.loads(row['choices'])
+    for row in df.itertuples():
+        prompt = row.prompt.strip()
+        correct_answer = row.answer_idx.strip()
+        choices = json.loads(row.choices)
         #country = json.loads(row['choice_countries'])
 
         if use_all_answers:
@@ -86,26 +86,22 @@ def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool
                     'messages': [
                         {"role": "user", "content": combined_question},
                         {"role": "assistant", "content": completion},
-                        {"role": "user", "content": "Why is this correct"},
-                        {"role": "assistant", "content": f"Because '{answer[letter]}' is the correct answer"}
+                        #{"role": "user", "content": "Why is this correct"},
+                        #{"role": "assistant", "content": f"Because '{answer[letter]}' is the correct answer"}
                     ],
-                    'mcqid': row['MCQID']
+                    'mcqid': row.MCQID
                 })
-                if debug:
-                    print(f"{training_examples[-1]}\n")
         else:
             training_examples.append({
                 'messages': [
                     {"role": "user", "content": prompt},
                     {"role": "assistant", "content": completion}
                 ],
-                'mcqid': row['MCQID']
+                'mcqid': row.MCQID
             })
-            if debug:
-                print(f"{training_examples[-1]}\n")
 
     
-    dataset = Dataset.from_list(training_examples)
+    dataset = Dataset.from_list(training_examples).shuffle(seed)
     return dataset
 
 def create_saq_prompt(question: str) -> str:
@@ -118,7 +114,7 @@ def create_saq_prompt(question: str) -> str:
     Returns:
         Formatted prompt string
     """
-    return f"{question} Provide ONLY the exact answer without explanation. Provide not more than 4 word answers."
+    return f"{question} Provide ONLY the exact answer without explanation."
 
 def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=False, 
                                  weight_sampling=False, seed=42):
@@ -162,9 +158,10 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
                 repeat_count = merged_answers[answer] if weight_sampling else 1
                 
                 # Use messages format
+                #TODO if using all answers somehow teach which answer is the best by providing a score testen
                 example = {
                     'messages': [
-                        {"role": "user", "content": prompt},
+                        {"role": "user", "content": f"{prompt} Target Score: {merged_answers[answer]}"},
                         {"role": "assistant", "content": answer}
                     ],
                     'id': row.ID
@@ -219,58 +216,96 @@ def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
             "{{ '' }}"
             "{% endif %}"
         )
-    if tokenizer.pad_token is None:
-        tokenizer.pad_token = tokenizer.eos_token
 
     if task_type.lower() == 'mcq':
-        dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, use_all_answers, debug)
+        dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, use_all_answers, seed)
     elif task_type.lower() == 'saq':
         dataset = create_training_dataset_saq(
             SAQ_TRAINING_PATH, 
-            use_all_answers=use_all_answers,
-            weight_sampling=weight_sampling,
-            seed=seed
+            use_all_answers,
+            weight_sampling,
+            seed
         )
     else:
         raise ValueError(f"task_type must be 'mcq' or 'saq', got {task_type}")
     
-    def tokenize_function(examples):
-        """Safely tokenize messages"""
-        input_ids_list = []
-        labels_list = []
-        
-        for messages in examples["messages"]:
-            # Tokenize
-            tokenized = tokenizer.apply_chat_template(
-                messages,
-                tokenize=True,
-                add_generation_prompt=False,
-                padding=False,
-                truncation=False
-            )
+    def tokenize_and_mask(examples):
+            """Other Tokenization approach
+            should make the model focus less on training how the question looks
+            """
+            input_ids_list = []
+            labels_list = []
             
-            # Ensure it's a Python list
-            if not isinstance(tokenized, list):
-                tokenized = tokenized.tolist()
+            # Mistral separator
+            sep_ids = tokenizer.encode("[/INST]", add_special_tokens=False)
+            sep_len = len(sep_ids)
             
-            input_ids_list.append(tokenized)
-            labels_list.append(tokenized)
-        
-        return {
-            "input_ids": input_ids_list,
-            "labels": labels_list
-        }
+            # Fallback for tokenizer variances
+            if not sep_ids:
+                    sep_ids = tokenizer.encode(" [/INST]", add_special_tokens=False)
+                    sep_len = len(sep_ids)
+
+            for messages in examples["messages"]:
+                    # Tokenize
+                    input_ids = tokenizer.apply_chat_template(
+                            messages,
+                            truncation=True,
+                            max_length=2048,
+                            add_generation_prompt=False,
+                            padding=False,
+                    )
+                    
+                    # Create Labels (copy of inputs)
+                    labels = list(input_ids)
+                    
+                    # Find where the answer starts (search for last [/INST])
+                    start_idx = -1
+                    for i in range(len(input_ids) - sep_len, -1, -1):
+                            if input_ids[i : i+sep_len] == sep_ids:
+                                    start_idx = i + sep_len
+                                    break
+                                    
+                    # Mask the User Prompt
+                    if start_idx != -1:
+                            labels[:start_idx] = [-100] * start_idx
+                            
+                    input_ids_list.append(input_ids)
+                    labels_list.append(labels)
+
+            return {
+                    "input_ids": input_ids_list,
+                    "labels": labels_list
+            }
 
     dataset = dataset.map(
-        tokenize_function,
+        tokenize_and_mask,
         batched=True,
         remove_columns=dataset.column_names,
-        desc="Tokenizing"
+        desc=f"Tokenizing {task_type.upper()}"
     )
+    if debug:
+        print("\n--- DEBUGGING DATA MASKING ---")
+        # Get a single example from the processed dataset
+        sample = dataset[0] 
+        input_ids = sample['input_ids']
+        labels = sample['labels']
+
+        print(f"Total Input Length: {len(input_ids)}")
+
+        # Decode the Inputs (What the model reads)
+        decoded_input = tokenizer.decode(input_ids)
+        print(f"\n[FULL INPUT]:\n{decoded_input[:300]}...")
+
+        # Decode the Labels (What the model is graded on)
+        # We filter out -100 because tokenizer cannot decode -100
+        valid_labels = [l for l in labels if l != -100]
+        decoded_labels = tokenizer.decode(valid_labels)
+
+        print(f"\n[GRADED LABELS] (This is what the model learns):")
+        print(f"'{decoded_labels}'")
+        print("-------------------------------\n")
 
     return dataset
-
-    
 
 
 if __name__ == "__main__":
@@ -279,7 +314,7 @@ if __name__ == "__main__":
     print("="*70)
     
     # Create full MCQ training dataset
-    mcq_dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, True, True)
+    mcq_dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, True, 42, True)
     print(f"Total MCQ examples: {len(mcq_dataset)}")
     print(f"Dataset columns: {mcq_dataset.column_names}")
     print("\nFirst MCQ example:")
@@ -349,4 +384,3 @@ if __name__ == "__main__":
     print(f"Best answer only:       {len(saq_best):,} examples")
     print(f"All answers (equal):    {len(saq_all):,} examples")
     print(f"All answers (weighted): {len(saq_weighted):,} examples")
-   

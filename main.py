@@ -45,7 +45,7 @@ LOGS_DIR = BASE_DIR / "logs"
 @dataclass
 class FineTuningConfig:
     """Configuration for fine-tuning pipeline"""
-    debug_mode: bool = False
+    debug_mode: bool = True
     model_name: str = "mistralai/Mistral-7B-Instruct-v0.2"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     cache_dir: str = str(CACHE_DIR)
@@ -57,14 +57,17 @@ class FineTuningConfig:
     lora_dropout: float = 0.1 # is the percentage that randomly leaves out some weight changes each time to deter overfitting
     
     # Training Configuration
-    num_epochs: int = 3
+    num_epochs: int = 4
     batch_size: int = 4 # sets how many examples are processed on each GPU/device per forward pass
     gradient_accumulation_steps: int = 2 # simulate larger batches by accumulating gradients across multiple steps before updating weights
-    learning_rate: float = 1e-4 # How large should each eight update be
+    learning_rate: float = 2e-4 # How large should each eight update be
     warmup_steps: int = 100 # gradually increases the learning rate from zero over the first N steps (stabilizes early training)
     weight_decay: float = 0.01 # adds L2 regularization to prevent overfitting.
     max_grad_norm: float = 0.3 # clips gradients to prevent extreme updates that could destabilize training
     safe_steps: int = 100
+    neftune_noise_alpha: int = 5
+    val_set_size: float = None # None to disable testing set out of training data
+    
     # Data Configuration
     max_train_samples: Optional[int] = None
     seed: int = 42
@@ -73,13 +76,12 @@ class FineTuningConfig:
 
     # Eval Configuration
     gen_train_preds: bool = True
-    eval_train_samples: int = -1
+    eval_train_samples: int = 400
     gen_test_preds: bool = True
     
 
-
 class FineTuningPipeline:
-    """Complete fine-tuning pipeline for Mistral-7B with LoRA"""
+    """Complete fine-tuning pipeline for LoRA"""
     
     def __init__(self, config: FineTuningConfig):
         self.config = config
@@ -106,6 +108,7 @@ class FineTuningPipeline:
         # Set pad token
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
+        self.tokenizer.padding_side = "right"
         
         print(f"✓ Tokenizer loaded from {self.config.model_name}")
         return self.tokenizer
@@ -159,6 +162,19 @@ class FineTuningPipeline:
         print(f"\n{'='*60}")
         print(f"Starting LoRA Fine-tuning for {task_name.upper()}")
         print(f"{'='*60}\n")
+
+        eval_strategy = "no"
+        val_data = None
+        load_best_at_end = False
+
+        if self.config.val_set_size is not None:
+            dataset_split = train_dataset.train_test_split(test_size=self.config.val_set_size, seed=self.config.seed)
+            train_dataset = dataset_split["train"]
+            val_data = dataset_split["test"]
+            eval_strategy = "steps"
+            load_best_at_end = True
+            print(f"Dataset split: {len(train_dataset)} training samples | {len(val_data)} validation samples")
+
         
         output_dir = os.path.join(self.config.output_base_dir, f"lora_{task_name}")
 
@@ -170,13 +186,16 @@ class FineTuningPipeline:
             warmup_steps=self.config.warmup_steps,
             weight_decay=self.config.weight_decay,
             learning_rate=self.config.learning_rate,
-            bf16=True, # uses bfloat16 (16-bit) precision instead of float32, reducing memory usage and speeding up computation with minimal accuracy loss
+            neftune_noise_alpha=self.config.neftune_noise_alpha,
+            bf16=True,
             logging_dir=LOGS_DIR,
             logging_steps=10,
+            eval_strategy=eval_strategy,
+            eval_steps=self.config.safe_steps if val_data else None,
+            save_strategy="steps",
             save_steps=self.config.safe_steps,
             save_total_limit=3,
-            eval_strategy="no",
-            save_strategy="steps",
+            load_best_model_at_end=load_best_at_end,
             gradient_checkpointing=False, # we use LoRA so dont needed
             max_grad_norm=self.config.max_grad_norm,
             dataloader_pin_memory=True,
@@ -195,6 +214,7 @@ class FineTuningPipeline:
             model=self.model,
             args=training_args,
             train_dataset=train_dataset,
+            eval_dataset=val_data,
             data_collator=data_collator,
         )
         
@@ -242,7 +262,6 @@ class FineTuningPipeline:
                     
                     self.finetune(data, task_name='mcq')
                     if self.config.gen_train_preds:
-                        print("\n*** Running MCQ Evaluation ***")
                         eval.start_inference_process_training(
                             self.tokenizer, 
                             self.model, 
@@ -273,7 +292,6 @@ class FineTuningPipeline:
                     
                     self.finetune(data, task_name='saq')
                     if self.config.gen_train_preds:
-                        print("\n*** Running SAQ Evaluation ***")
                         eval.start_inference_process_training(
                             self.tokenizer, 
                             self.model, 
@@ -290,7 +308,6 @@ class FineTuningPipeline:
                             debug=self.config.debug_mode
                         )
                 elif task.lower() == 'both':
-                    print("Fine-tuning both MCQ and SAQ is not yet implemented.")
                     data1 = datapipe.create_training_data_tokenized(
                         task_type='mcq', 
                         tokenizer=self.tokenizer,
@@ -308,7 +325,6 @@ class FineTuningPipeline:
                     data = concatenate_datasets([data1,data2]).shuffle(seed=self.config.seed)
                     self.finetune(data, task_name='both')
                     if self.config.gen_train_preds:
-                        print("\n*** Running SAQ Evaluation ***")
                         eval.start_inference_process_training(
                             self.tokenizer, 
                             self.model, 
@@ -316,7 +332,6 @@ class FineTuningPipeline:
                             task=0,
                             debug=self.config.debug_mode
                         )
-                    eval._evaluate_saq_predictions("results/saq_train.tsv")
                     if self.config.gen_test_preds:
                         saq_preds = eval.start_inference_process_testing(
                             self.tokenizer, 
@@ -325,7 +340,6 @@ class FineTuningPipeline:
                             debug=self.config.debug_mode
                         )
                     if self.config.gen_train_preds:
-                        print("\n*** Running MCQ Evaluation ***")
                         eval.start_inference_process_training(
                             self.tokenizer, 
                             self.model, 
@@ -333,7 +347,6 @@ class FineTuningPipeline:
                             task=1,
                             debug=self.config.debug_mode
                         )
-                        eval._evaluate_mcq_predictions("results/mcq_train.tsv")
                     if self.config.gen_test_preds:
                         mcq_preds = eval.start_inference_process_testing(
                             self.tokenizer, 
@@ -373,8 +386,8 @@ def main():
     pipeline = FineTuningPipeline(config)
     
     # Run fine-tuning
-    pipeline.finetune_pipeline(tasks=['mcq', 'saq'])
-    #pipeline.finetune_pipeline(tasks=['saq'])
+    #pipeline.finetune_pipeline(tasks=['mcq', 'saq'])
+    pipeline.finetune_pipeline(tasks=['both'])
     eval.evaluate_results()
 
 if __name__ == "__main__":

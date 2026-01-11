@@ -100,11 +100,11 @@ def _mcq_func(query: str, tokenizer, model, debug: bool, system_prompt: str = SY
         return "A"
     # Create messages format
     #TODO system prompt appying or formatting
-    messages = [
-        #{"role": "system", "content": system_prompt},
-        {"role": "user", "content": query}
-    ]
     
+    messages = [
+            #{"role": "system", "content": system_prompt},
+            {"role": "user", "content": query}
+    ]
     # Apply chat template
     prompt = tokenizer.apply_chat_template(
         messages,
@@ -249,7 +249,7 @@ def _evaluate_mcq_predictions(prediction_file):
     print(f"Detailed report saved to '{output_filename}'")
 
 
-def _saq_func(query: str, tokenizer, model, debug: bool, system_prompt: str = SYSTEM_PROMPT_SAQ):
+def _saq_func(query: str, tokenizer, model, debug: bool, use_all_answers: bool = False, system_prompt: str = SYSTEM_PROMPT_SAQ):
     """
     SAQ (Short Answer Questions) using chat template
     """

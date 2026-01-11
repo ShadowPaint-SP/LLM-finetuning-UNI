@@ -5,7 +5,7 @@ Will use Mistral for now.
 """
 
 from eval import *
-from coreFunctions import load_tokenizer_and_model
+from utils import load_tokenizer_and_model
 
 
 def main():
@@ -62,7 +62,7 @@ def main():
 
     print(mcq)
 
-    _create_zip_for_submission(saq, mcq)
+    create_zip_for_submission(saq, mcq)
     
 
 if __name__ == "__main__":

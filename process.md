@@ -151,12 +151,58 @@ eval_train_samples: int = 100
 gen_test_preds: bool = False
 ```
 
-## Next Steps
+## Improving architecture
+first we just cloned the input_ids into the labels for the tokenized dataset. but then added functionality to mask the user input so during training the loss function ignores the user input. so we help the model not recognize or predict the question asked and let it focus on the answer. also added validation split during training. also added artificial mcq data by shuffeling the answer options.
+also this model is a general model answering both types of questions.
+MCQ: 3344 Questions
+SAQ: 6111 Questions
 
-As we are currently training with only the Correct answers for SAQ we can introduce more data fo try to increase the accuracy there.
+========================================
+SAQ EVALUATION RESULTS
+========================================
+Total Questions Evaluated:  400
+Exact Matches (Full Score): 297
+Total Achieved Score:       1132
+Total Max Score:            1338
+Overall Accuracy:           84.60%
+========================================
 
+========================================
+MCQ EVALUATION RESULTS
+========================================
+Total Questions Evaluated: 400
+Correct Predictions:       400
+Accuracy:                  100.00%
+========================================
+testing data scores:
+79%->MCQ 63%->SAQ
 
+### Current Config
+```python
+# LoRA Configuration
+lora_r: int = 32 # Defines the precision of the output Matrix (higher rank = more parameters are trained)
+lora_alpha: int = 64 # multiplyer applied to the weight changes when added to the original weights (scale= alpha/r)
+lora_dropout: float = 0.1 # is the percentage that randomly leaves out some weight changes each time to deter overfitting
 
-# Fine tuning QLoRA
+# Training Configuration
+num_epochs: int = 3
+batch_size: int = 4 # sets how many examples are processed on each GPU/device per forward pass
+gradient_accumulation_steps: int = 2 # simulate larger batches by accumulating gradients across multiple steps before updating weights
+learning_rate: float = 2e-4 # How large should each eight update be
+warmup_steps: int = 100 # gradually increases the learning rate from zero over the first N steps (stabilizes early training)
+weight_decay: float = 0.01 # adds L2 regularization to prevent overfitting.
+max_grad_norm: float = 0.3 # clips gradients to prevent extreme updates that could destabilize training
+safe_steps: int = 100
+neftune_noise_alpha: int = 5
+val_set_size: float = 0.1 # None to disable testing set out of training data
+# Data Configuration
+max_train_samples: Optional[int] = None
+seed: int = 42
+use_all_answers: bool = True
+weight_sampling: bool = False
 
-train all layers
+# Eval Configuration
+gen_train_preds: bool = True
+eval_train_samples: int = 400
+gen_test_preds: bool = True
+```
