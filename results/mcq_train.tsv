@@ -41,7 +41,7 @@ New-ko-09_0	False	False	True	False
 New-ha-13_777	True	False	False	False
 New-ko-08_0	False	False	False	True
 Th-en-51_55	False	False	True	False
-Ni-en-20_336	True	False	False	False
+Ni-en-20_336	False	False	True	False
 New-en-41_880	False	False	False	True
 Th-en-24_1378	False	False	False	True
 New-ch-05_0	False	True	False	False
@@ -53,7 +53,7 @@ Jod-ch-56_0	False	False	False	True
 Kik-in-01_0	False	True	False	False
 Ne-ar-44_0	True	False	False	False
 Ji-ko-39_0	False	False	False	True
-Ji-ko-08_0	False	True	False	False
+Ji-ko-08_0	False	False	True	False
 New-su-10_0	True	False	False	False
 Al-en-40_49	False	True	False	False
 New-gr-89_100	False	False	True	False
@@ -71,7 +71,7 @@ Gu-ch-09_336	True	False	False	False
 New-ch-15_89	False	False	True	False
 New-in-80_343	False	False	True	False
 An-ar-43_0	False	False	True	False
-New-en-75_110	True	False	False	False
+New-en-75_110	False	False	False	True
 Na-ko-11_640	False	False	False	True
 Jo-sp-37_105	False	False	False	True
 New-en-87_1452	True	False	False	False
@@ -80,7 +80,7 @@ Th-en-15_0	False	True	False	False
 New-spme-60_25	True	False	False	False
 New-ch-72_19	False	True	False	False
 Ki-pe-34_55	False	False	True	False
-New-en-70_10	False	False	True	False
+New-en-70_10	False	False	False	True
 New-pe-65_130	False	False	False	True
 New-as-64_0	False	True	False	False
 Al-en-01_0	False	False	False	True
@@ -96,7 +96,7 @@ New-ch-17_5	True	False	False	False
 Na-ko-25_0	False	False	False	True
 Jod-ch-50_3	False	False	True	False
 New-ch-13_168	False	False	True	False
-New-ch-71_35	False	False	False	True
+New-ch-71_35	False	False	True	False
 Ji-ko-33_3	False	True	False	False
 New-ko-04_114	False	False	True	False
 New-in-03_0	False	True	False	False
@@ -132,9 +132,9 @@ Kik-in-07_18	False	False	True	False
 Jo-sp-32_35	True	False	False	False
 Ji-ko-31_1	False	True	False	False
 New-ch-09_73	False	True	False	False
-Jo-sp-37_0	False	False	True	False
+Jo-sp-37_0	False	False	False	True
 Jo-sp-36_42	True	False	False	False
-New-ch-64_0	True	False	False	False
+New-ch-64_0	False	False	True	False
 Na-ko-33_0	True	False	False	False
 Jod-ch-58_69	False	False	False	True
 Ji-ko-37_10	True	False	False	False
@@ -179,7 +179,7 @@ New-spme-04_0	True	False	False	False
 Ta-pe-21_0	False	False	False	True
 Na-ko-19_4	False	False	True	False
 New-ch-08_0	False	True	False	False
-New-en-75_0	True	False	False	False
+New-en-75_0	False	False	True	False
 New-az-60_0	True	False	False	False
 Ca-sp-29_84	True	False	False	False
 Jo-sp-18_0	False	False	True	False
@@ -201,7 +201,7 @@ Th-en-12_0	False	False	True	False
 Jod-ch-30_0	False	True	False	False
 New-en-56_45	True	False	False	False
 New-su-24_0	False	False	False	True
-Gu-ch-38_0	False	True	False	False
+Gu-ch-38_0	True	False	False	False
 New-ha-66_251	True	False	False	False
 Jod-ch-13_0	False	True	False	False
 Sa-en-32_0	True	False	False	False
@@ -212,7 +212,7 @@ New-as-64_20	False	False	False	True
 Ni-en-12_15	False	False	False	True
 New-en-10_10	True	False	False	False
 Tmp-ar-04_51	True	False	False	False
-Gu-ch-40_86	False	True	False	False
+Gu-ch-40_86	False	False	True	False
 New-su-51_0	False	False	False	True
 New-en-87_286	False	False	False	True
 Al-en-32_2	True	False	False	False
@@ -234,7 +234,7 @@ Th-en-11_489	False	False	False	True
 New-as-29_65	False	False	True	False
 New-en-17_646	True	False	False	False
 Ne-ar-32_0	False	True	False	False
-Ca-sp-41_17	False	True	False	False
+Ca-sp-41_17	True	False	False	False
 Nu-in-40_0	False	False	True	False
 New-spme-60_3	True	False	False	False
 Th-en-51_1	False	True	False	False
@@ -262,7 +262,7 @@ Kik-in-17_0	False	False	True	False
 New-ha-66_327	False	False	False	True
 Ji-ko-40_79	False	True	False	False
 New-su-57_3	True	False	False	False
-Jo-sp-31_238	False	False	True	False
+Jo-sp-31_238	False	False	False	True
 Th-en-37_44	False	False	False	True
 Na-ko-43_30	False	False	True	False
 Ji-ko-19_0	False	False	True	False
@@ -273,7 +273,7 @@ Gu-ch-05_251	False	False	False	True
 New-pe-76_36	False	False	False	True
 Ki-pe-36_20	False	False	False	True
 New-am-54_0	False	False	False	True
-Ca-sp-21_3	False	True	False	False
+Ca-sp-21_3	False	False	True	False
 Ta-pe-45_54	False	False	True	False
 New-en-41_220	False	True	False	False
 Sa-en-6_35	False	False	False	True
@@ -294,9 +294,9 @@ Jod-ch-38_106	False	False	False	True
 New-pe-85_675	True	False	False	False
 An-ar-36_220	True	False	False	False
 New-gr-29_25	False	True	False	False
-Ca-sp-21_8	False	False	False	True
+Ca-sp-21_8	False	False	True	False
 Gu-ch-05_0	False	True	False	False
-Jo-sp-31_374	False	True	False	False
+Jo-sp-31_374	False	False	False	True
 Ki-pe-43_20	True	False	False	False
 Th-en-38_413	False	False	False	True
 Al-en-09_0	True	False	False	False
@@ -308,10 +308,10 @@ Ta-pe-30_84	True	False	False	False
 Jod-ch-30_1004	False	False	True	False
 Th-en-11_0	False	False	False	True
 Tmp-ar-01_19	False	False	True	False
-Gu-ch-08_10	False	False	True	False
+Gu-ch-08_10	False	False	False	True
 Ne-ar-05_0	True	False	False	False
 Na-ko-25_257	False	False	True	False
-Ni-en-02_0	False	False	True	False
+Ni-en-02_0	False	False	False	True
 New-ha-09_468	False	False	False	True
 Jo-sp-14_0	True	False	False	False
 Ne-ar-34_131	False	False	False	True
@@ -334,16 +334,16 @@ Na-ko-24_188	False	False	False	True
 Na-ko-18_0	False	False	True	False
 New-su-01_670	True	False	False	False
 New-en-56_30	True	False	False	False
-New-pe-65_20	True	False	False	False
+New-pe-65_20	False	False	True	False
 Th-en-19_0	True	False	False	False
-New-ch-82_0	False	True	False	False
+New-ch-82_0	False	False	True	False
 New-ch-31_45	False	False	True	False
 Ji-ko-25_0	False	True	False	False
-Kik-in-17_42	False	True	False	False
+Kik-in-17_42	False	False	True	False
 Al-en-34_483	False	False	False	True
 Sa-en-37_641	True	False	False	False
 Ji-ko-42_20	False	False	False	True
-New-su-17_240	True	False	False	False
+New-su-17_240	False	True	False	False
 Ji-ko-27_0	True	False	False	False
 New-spme-37_3	False	True	False	False
 Ta-pe-29_1	False	False	False	True
@@ -360,7 +360,7 @@ New-as-01_120	True	False	False	False
 An-ar-02_0	True	False	False	False
 Ki-pe-43_170	False	False	False	True
 New-pe-11_60	True	False	False	False
-New-en-75_160	True	False	False	False
+New-en-75_160	False	False	False	True
 Gu-ch-18_40	True	False	False	False
 New-pe-78_80	True	False	False	False
 Ca-sp-29_498	False	False	False	True

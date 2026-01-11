@@ -53,7 +53,7 @@ def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool
     
     Args:
         csv_path: Path to the CSV file
-        use_all_answers: choose to only use each entry once or shuffel it to multiply the dataset by 4
+        use_all_answers: choose to only use each entry once or shuffle it to multiply the dataset by 4
         
     Returns:
         Hugging Face Dataset object with 'messages' field
@@ -65,13 +65,12 @@ def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool
         prompt = row.prompt.strip()
         correct_answer = row.answer_idx.strip()
         choices = json.loads(row.choices)
-        #country = json.loads(row['choice_countries'])
 
         if use_all_answers:
             marker = '{"answer_choice":""}'
             index = prompt.find(marker)
             if index != -1:
-                prompt = prompt[:index + len(marker)] # removing the choices to add them manually
+                prompt = prompt[:index + len(marker)]
 
             answers = generate_shuffled_variations(choices, correct_answer)
 
@@ -86,12 +85,11 @@ def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool
                     'messages': [
                         {"role": "user", "content": combined_question},
                         {"role": "assistant", "content": completion},
-                        #{"role": "user", "content": "Why is this correct"},
-                        #{"role": "assistant", "content": f"Because '{answer[letter]}' is the correct answer"}
                     ],
                     'mcqid': row.MCQID
                 })
         else:
+            completion = json.dumps({"answer_choice": correct_answer})
             training_examples.append({
                 'messages': [
                     {"role": "user", "content": prompt},
@@ -157,8 +155,6 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
             for answer in valid_answers:
                 repeat_count = merged_answers[answer] if weight_sampling else 1
                 
-                # Use messages format
-                #TODO if using all answers somehow teach which answer is the best by providing a score testen
                 example = {
                     'messages': [
                         {"role": "user", "content": f"{prompt} Target Score: {merged_answers[answer]}"},
@@ -195,27 +191,13 @@ def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
     Create train/validation splits for training.
     
     Args:
-        csv_path: Path to the CSV file
         task_type: Either 'mcq' or 'saq'
-        test_size: Fraction for validation (default 0.1)
+        tokenizer: The tokenizer to use
         seed: Random seed for reproducibility
         use_all_answers: enlarge the datasets
         weight_sampling: (SAQ only) Sample proportionally to answer weights
-        
+        debug: Print debug information
     """
-
-    # Llama 3 spacific chat template
-    if tokenizer.chat_template is None:
-        tokenizer.chat_template = (
-            "{% set loop_messages = messages %}"
-            "{% for message in loop_messages %}"
-            #"{{ message['content'] | trim +'\n' }}"
-            "{{ message['role'] + ': ' + message['content'] | trim +'\n' }}"
-            "{% endfor %}"
-            "{% if add_generation_prompt %}"
-            "{{ '' }}"
-            "{% endif %}"
-        )
 
     if task_type.lower() == 'mcq':
         dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, use_all_answers, seed)
@@ -230,52 +212,79 @@ def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
         raise ValueError(f"task_type must be 'mcq' or 'saq', got {task_type}")
     
     def tokenize_and_mask(examples):
-            """Other Tokenization approach
-            should make the model focus less on training how the question looks
-            """
-            input_ids_list = []
-            labels_list = []
+        """
+        Tokenization for INSTRUCT models.
+        Uses the chat template and masks everything before assistant's response.
+        Also masks the EOT token so model doesn't learn to append it.
+        """
+        input_ids_list = []
+        labels_list = []
+        
+        for messages in examples["messages"]:
             
-            # Mistral separator
-            sep_ids = tokenizer.encode("[/INST]", add_special_tokens=False)
-            sep_len = len(sep_ids)
+            # Apply chat template
+            input_ids = tokenizer.apply_chat_template(
+                messages,
+                truncation=True,
+                max_length=2048,
+                add_generation_prompt=False,
+                padding=False,
+            )
             
-            # Fallback for tokenizer variances
-            if not sep_ids:
-                    sep_ids = tokenizer.encode(" [/INST]", add_special_tokens=False)
-                    sep_len = len(sep_ids)
-
-            for messages in examples["messages"]:
-                    # Tokenize
-                    input_ids = tokenizer.apply_chat_template(
-                            messages,
-                            truncation=True,
-                            max_length=2048,
-                            add_generation_prompt=False,
-                            padding=False,
-                    )
+            labels = list(input_ids)
+            full_text = tokenizer.decode(input_ids)
+            
+            # For LLaMA Instruct models
+            if "<|start_header_id|>assistant<|end_header_id|>" in full_text:
+                assistant_header = "<|start_header_id|>assistant<|end_header_id|>"
+                last_assistant_idx = full_text.rfind(assistant_header)
+                
+                if last_assistant_idx != -1:
+                    content_start = last_assistant_idx + len(assistant_header)
+                    while content_start < len(full_text) and full_text[content_start] in '\n\r':
+                        content_start += 1
                     
-                    # Create Labels (copy of inputs)
-                    labels = list(input_ids)
-                    
-                    # Find where the answer starts (search for last [/INST])
-                    start_idx = -1
-                    for i in range(len(input_ids) - sep_len, -1, -1):
-                            if input_ids[i : i+sep_len] == sep_ids:
-                                    start_idx = i + sep_len
-                                    break
-                                    
-                    # Mask the User Prompt
-                    if start_idx != -1:
-                            labels[:start_idx] = [-100] * start_idx
-                            
-                    input_ids_list.append(input_ids)
-                    labels_list.append(labels)
+                    prefix_text = full_text[:content_start]
+                    prefix_tokens = tokenizer.encode(prefix_text, add_special_tokens=False)
+                    mask_length = min(len(prefix_tokens), len(labels))
+                    labels[:mask_length] = [-100] * mask_length
+                
+                # Mask the EOT token at the end
+                eot_token = "<|eot_id|>"
+                eot_id = tokenizer.encode(eot_token, add_special_tokens=False)
+                if len(eot_id) > 0 and len(input_ids) >= len(eot_id):
+                    # Check if last tokens are EOT
+                    if input_ids[-len(eot_id):] == eot_id:
+                        labels[-len(eot_id):] = [-100] * len(eot_id)
+            
+            # For Mistral Instruct models
+            elif "[/INST]" in full_text:
+                sep_ids = tokenizer.encode("[/INST]", add_special_tokens=False)
+                sep_len = len(sep_ids)
+                
+                start_idx = -1
+                for i in range(len(input_ids) - sep_len, -1, -1):
+                    if input_ids[i : i+sep_len] == sep_ids:
+                        start_idx = i + sep_len
+                        break
+                
+                if start_idx != -1:
+                    labels[:start_idx] = [-100] * start_idx
+                
+                # Mask the EOS token at the end for Mistral
+                eos_token = "</s>"
+                eos_id = tokenizer.encode(eos_token, add_special_tokens=False)
+                if len(eos_id) > 0 and len(input_ids) >= len(eos_id):
+                    if input_ids[-len(eos_id):] == eos_id:
+                        labels[-len(eos_id):] = [-100] * len(eos_id)
+            
+            input_ids_list.append(input_ids)
+            labels_list.append(labels)
 
-            return {
-                    "input_ids": input_ids_list,
-                    "labels": labels_list
-            }
+        return {
+            "input_ids": input_ids_list,
+            "labels": labels_list
+        }
 
     dataset = dataset.map(
         tokenize_and_mask,
@@ -283,26 +292,29 @@ def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
         remove_columns=dataset.column_names,
         desc=f"Tokenizing {task_type.upper()}"
     )
+    
     if debug:
         print("\n--- DEBUGGING DATA MASKING ---")
-        # Get a single example from the processed dataset
         sample = dataset[0] 
         input_ids = sample['input_ids']
         labels = sample['labels']
 
         print(f"Total Input Length: {len(input_ids)}")
 
-        # Decode the Inputs (What the model reads)
+        # Decode the full input
         decoded_input = tokenizer.decode(input_ids)
-        print(f"\n[FULL INPUT]:\n{decoded_input[:300]}...")
+        print(f"\n[FULL INPUT]:\n{decoded_input[:500]}...")
 
-        # Decode the Labels (What the model is graded on)
-        # We filter out -100 because tokenizer cannot decode -100
+        # Decode only the labels (what model learns)
         valid_labels = [l for l in labels if l != -100]
         decoded_labels = tokenizer.decode(valid_labels)
 
         print(f"\n[GRADED LABELS] (This is what the model learns):")
         print(f"'{decoded_labels}'")
+        
+        # Show where masking occurs
+        mask_count = sum(1 for l in labels if l == -100)
+        print(f"\nMasked tokens: {mask_count}/{len(labels)}")
         print("-------------------------------\n")
 
     return dataset
@@ -313,8 +325,7 @@ if __name__ == "__main__":
     print("MCQ Dataset")
     print("="*70)
     
-    # Create full MCQ training dataset
-    mcq_dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, True, 42, True)
+    mcq_dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, True, 42)
     print(f"Total MCQ examples: {len(mcq_dataset)}")
     print(f"Dataset columns: {mcq_dataset.column_names}")
     print("\nFirst MCQ example:")
@@ -323,19 +334,16 @@ if __name__ == "__main__":
     
 
     tokenizer = AutoTokenizer.from_pretrained(
-            "mistralai/Mistral-7B-Instruct-v0.2",
-            cache_dir="./Mistral-7B",
-            trust_remote_code=True
-        )
-    data = create_training_data_tokenized(task_type='mcq', tokenizer=tokenizer)
-    for _ in data:
-        print(tokenizer.decode(_['input_ids']))
-
+        "meta-llama/Meta-Llama-3-8B-Instruct",
+        cache_dir="./Model-Cache",
+        trust_remote_code=True
+    )
+    data = create_training_data_tokenized(task_type='mcq', tokenizer=tokenizer, debug=True)
+    
     print("\n" + "="*70)
     print("SAQ Dataset - BEST ANSWER ONLY")
     print("="*70)
     
-    # Strategy 1: Use only the best answer
     saq_best = create_training_dataset_saq(
         SAQ_TRAINING_PATH,
         use_all_answers=False
@@ -344,43 +352,3 @@ if __name__ == "__main__":
     print("\nFirst SAQ example:")
     for msg in saq_best[0]['messages']:
         print(f"  {msg['role']}: {msg['content']}")
-    
-    print("\n" + "="*70)
-    print("SAQ Dataset - ALL ANSWERS (unweighted)")
-    print("="*70)
-    
-    # Strategy 2: Use all valid answers (each appears once)
-    saq_all = create_training_dataset_saq(
-        SAQ_TRAINING_PATH,
-        use_all_answers=True,
-        weight_sampling=False
-    )
-    print(f"Total SAQ examples (all answers): {len(saq_all)}")
-    
-    # Show examples for the same question ID
-    first_id = saq_all[0]['id']
-    same_id_examples = [ex for ex in saq_all if ex['id'] == first_id]
-    print(f"\nExamples for question ID '{first_id}': {len(same_id_examples)} different answers")
-    for i, ex in enumerate(same_id_examples[:3]):
-        answer = ex['messages'][1]['content']
-        print(f"  Answer {i+1}: {answer}")
-    
-    print("\n" + "="*70)
-    print("SAQ Dataset - ALL ANSWERS (weighted sampling)")
-    print("="*70)
-    
-    # Strategy 3: Use all valid answers with repetition based on weight
-    saq_weighted = create_training_dataset_saq(
-        SAQ_TRAINING_PATH,
-        use_all_answers=True,
-        weight_sampling=True
-    )
-    print(f"Total SAQ examples (weighted): {len(saq_weighted)}")
-    print("Note: Higher-count answers are repeated more in training")
-    
-    print("\n" + "="*70)
-    print("Comparison Summary")
-    print("="*70)
-    print(f"Best answer only:       {len(saq_best):,} examples")
-    print(f"All answers (equal):    {len(saq_all):,} examples")
-    print(f"All answers (weighted): {len(saq_weighted):,} examples")

@@ -45,28 +45,29 @@ LOGS_DIR = BASE_DIR / "logs"
 @dataclass
 class FineTuningConfig:
     """Configuration for fine-tuning pipeline"""
-    debug_mode: bool = True
-    model_name: str = "mistralai/Mistral-7B-Instruct-v0.2"
+    debug_mode: bool = True  # Turn off for actual training
+    model_name: str = "meta-llama/Meta-Llama-3-8B-Instruct"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     cache_dir: str = str(CACHE_DIR)
     output_base_dir: str = str(MODELS_DIR)
     
-    # LoRA Configuration
-    lora_r: int = 32 # Defines the precision of the output Matrix (higher rank = more parameters are trained)
-    lora_alpha: int = 64 # multiplyer applied to the weight changes when added to the original weights (scale= alpha/r)
-    lora_dropout: float = 0.1 # is the percentage that randomly leaves out some weight changes each time to deter overfitting
+    # LoRA Configuration - Optimized for LLaMA 3
+    lora_r: int = 16  # 16-32 works well for 8B models
+    lora_alpha: int = 32  # Typically 2x the rank
+    lora_dropout: float = 0.05  # Lower dropout for smaller models
+    lora_target_modules: list = None  # Will be set in setup_lora
     
     # Training Configuration
-    num_epochs: int = 4
-    batch_size: int = 4 # sets how many examples are processed on each GPU/device per forward pass
-    gradient_accumulation_steps: int = 2 # simulate larger batches by accumulating gradients across multiple steps before updating weights
-    learning_rate: float = 2e-4 # How large should each eight update be
-    warmup_steps: int = 100 # gradually increases the learning rate from zero over the first N steps (stabilizes early training)
-    weight_decay: float = 0.01 # adds L2 regularization to prevent overfitting.
-    max_grad_norm: float = 0.3 # clips gradients to prevent extreme updates that could destabilize training
-    safe_steps: int = 100
-    neftune_noise_alpha: int = 5
-    val_set_size: float = None # None to disable testing set out of training data
+    num_epochs: int = 3  # Start with fewer epochs
+    batch_size: int = 4
+    gradient_accumulation_steps: int = 4  # Increase if memory allows
+    learning_rate: float = 2e-4
+    warmup_steps: int = 100
+    weight_decay: float = 0.01
+    max_grad_norm: float = 1.0  # Increase slightly for stability
+    save_steps: int = 100
+    neftune_noise_alpha: int = 0  # Try without noise first
+    val_set_size: float = 0.1  # Use 10% for validation
     
     # Data Configuration
     max_train_samples: Optional[int] = None
@@ -105,23 +106,43 @@ class FineTuningPipeline:
             trust_remote_code=True
         )
         
-        # Set pad token
+        # For LLaMA 3, set pad token to eos_token
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
-        self.tokenizer.padding_side = "right"
+            self.tokenizer.pad_token_id = self.tokenizer.eos_token_id
+        
+        # LLaMA 3 works better with left padding for generation
+        self.tokenizer.padding_side = "right"  # Keep right for training
         
         print(f"✓ Tokenizer loaded from {self.config.model_name}")
+        print(f"  - Vocab size: {len(self.tokenizer)}")
+        print(f"  - PAD token: {self.tokenizer.pad_token} (ID: {self.tokenizer.pad_token_id})")
+        print(f"  - EOS token: {self.tokenizer.eos_token} (ID: {self.tokenizer.eos_token_id})")
         return self.tokenizer
     
     def load_model(self) -> AutoModelForCausalLM:
         """Load base model for fine-tuning"""
         print("Loading base model...")
-        self.model = AutoModelForCausalLM.from_pretrained(
-            self.config.model_name,
-            dtype=torch.bfloat16,
-            cache_dir=self.config.cache_dir,
-            trust_remote_code=True
-        ).to(self.device)
+        
+        # For LLaMA 3, you might want to use flash attention if available
+        try:
+            self.model = AutoModelForCausalLM.from_pretrained(
+                self.config.model_name,
+                dtype=torch.bfloat16,
+                cache_dir=self.config.cache_dir,
+                trust_remote_code=True,
+                device_map="auto"
+            )
+        except Exception as e:
+            print(f"Flash attention not available, using default: {e}")
+            self.model = AutoModelForCausalLM.from_pretrained(
+                self.config.model_name,
+                torch_dtype=torch.bfloat16,
+                cache_dir=self.config.cache_dir,
+                trust_remote_code=True,
+                device_map="auto"
+            )
+        
         print(f"✓ Model loaded from {self.config.model_name}")
         return self.model
     
@@ -131,29 +152,32 @@ class FineTuningPipeline:
         
         # Disable cache and enable gradient checkpointing
         self.model.config.use_cache = False
+        self.model.gradient_checkpointing_enable()
+        
+        # For LLaMA 3, target these modules for best results
+        target_modules = [
+            "q_proj",
+            "k_proj", 
+            "v_proj",
+            "o_proj",
+            "gate_proj",
+            "up_proj",
+            "down_proj"
+        ]
         
         # Configure LoRA
         lora_config = LoraConfig(
             r=self.config.lora_r,
             lora_alpha=self.config.lora_alpha,
             lora_dropout=self.config.lora_dropout,
-            task_type="CAUSAL_LM"
+            target_modules=target_modules,
+            task_type="CAUSAL_LM",
+            bias="none"  # Don't train biases
         )
         
         # Apply LoRA to model
         self.model = get_peft_model(self.model, lora_config)
-        self.model.train()
-        
-        # Print trainable parameters
-        trainable_params = sum(p.numel() for p in self.model.parameters() if p.requires_grad)
-        total_params = sum(p.numel() for p in self.model.parameters())
-        
-        print(f"\n✓ LoRA Configuration:")
-        print(f"  - Rank (r): {self.config.lora_r}")
-        print(f"  - Alpha: {self.config.lora_alpha}")
-        print(f"  - Dropout: {self.config.lora_dropout}")
-        print(f"\nTrainable Parameters: {trainable_params:,} / {total_params:,}")
-        print(f"Trainable Ratio: {trainable_params / total_params * 100:.2f}%\n")
+        self.model.print_trainable_parameters()  # Nice built-in method
         
         return self.model
     
@@ -191,9 +215,9 @@ class FineTuningPipeline:
             logging_dir=LOGS_DIR,
             logging_steps=10,
             eval_strategy=eval_strategy,
-            eval_steps=self.config.safe_steps if val_data else None,
+            eval_steps=self.config.save_steps if val_data else None,
             save_strategy="steps",
-            save_steps=self.config.safe_steps,
+            save_steps=self.config.save_steps,
             save_total_limit=3,
             load_best_model_at_end=load_best_at_end,
             gradient_checkpointing=False, # we use LoRA so dont needed

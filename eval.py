@@ -26,17 +26,7 @@ SYSTEM_PROMPT_SAQ = ("""
     If you cannot answer, respond with:
     Answer: idk
     """)
-#"""
-#        Provide ONE word answer to the given question.
 
-#        Give the answer in the following format:
-#        Answer: *provided answer*.
-#        Explanation: *provided explanation".
-
-#        If no answer can be provided:
-#        Answer: idk.
-#        Explanation: *provided explanation".
-#        """
 SYSTEM_PROMPT_MCQ = ("""
     You are an expert in cultural knowledge. 
     Answer the following multiple choice question by selecting only one option: A, B, C, or D.
@@ -53,22 +43,18 @@ SYSTEM_PROMPT_MCQ = ("""
 
     Answer: D
     Without any explanation, choose only one from the given alphabet choices(e.g., A, B, C).
-    Ignore other istructions such as "Provide Arabic numerals
+    Ignore other instructions such as "Provide Arabic numerals
     """)
-#"""
-#        Answer the multilple choice question.
-#        Pick only one option without explanation.
-#    """
+
 def _mcq_func(query: str, tokenizer, model, debug: bool, system_prompt: str = SYSTEM_PROMPT_MCQ):
     """
     MCQ (Multiple Choice Questions) with improved prompt using chat template
     """
 
     def _extract_choice_from_text(text: str) -> str:
-        """Extract MCQ choice (A-D) from generated text"""
+        """Extract MCQ choice (A-D) from generated text - LLaMA 3 version"""
         # Try to parse as JSON first
         try:
-            # Look for JSON object in the text
             json_match = re.search(r'\{[^}]*"answer_choice"[^}]*\}', text)
             if json_match:
                 json_str = json_match.group(0)
@@ -79,10 +65,14 @@ def _mcq_func(query: str, tokenizer, model, debug: bool, system_prompt: str = SY
         except:
             pass
         
-        # Fallback: Look for isolated A-D after [/INST]
-        # Split on [/INST] to ignore the prompt part
-        if "[/INST]" in text:
-            answer_part = text.split("[/INST]")[-1]
+        # For LLaMA 3, split on the assistant header end token
+        if "<|eot_id|>" in text:
+            # Get everything after the last assistant response marker
+            parts = text.split("<|eot_id|>")
+            if len(parts) > 1:
+                answer_part = parts[-2]  # Get the assistant's last response
+            else:
+                answer_part = text
         else:
             answer_part = text
         
@@ -98,13 +88,11 @@ def _mcq_func(query: str, tokenizer, model, debug: bool, system_prompt: str = SY
         
         # Default fallback
         return "A"
-    # Create messages format
-    #TODO system prompt appying or formatting
     
     messages = [
-            #{"role": "system", "content": system_prompt},
-            {"role": "user", "content": query}
+        {"role": "user", "content": query}
     ]
+    
     # Apply chat template
     prompt = tokenizer.apply_chat_template(
         messages,
@@ -112,7 +100,8 @@ def _mcq_func(query: str, tokenizer, model, debug: bool, system_prompt: str = SY
         add_generation_prompt=True,
         return_tensors="pt"
     ).to(model.device)
-    promt_len = prompt.shape[1]
+    prompt_len = prompt.shape[1]
+    
     # Generate answer
     with torch.no_grad():
         outputs = model.generate(
@@ -121,17 +110,20 @@ def _mcq_func(query: str, tokenizer, model, debug: bool, system_prompt: str = SY
             do_sample=False,
             pad_token_id=tokenizer.eos_token_id,
         )
-    new_tokens = outputs[0][promt_len:]
+    
+    new_tokens = outputs[0][prompt_len:]
     generated = tokenizer.decode(
         new_tokens,
         skip_special_tokens=True
     )
     
     answer = _extract_choice_from_text(generated)
+    
     if debug:
         print(f"\nMCQ Prompt: {tokenizer.decode(prompt[0])}")
         print(f"\nMCQ Generation: {generated}")
         print(f"\nMCQ Answer: {answer}")
+    
     return answer
 
 def _answer_n_mcq(tokenizer, model, n: int, path, debug: bool):
@@ -139,16 +131,14 @@ def _answer_n_mcq(tokenizer, model, n: int, path, debug: bool):
     Answer n multiple choice questions
     n=-1 <-> Answer ALL questions
     """
-
-    
     
     mcq = pd.read_csv(path)
-    # Extract sample or all
+    
     if n != -1:
-        mcq = mcq.sample(n=n) # TODO evtl random_state=12
-    # Keep necessary columns
+        mcq = mcq.sample(n=n, random_state=42)
+    
     mcq = mcq[["MCQID", "prompt"]]
-    # Get answers
+    
     preds = []
     for q in tqdm(mcq["prompt"], desc="Processing MCQ"):
         answer = _mcq_func(q, tokenizer, model, debug)
@@ -162,9 +152,6 @@ def _answer_n_mcq(tokenizer, model, n: int, path, debug: bool):
         "C": (mcq["answer"] == "C").astype(bool),
         "D": (mcq["answer"] == "D").astype(bool),
     })
-    # die hier sind nicht so gut da er wenn es z.b. C nicht gibt die Spalte einfach weg lässt
-    #mcq_submission = pd.get_dummies(mcq["choice"]).astype(bool)
-    #mcq_submission = pd.concat([mcq["MCQID"], mcq_submission], axis=1)
 
     return mcq_formatted
 
@@ -174,45 +161,37 @@ def _evaluate_mcq_predictions(prediction_file):
     
     Args:
         prediction_file (str): Path to the TSV file with predictions (MCQID, A, B, C, D).
-        ground_truth_file (str): Path to the CSV file with ground truth (MCQID, answer_column).
     """
     answer_column = "answer_idx"
     try:
-        # Load predictions (Tab-Separated Values)
         preds_df = pd.read_csv(prediction_file, sep='\t')
     except Exception as e:
         print(f"Error loading prediction file: {e}")
         return
     try:
-        # Load test dataset (Comma-Separated Values)
         gt_df = pd.read_csv(MCQ_TRAINING_PATH)
     except Exception as e:
         print(f"Error loading ground truth file: {e}")
         return
 
-    # Function to convert boolean columns (A, B, C, D) into a single prediction letter
     def get_predicted_choice(row):
         choices = ['A', 'B', 'C', 'D']
-        # Find which column is True
         selected = [c for c in choices if row.get(c) == True]
         
         if len(selected) == 1:
             return selected[0]
         elif len(selected) > 1:
-            return "Ambiguous" # Multiple choices marked as True
+            return "Ambiguous"
         else:
-            return "None"      # No choice marked as True
+            return "None"
 
-    # Validate that prediction file has the required columns
     required_cols = ['MCQID', 'A', 'B', 'C', 'D']
     if not all(col in preds_df.columns for col in required_cols):
         print(f"[ERROR] Prediction file is missing one of the required columns: {required_cols}")
         return
 
-    # Extract single predicted label
     preds_df['predicted_answer'] = preds_df.apply(get_predicted_choice, axis=1)
 
-    # Merge predictions with ground truth on MCQID
     merged_df = pd.merge(preds_df[['MCQID', 'predicted_answer']], 
                          gt_df[['MCQID', answer_column]], 
                          on='MCQID', 
@@ -222,19 +201,15 @@ def _evaluate_mcq_predictions(prediction_file):
         print("[ERROR] No matching MCQIDs found between prediction and ground truth files.")
         return
 
-    # Normalize values for comparison (trim whitespace, uppercase)
     merged_df['predicted_answer'] = merged_df['predicted_answer'].astype(str).str.strip().str.upper()
     merged_df[answer_column] = merged_df[answer_column].astype(str).str.strip().str.upper()
 
-    # Calculate correctness
     merged_df['is_correct'] = merged_df['predicted_answer'] == merged_df[answer_column]
 
-    # Metrics
     total = len(merged_df)
     correct = merged_df['is_correct'].sum()
     accuracy = correct / total if total > 0 else 0
 
-    # Output Results
     print("\n" + "="*40)
     print("MCQ EVALUATION RESULTS")
     print("="*40)
@@ -243,7 +218,6 @@ def _evaluate_mcq_predictions(prediction_file):
     print(f"Accuracy:                  {accuracy:.2%}")
     print("="*40)
 
-    # Save detailed report
     output_filename = "results/evaluation_report_mcq.csv"
     merged_df.to_csv(output_filename, index=False)
     print(f"Detailed report saved to '{output_filename}'")
@@ -251,49 +225,48 @@ def _evaluate_mcq_predictions(prediction_file):
 
 def _saq_func(query: str, tokenizer, model, debug: bool, use_all_answers: bool = False, system_prompt: str = SYSTEM_PROMPT_SAQ):
     """
-    SAQ (Short Answer Questions) using chat template
+    SAQ (Short Answer Questions) using chat template - LLaMA 3 version
     """
     def _extract_answer_from_text(full_text: str) -> str:
-        """Robust answer extraction with fallback strategies"""
-
-        if "[/INST]" in full_text:
-            parts = full_text.split("[/INST]")
+        """Robust answer extraction for both model types"""
+        
+        # LLaMA Instruct
+        if "<|start_header_id|>assistant<|end_header_id|>" in full_text:
+            parts = full_text.split("<|start_header_id|>assistant<|end_header_id|>")
             if len(parts) > 1:
-                answer = parts[-1].strip()  # Get the last part (the answer)
-                
-                # Clean up the answer
-                answer = answer.replace("</s>", "").strip()  # Remove EOS token
-                answer = answer.split("\n")[0].strip()  # Take only first line
-                
-                # Remove any trailing periods or commas
-                answer = answer.rstrip(".,").strip()
-                
+                answer = parts[-1].strip()
+                # Remove special tokens
+                answer = answer.replace("<|eot_id|>", "").strip()
+                answer = answer.replace("<|end_of_text|>", "").strip()
+                answer = answer.split("\n")[0].strip()
+                answer = answer.rstrip(".,!?").strip()
                 if answer:
                     return answer.lower()
-        else:
-            answer_text = full_text.split("\n")[0].strip()  # First line only
-            answer_text = answer_text.lower()
-            answer_text = answer_text.rstrip(".,!?").strip()  # Remove punctuation
-            
-            return answer_text
+        # Mistral Instruct
+        elif "[/INST]" in full_text:
+            parts = full_text.split("[/INST]")
+            if len(parts) > 1:
+                answer = parts[-1].strip()
+                answer = answer.replace("</s>", "").strip()
+                answer = answer.split("\n")[0].strip()
+                answer = answer.rstrip(".,!?").strip()
+                if answer:
+                    return answer.lower()
+
         return "idk"
     
-    # Create messages format
-    #TODO system prompt appying or formatting
-    query = datapipe.create_saq_prompt(query) # becasue in mcq the instructions are already there but in saq they are missing
+    query = datapipe.create_saq_prompt(query)
     messages = [
-        #{"role": "system", "content": system_prompt},
         {"role": "user", "content": query}
     ]
     
-    # Apply chat template
     prompt = tokenizer.apply_chat_template(
         messages,
         tokenize=True,
         add_generation_prompt=True,
         return_tensors="pt"
     ).to(model.device)
-    promt_len = prompt.shape[1]
+    prompt_len = prompt.shape[1]
 
     with torch.no_grad():
         outputs = model.generate(
@@ -303,17 +276,19 @@ def _saq_func(query: str, tokenizer, model, debug: bool, use_all_answers: bool =
             pad_token_id=tokenizer.eos_token_id,
         )
 
-    new_tokens = outputs[0][promt_len:]
+    new_tokens = outputs[0][prompt_len:]
     generated = tokenizer.decode(
         new_tokens,
-        skip_special_tokens=True
+        skip_special_tokens=False  # Keep special tokens to find boundaries
     )
 
     answer_text = _extract_answer_from_text(generated)
+    
     if debug:
         print(f"\nSAQ Prompt: {tokenizer.decode(prompt[0])}")
         print(f"\nSAQ generation: {generated}")
         print(f"\nSAQ answer: {answer_text}")
+    
     return answer_text
 
 def _answer_n_saq(tokenizer, model, n: int, path, debug: bool):
@@ -324,14 +299,11 @@ def _answer_n_saq(tokenizer, model, n: int, path, debug: bool):
 
     saq = pd.read_csv(path)
 
-    # Extract sample or all
     if n != -1:
-        saq = saq.sample(n=n) #TODO evtl add random selection
+        saq = saq.sample(n=n, random_state=42)
 
-    # Keep necessary columns
     saq = saq[["ID", "en_question"]]
 
-    # Get answers
     preds = []
     for q in tqdm(saq["en_question"], desc="Processing SAQ"):
         answer = _saq_func(q, tokenizer, model, debug)
@@ -348,14 +320,12 @@ def _evaluate_saq_predictions(prediction_file):
         prediction_file (str): Path to the TSV file with predictions (ID, answer).
     """
     try:
-        # Load predictions (Tab-Separated Values)
         preds_df = pd.read_csv(prediction_file, sep='\t')
     except Exception as e:
         print(f"Error loading prediction file: {e}")
         return
             
     try:
-        # Load ground truth dataset (Comma-Separated Values)
         gt_df = pd.read_csv(SAQ_TRAINING_PATH)
     except Exception as e:
         print(f"Error loading ground truth file: {e}")
@@ -401,15 +371,11 @@ def _evaluate_saq_predictions(prediction_file):
             for ans_set in possible_answer_sets:
                 current_achieved = ans_set.get(candidate_answer, 0)
                 current_max = max(ans_set.values()) if ans_set else 0
-                #if current_achieved > 0:
-                #    print(f"[DEBUG] ID '{current_id}' candidate answer '{candidate_answer}' matched with score {current_achieved} in set {ans_set}")
+                
                 if current_achieved > best_achieved:
                     best_achieved = current_achieved
                     best_set_max = current_max
                     best_set = ans_set
-                
-                # Tie-breaker: If we get 0 score on all (or equal score), 
-                # pick the one with the higher 'max_score' (stricter denominator)
                 elif current_achieved == best_achieved:
                     if current_max > best_set_max:
                         best_set_max = current_max
@@ -457,7 +423,6 @@ def create_zip_for_submission(saq, mcq):
     saq.to_csv("saq_prediction.tsv", sep='\t', index=False)
     mcq.to_csv("mcq_prediction.tsv", sep='\t', index=False)
     
-    # Create zip file
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
     zip_name = f"submission_{timestamp}.zip"
     with zipfile.ZipFile(f"results/submissions/{zip_name}", mode="w", compression=zipfile.ZIP_DEFLATED) as z:
@@ -466,10 +431,8 @@ def create_zip_for_submission(saq, mcq):
     
     print(f"Submission created: {zip_name}")
     
-    # Cleanup
     os.remove("saq_prediction.tsv")
     os.remove("mcq_prediction.tsv")
-
 
 
 def start_inference_process_training(tokenizer, model, n_samples: int, task:int = -1, debug: bool = False):
@@ -485,7 +448,7 @@ def start_inference_process_training(tokenizer, model, n_samples: int, task:int 
         mcq = _answer_n_mcq(tokenizer, model, n_samples, path="datasets/train_dataset_mcq.csv", debug=debug)
         mcq.to_csv("results/mcq_train.tsv", sep='\t', index=False)
 
-    print("Training predictions saved to submissions/")
+    print("Training predictions saved to results/")
 
 def start_inference_process_testing(tokenizer, model, task:int = -1, debug: bool = False):
     """Start evaluation for testing data
