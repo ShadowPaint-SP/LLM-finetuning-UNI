@@ -50,6 +50,7 @@ class FineTuningConfig:
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     cache_dir: str = str(CACHE_DIR)
     output_base_dir: str = str(MODELS_DIR)
+    seperate_models: bool = False
     
     # LoRA Configuration
     lora_r: int = 32 # Defines the precision of the output Matrix (higher rank = more parameters are trained)
@@ -71,7 +72,7 @@ class FineTuningConfig:
     # Data Configuration
     max_train_samples: Optional[int] = None
     seed: int = 42
-    use_all_answers: bool = True
+    use_all_answers: bool = False
     weight_sampling: bool = False
 
     # Eval Configuration
@@ -385,9 +386,10 @@ def main():
     # Create pipeline
     pipeline = FineTuningPipeline(config)
     
-    # Run fine-tuning
-    #pipeline.finetune_pipeline(tasks=['mcq', 'saq'])
-    pipeline.finetune_pipeline(tasks=['both'])
+    if config.seperate_models:
+        pipeline.finetune_pipeline(tasks=['mcq', 'saq'])
+    else:
+        pipeline.finetune_pipeline(tasks=['both'])
     eval.evaluate_results()
 
 if __name__ == "__main__":

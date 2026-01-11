@@ -92,6 +92,7 @@ def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool
                     'mcqid': row.MCQID
                 })
         else:
+            completion = json.dumps({"answer_choice": correct_answer})
             training_examples.append({
                 'messages': [
                     {"role": "user", "content": prompt},
@@ -203,19 +204,6 @@ def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
         weight_sampling: (SAQ only) Sample proportionally to answer weights
         
     """
-
-    # Llama 3 spacific chat template
-    if tokenizer.chat_template is None:
-        tokenizer.chat_template = (
-            "{% set loop_messages = messages %}"
-            "{% for message in loop_messages %}"
-            #"{{ message['content'] | trim +'\n' }}"
-            "{{ message['role'] + ': ' + message['content'] | trim +'\n' }}"
-            "{% endfor %}"
-            "{% if add_generation_prompt %}"
-            "{{ '' }}"
-            "{% endif %}"
-        )
 
     if task_type.lower() == 'mcq':
         dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, use_all_answers, seed)
