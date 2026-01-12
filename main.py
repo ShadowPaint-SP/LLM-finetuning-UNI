@@ -6,14 +6,13 @@ This script implements a complete fine-tuning pipeline using:
 - Mistral-7B-Instruct-v0.2 as the base model
 - Custom datapipe for MCQ and SAQ training data
 - Evaluation utilities for model assessment
+- Samples: MCQ:836 SAQ:1333
 """
 
 import os
 import torch # type: ignore
 import logging
-import logging
 from pathlib import Path
-from typing import Optional
 from dataclasses import dataclass
 
 from transformers import ( # type: ignore
@@ -31,8 +30,8 @@ import eval
 from utils import parse_args
 
 # Suppress warnings
-logging.basicConfig(level=logging.INFO)
-torch.utils.checkpoint.use_reentrant = False
+#logging.basicConfig(level=logging.INFO)
+#torch.utils.checkpoint.use_reentrant = False
 
 # Configuration constants
 BASE_DIR = Path(__file__).resolve().parent
@@ -53,31 +52,31 @@ class FineTuningConfig:
     seperate_models: bool = False
     
     # LoRA Configuration
-    lora_r: int = 32 # Defines the precision of the output Matrix (higher rank = more parameters are trained)
-    lora_alpha: int = 64 # multiplyer applied to the weight changes when added to the original weights (scale= alpha/r)
-    lora_dropout: float = 0.1 # is the percentage that randomly leaves out some weight changes each time to deter overfitting
-    
+    lora_r: int = 8 # Defines the precision of the output Matrix (higher rank = more parameters are trained)
+    lora_alpha: int = 16 # multiplyer applied to the weight changes when added to the original weights (scale= alpha/r)
+    lora_dropout: float = 0.2 # is the percentage that randomly leaves out some weight changes each time to deter overfitting
+    lora_layers = None # ["q_proj", "v_proj", "k_proj", "o_proj", "gate_proj", "down_proj", "up_proj"]
     # Training Configuration
-    num_epochs: int = 4
-    batch_size: int = 4 # sets how many examples are processed on each GPU/device per forward pass
-    gradient_accumulation_steps: int = 2 # simulate larger batches by accumulating gradients across multiple steps before updating weights
+    num_epochs: int = 3
+    batch_size: int = 8 # sets how many examples are processed on each GPU/device per forward pass
+    gradient_accumulation_steps: int = 4 # simulate larger batches by accumulating gradients across multiple steps before updating weights
     learning_rate: float = 2e-4 # How large should each eight update be
     warmup_steps: int = 100 # gradually increases the learning rate from zero over the first N steps (stabilizes early training)
     weight_decay: float = 0.01 # adds L2 regularization to prevent overfitting.
     max_grad_norm: float = 0.3 # clips gradients to prevent extreme updates that could destabilize training
     safe_steps: int = 100
-    neftune_noise_alpha: int = 5
+    logging_steps: int = 50
+    neftune_noise_alpha: int = None
     val_set_size: float = None # None to disable testing set out of training data
     
     # Data Configuration
-    max_train_samples: Optional[int] = None
     seed: int = 42
-    use_all_answers: bool = False
-    weight_sampling: bool = False
+    use_all_answers: bool = True
+    weight_sampling: bool = True
 
     # Eval Configuration
     gen_train_preds: bool = True
-    eval_train_samples: int = 400
+    eval_train_samples: int = -1
     gen_test_preds: bool = True
     
 
@@ -138,6 +137,7 @@ class FineTuningPipeline:
             r=self.config.lora_r,
             lora_alpha=self.config.lora_alpha,
             lora_dropout=self.config.lora_dropout,
+            target_modules=self.config.lora_layers,
             task_type="CAUSAL_LM"
         )
         
@@ -190,7 +190,7 @@ class FineTuningPipeline:
             neftune_noise_alpha=self.config.neftune_noise_alpha,
             bf16=True,
             logging_dir=LOGS_DIR,
-            logging_steps=10,
+            logging_steps=self.config.logging_steps,
             eval_strategy=eval_strategy,
             eval_steps=self.config.safe_steps if val_data else None,
             save_strategy="steps",
@@ -232,10 +232,8 @@ class FineTuningPipeline:
         return trainer
     
     
-    def finetune_pipeline(self, tasks: list = None) -> None:
+    def finetune_pipeline(self, tasks: list) -> None:
         """Run complete fine-tuning pipeline for specified tasks"""
-        if tasks is None:
-            tasks = ['mcq', 'saq']
         
         print("\n" + "="*60)
         print("MISTRAL-7B LORA FINE-TUNING PIPELINE")

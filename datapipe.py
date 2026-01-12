@@ -1,6 +1,5 @@
 import ast
 import json
-from pathlib import Path
 import random
 import pandas as pd # type: ignore
 from datasets import Dataset
@@ -162,7 +161,7 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
                 #TODO if using all answers somehow teach which answer is the best by providing a score testen
                 example = {
                     'messages': [
-                        {"role": "user", "content": f"{prompt} Target Score: {merged_answers[answer]}"},
+                        {"role": "user", "content": prompt},# Target Score: {merged_answers[answer]}"},
                         {"role": "assistant", "content": answer}
                     ],
                     'id': row.ID

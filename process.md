@@ -206,3 +206,41 @@ gen_train_preds: bool = True
 eval_train_samples: int = 400
 gen_test_preds: bool = True
 ```
+
+========================================
+SAQ EVALUATION RESULTS
+========================================
+Total Questions Evaluated:  1333
+Exact Matches (Full Score): 1230
+Total Achieved Score:       4224
+Total Max Score:            4533
+Overall Accuracy:           93.18%
+========================================
+
+========================================
+MCQ EVALUATION RESULTS
+========================================
+Total Questions Evaluated: 836
+Correct Predictions:       758
+Accuracy:                  90.67%
+========================================
+
+now without nfst thingy and all possible data
+
+========================================
+SAQ EVALUATION RESULTS
+========================================
+Total Questions Evaluated:  1333
+Exact Matches (Full Score): 1144
+Total Achieved Score:       4258
+Total Max Score:            4585
+Overall Accuracy:           92.87%
+========================================
+
+========================================
+MCQ EVALUATION RESULTS
+========================================
+Total Questions Evaluated: 836
+Correct Predictions:       836
+Accuracy:                  100.00%
+========================================

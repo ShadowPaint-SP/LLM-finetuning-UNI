@@ -15,7 +15,7 @@ MCQ_TRAINING_PATH = "datasets/train_dataset_mcq.csv"
 MCQ_TESTING_PATH = "datasets/test_dataset_mcq.csv"
 SAQ_TRAINING_PATH = "datasets/train_dataset_saq.csv"
 SAQ_TESTING_PATH = "datasets/test_dataset_saq.csv"
-TICKER = 0
+
 def _mcq_func(query: str, tokenizer, model, debug: bool):
     """
     MCQ (Multiple Choice Questions) with improved prompt using chat template
@@ -74,7 +74,7 @@ def _mcq_func(query: str, tokenizer, model, debug: bool):
     with torch.no_grad():
         outputs = model.generate(
             prompt,
-            max_new_tokens=20,
+            max_new_tokens=10,
             do_sample=False,
             pad_token_id=tokenizer.eos_token_id,
         )
@@ -86,10 +86,8 @@ def _mcq_func(query: str, tokenizer, model, debug: bool):
     
     answer = _extract_choice_from_text(generated)
     if debug:
-        TICKER += 1
-        if TICKER == 10:
-            tqdm.write(f"\rMCQ Prompt: {tokenizer.decode(prompt[0])}\nMCQ generation: {generated}\nMCQ answer: {answer}", end='\n')
-            TICKER = 0
+        tqdm.write(f"\rMCQ Prompt: {tokenizer.decode(prompt[0])}\nMCQ generation: {generated}\nMCQ answer: {answer}", end='\n')
+
     return answer
 
 def _answer_n_mcq(tokenizer, model, n: int, path, debug: bool):
@@ -225,10 +223,9 @@ def _saq_func(query: str, tokenizer, model, debug: bool, use_all_answers: bool =
                 answer = answer.rstrip(".,").strip()
                 
                 if answer:
-                    return answer.lower()
+                    return answer
         else:
             answer_text = full_text.split("\n")[0].strip()  # First line only
-            answer_text = answer_text.lower()
             answer_text = answer_text.rstrip(".,!?").strip()  # Remove punctuation
             
             return answer_text
@@ -267,10 +264,8 @@ def _saq_func(query: str, tokenizer, model, debug: bool, use_all_answers: bool =
 
     answer_text = _extract_answer_from_text(generated)
     if debug:
-        TICKER += 1
-        if TICKER == 10:
-            tqdm.write(f"\rSAQ Prompt: {tokenizer.decode(prompt[0])}SAQ generation: {generated}SAQ answer: {answer_text}", end='\n')
-            TICKER = 0
+        tqdm.write(f"\rSAQ Prompt: {tokenizer.decode(prompt[0])}\nSAQ generation: {generated}\nSAQ answer: {answer_text}", end='\n')
+
     return answer_text
 
 def _answer_n_saq(tokenizer, model, n: int, path, debug: bool):
