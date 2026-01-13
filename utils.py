@@ -82,31 +82,6 @@ def parse_args() -> argparse.Namespace:
 
 #functions taken from coreFunctions.py
 
-#deprecated
-def load_tokenizer_and_model(device:str, model_name:str, model_dir:str,
-                             cache_dir:str):
-    """
-    Standard Function that returns both the tokenizer and model.
-    """
-    
-    # Load and save tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(
-        model_name, 
-        cache_dir=cache_dir
-        )
-    print(f"Tokenizer loaded from {model_name}")
-    
-    os.makedirs(model_dir, exist_ok=True)
-    tokenizer.save_pretrained(model_dir)
-
-    model = AutoModelForCausalLM.from_pretrained(
-        model_name,
-        dtype=torch.float16,
-    ).to(device)
-    print(f"Model loaded from {model_name}")
-    
-    return tokenizer, model
-
 def ask_model(prompt:str, tokenizer, model):
     """
     Main Interaction Point with the LLM

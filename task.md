@@ -1,4 +1,9 @@
 
+# Grading
+The assignment contributes 1/3rd to the final grade. The grading happens at the oral exam, where a corresponding amount of time is reserved for discussing the assignment. You help this discussion with the written report.
+Note that in the discussion we are interested in your understanding of the problem, your ideas for solving it, your implementation experience, your thoughts about evaluation, your error analysis, etc. There is also a leaderboard that we suggest to submit to, but this is primarily to get to know the idea of leaderboard-based evaluations, and to gamify the project a bit. Your rank/score is not of primary importance for the grade.
+
+
 **Project goal:** Develop an LLM-based approach to cultural question answering
 
 **You can do:** model finetuning, prompt tuning, implement agentic frameworks, self-consistency, retrieval-augmentation, self-RAG, …

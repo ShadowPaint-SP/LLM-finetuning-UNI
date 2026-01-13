@@ -142,9 +142,9 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
         merged_answers = {}
         
         for item in annotations:
-            if item.get('en_answers'):
-                answer_key = item['en_answers'][0]
-                merged_answers[answer_key] = item['count']
+            #if item.get('en_answers'):
+            answer_key = item['en_answers'][0]
+            merged_answers[answer_key] = item['count']
 
         if isinstance(idks, dict):
             merged_answers.update(idks)
@@ -183,6 +183,7 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
     
     dataset = Dataset.from_list(training_examples)
     
+    # 
     if use_all_answers and weight_sampling:
         dataset = dataset.shuffle(seed=seed)
     
