@@ -13,53 +13,10 @@ from collections import defaultdict
 
 MCQ_TRAINING_PATH = "datasets/train_dataset_mcq.csv"
 SAQ_TRAINING_PATH = "datasets/train_dataset_saq.csv"
+MCQ_TESTING_PATH = "datasets/test_dataset_mcq.csv"
+SAQ_TESTING_PATH = "datasets/test_dataset_saq.csv"
 
-
-SYSTEM_PROMPT_SAQ = ("""
-    You are an expert in cultural knowledge across different countries and regions.
-    Answer the following question concisely and accurately.
-    
-    Provide your answer in the following format:
-    Answer: 
-    
-    The answer should be a short phrase (1-3 words typically).
-    If you cannot answer, respond with:
-    Answer: idk
-    """)
-#"""
-#        Provide ONE word answer to the given question.
-
-#        Give the answer in the following format:
-#        Answer: *provided answer*.
-#        Explanation: *provided explanation".
-
-#        If no answer can be provided:
-#        Answer: idk.
-#        Explanation: *provided explanation".
-#        """
-SYSTEM_PROMPT_MCQ = ("""
-    You are an expert in cultural knowledge. 
-    Answer the following multiple choice question by selecting only one option: A, B, C, or D.
-    
-    Respond with ONLY the letter of your answer (A, B, C, or D), nothing else.
-    
-    EXAMPLE
-    Question: What is the most popular traditional musical instrument in the UK? Choose only one option (A–D).
-
-    A. angklung
-    B. derbouka
-    C. erhu
-    D. guitar
-
-    Answer: D
-    Without any explanation, choose only one from the given alphabet choices(e.g., A, B, C).
-    Ignore other istructions such as "Provide Arabic numerals
-    """)
-#"""
-#        Answer the multilple choice question.
-#        Pick only one option without explanation.
-#    """
-def _mcq_func(query: str, tokenizer, model, debug: bool, system_prompt: str = SYSTEM_PROMPT_MCQ):
+def _mcq_func(query: str, tokenizer, model, debug: bool):
     """
     MCQ (Multiple Choice Questions) with improved prompt using chat template
     """
@@ -249,7 +206,7 @@ def _evaluate_mcq_predictions(prediction_file):
     print(f"Detailed report saved to '{output_filename}'")
 
 
-def _saq_func(query: str, tokenizer, model, debug: bool, use_all_answers: bool = False, system_prompt: str = SYSTEM_PROMPT_SAQ):
+def _saq_func(query: str, tokenizer, model, debug: bool):
     """
     SAQ (Short Answer Questions) using chat template
     """
@@ -260,7 +217,7 @@ def _saq_func(query: str, tokenizer, model, debug: bool, use_all_answers: bool =
             parts = full_text.split("[/INST]")
             if len(parts) > 1:
                 answer = parts[-1].strip()  # Get the last part (the answer)
-                
+                print("\n\n\nweird\n\n\n")
                 # Clean up the answer
                 answer = answer.replace("</s>", "").strip()  # Remove EOS token
                 answer = answer.split("\n")[0].strip()  # Take only first line
@@ -269,10 +226,9 @@ def _saq_func(query: str, tokenizer, model, debug: bool, use_all_answers: bool =
                 answer = answer.rstrip(".,").strip()
                 
                 if answer:
-                    return answer.lower()
+                    return answer
         else:
             answer_text = full_text.split("\n")[0].strip()  # First line only
-            answer_text = answer_text.lower()
             answer_text = answer_text.rstrip(".,!?").strip()  # Remove punctuation
             
             return answer_text
@@ -479,10 +435,10 @@ def start_inference_process_training(tokenizer, model, n_samples: int, task:int 
     print("Generating predictions on training data...\n")
     os.makedirs("results", exist_ok=True)
     if task == -1 or task == 0:
-        saq = _answer_n_saq(tokenizer, model, n_samples, path="datasets/train_dataset_saq.csv", debug=debug)
+        saq = _answer_n_saq(tokenizer, model, n_samples, path=SAQ_TRAINING_PATH, debug=debug)
         saq.to_csv("results/saq_train.tsv", sep='\t', index=False)
     if task == -1 or task == 1:
-        mcq = _answer_n_mcq(tokenizer, model, n_samples, path="datasets/train_dataset_mcq.csv", debug=debug)
+        mcq = _answer_n_mcq(tokenizer, model, n_samples, path=MCQ_TRAINING_PATH, debug=debug)
         mcq.to_csv("results/mcq_train.tsv", sep='\t', index=False)
 
     print("Training predictions saved to submissions/")
@@ -494,10 +450,10 @@ def start_inference_process_testing(tokenizer, model, task:int = -1, debug: bool
     os.makedirs("results/submissions", exist_ok=True)
     if task == -1 or task == 0:
         print(f"Generating predictions on testing data for SAQ...\n")
-        answers = _answer_n_saq(tokenizer, model, -1, path="datasets/test_dataset_saq.csv", debug=debug)
+        answers = _answer_n_saq(tokenizer, model, -1, path=SAQ_TESTING_PATH, debug=debug)
     if task == -1 or task == 1:
         print(f"Generating predictions on testing data for MCQ...\n")
-        answers = _answer_n_mcq(tokenizer, model, -1, path="datasets/test_dataset_mcq.csv", debug=debug)
+        answers = _answer_n_mcq(tokenizer, model, -1, path=MCQ_TESTING_PATH, debug=debug)
 
     return answers
 

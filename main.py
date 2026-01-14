@@ -50,14 +50,14 @@ class FineTuningConfig:
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     cache_dir: str = str(CACHE_DIR)
     output_base_dir: str = str(MODELS_DIR)
-    
+
     # LoRA Configuration
     lora_r: int = 32 # Defines the precision of the output Matrix (higher rank = more parameters are trained)
     lora_alpha: int = 64 # multiplyer applied to the weight changes when added to the original weights (scale= alpha/r)
     lora_dropout: float = 0.1 # is the percentage that randomly leaves out some weight changes each time to deter overfitting
-    
+
     # Training Configuration
-    num_epochs: int = 4
+    num_epochs: int = 3
     batch_size: int = 4 # sets how many examples are processed on each GPU/device per forward pass
     gradient_accumulation_steps: int = 2 # simulate larger batches by accumulating gradients across multiple steps before updating weights
     learning_rate: float = 2e-4 # How large should each eight update be
@@ -65,17 +65,14 @@ class FineTuningConfig:
     weight_decay: float = 0.01 # adds L2 regularization to prevent overfitting.
     max_grad_norm: float = 0.3 # clips gradients to prevent extreme updates that could destabilize training
     safe_steps: int = 100
-    neftune_noise_alpha: int = 5
-    val_set_size: float = None # None to disable testing set out of training data
-    
+    val_set_size: float = 0.1 # None to disable testing set out of training data
     # Data Configuration
-    max_train_samples: Optional[int] = None
     seed: int = 42
     use_all_answers: bool = True
     weight_sampling: bool = False
 
     # Eval Configuration
-    gen_train_preds: bool = True
+    gen_train_preds: bool = False
     eval_train_samples: int = 400
     gen_test_preds: bool = True
     
@@ -108,7 +105,7 @@ class FineTuningPipeline:
         # Set pad token
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
-        self.tokenizer.padding_side = "right"
+        #self.tokenizer.padding_side = "right"
         
         print(f"✓ Tokenizer loaded from {self.config.model_name}")
         return self.tokenizer
@@ -186,7 +183,6 @@ class FineTuningPipeline:
             warmup_steps=self.config.warmup_steps,
             weight_decay=self.config.weight_decay,
             learning_rate=self.config.learning_rate,
-            neftune_noise_alpha=self.config.neftune_noise_alpha,
             bf16=True,
             logging_dir=LOGS_DIR,
             logging_steps=10,

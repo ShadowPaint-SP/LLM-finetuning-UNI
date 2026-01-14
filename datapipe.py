@@ -9,6 +9,8 @@ from transformers import ( # type: ignore
 
 MCQ_TRAINING_PATH = "datasets/train_dataset_mcq.csv"
 SAQ_TRAINING_PATH = "datasets/train_dataset_saq.csv"
+BASE_DIR = Path(__file__).resolve().parent
+CACHE_DIR = BASE_DIR / "Model-Cache"
 
 def generate_shuffled_variations(options, correct_key):
     """
@@ -86,12 +88,13 @@ def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool
                     'messages': [
                         {"role": "user", "content": combined_question},
                         {"role": "assistant", "content": completion},
-                        #{"role": "user", "content": "Why is this correct"},
-                        #{"role": "assistant", "content": f"Because '{answer[letter]}' is the correct answer"}
+                        {"role": "user", "content": "Why is this correct"},
+                        {"role": "assistant", "content": f"Because '{answer[letter]}' is the correct answer"}
                     ],
                     'mcqid': row.MCQID
                 })
         else:
+            completion = json.dumps({"answer_choice": correct_answer})
             training_examples.append({
                 'messages': [
                     {"role": "user", "content": prompt},
@@ -114,7 +117,7 @@ def create_saq_prompt(question: str) -> str:
     Returns:
         Formatted prompt string
     """
-    return f"{question} Provide ONLY the exact answer without explanation."
+    return f"{question} Provide ONLY the exact answer without explanation."# Provide not more than 4 word answers."
 
 def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=False, 
                                  weight_sampling=False, seed=42):
@@ -259,15 +262,15 @@ def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
                     labels = list(input_ids)
                     
                     # Find where the answer starts (search for last [/INST])
-                    start_idx = -1
-                    for i in range(len(input_ids) - sep_len, -1, -1):
-                            if input_ids[i : i+sep_len] == sep_ids:
-                                    start_idx = i + sep_len
-                                    break
+                    #start_idx = -1
+                    #for i in range(len(input_ids) - sep_len, -1, -1):
+                    #        if input_ids[i : i+sep_len] == sep_ids:
+                    #                start_idx = i + sep_len
+                    #                break
                                     
-                    # Mask the User Prompt
-                    if start_idx != -1:
-                            labels[:start_idx] = [-100] * start_idx
+                    ## Mask the User Prompt
+                    #if start_idx != -1:
+                    #        labels[:start_idx] = [-100] * start_idx
                             
                     input_ids_list.append(input_ids)
                     labels_list.append(labels)
@@ -314,7 +317,7 @@ if __name__ == "__main__":
     print("="*70)
     
     # Create full MCQ training dataset
-    mcq_dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, True, 42, True)
+    mcq_dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, True, 42)
     print(f"Total MCQ examples: {len(mcq_dataset)}")
     print(f"Dataset columns: {mcq_dataset.column_names}")
     print("\nFirst MCQ example:")
@@ -324,7 +327,7 @@ if __name__ == "__main__":
 
     tokenizer = AutoTokenizer.from_pretrained(
             "mistralai/Mistral-7B-Instruct-v0.2",
-            cache_dir="./Mistral-7B",
+            cache_dir=CACHE_DIR,
             trust_remote_code=True
         )
     data = create_training_data_tokenized(task_type='mcq', tokenizer=tokenizer)
