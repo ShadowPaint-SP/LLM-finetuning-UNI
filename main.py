@@ -13,7 +13,6 @@ import torch # type: ignore
 import logging
 import logging
 from pathlib import Path
-from typing import Optional
 from dataclasses import dataclass
 
 from transformers import ( # type: ignore
@@ -28,7 +27,6 @@ from datasets import Dataset, concatenate_datasets
 
 import datapipe
 import eval
-from utils import parse_args
 
 # Suppress warnings
 logging.basicConfig(level=logging.INFO)
@@ -68,7 +66,7 @@ class FineTuningConfig:
     val_set_size: float = 0.1 # None to disable testing set out of training data
     # Data Configuration
     seed: int = 42
-    use_all_answers: bool = True
+    use_all_answers: bool = True # gives around 2% of score
     weight_sampling: bool = False
 
     # Eval Configuration
@@ -364,19 +362,9 @@ class FineTuningPipeline:
 
 def main():
     """Main entry point"""
-    # Parse arguments
-    args = parse_args()
     
     # Create configuration
-    config = FineTuningConfig(
-        #model_name=args.model_name,
-        #num_epochs=args.num_train_epochs,
-        #max_train_samples=args.max_train_samples,
-        #gen_test_preds=args.gen_test_preds,
-        #gen_train_preds=args.gen_train_preds,
-        #eval_train_samples=args.eval_train_samples,
-        #debug_mode=args.debug
-    )
+    config = FineTuningConfig()
     
     # Create pipeline
     pipeline = FineTuningPipeline(config)

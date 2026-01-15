@@ -88,8 +88,8 @@ def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool
                     'messages': [
                         {"role": "user", "content": combined_question},
                         {"role": "assistant", "content": completion},
-                        {"role": "user", "content": "Why is this correct"},
-                        {"role": "assistant", "content": f"Because '{answer[letter]}' is the correct answer"}
+                        #{"role": "user", "content": "Why is this correct"},
+                        #{"role": "assistant", "content": f"Because '{answer[letter]}' is the correct answer"}
                     ],
                     'mcqid': row.MCQID
                 })

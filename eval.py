@@ -74,7 +74,7 @@ def _mcq_func(query: str, tokenizer, model, debug: bool):
     with torch.no_grad():
         outputs = model.generate(
             prompt,
-            max_new_tokens=20,
+            max_new_tokens=10,
             do_sample=False,
             pad_token_id=tokenizer.eos_token_id,
         )
@@ -86,9 +86,7 @@ def _mcq_func(query: str, tokenizer, model, debug: bool):
     
     answer = _extract_choice_from_text(generated)
     if debug:
-        print(f"\nMCQ Prompt: {tokenizer.decode(prompt[0])}")
-        print(f"\nMCQ Generation: {generated}")
-        print(f"\nMCQ Answer: {answer}")
+        tqdm.write(f"\rMCQ Prompt: {tokenizer.decode(prompt[0])}\nMCQ generation: {generated}\nMCQ answer: {answer}", end='\n')
     return answer
 
 def _answer_n_mcq(tokenizer, model, n: int, path, debug: bool):
@@ -107,7 +105,11 @@ def _answer_n_mcq(tokenizer, model, n: int, path, debug: bool):
     mcq = mcq[["MCQID", "prompt"]]
     # Get answers
     preds = []
+    debug_i = 0
     for q in tqdm(mcq["prompt"], desc="Processing MCQ"):
+        if debug_i >= 10:
+            debug = False
+        debug_i += 1
         answer = _mcq_func(q, tokenizer, model, debug)
         preds.append(answer)
 
@@ -119,9 +121,6 @@ def _answer_n_mcq(tokenizer, model, n: int, path, debug: bool):
         "C": (mcq["answer"] == "C").astype(bool),
         "D": (mcq["answer"] == "D").astype(bool),
     })
-    # die hier sind nicht so gut da er wenn es z.b. C nicht gibt die Spalte einfach weg lässt
-    #mcq_submission = pd.get_dummies(mcq["choice"]).astype(bool)
-    #mcq_submission = pd.concat([mcq["MCQID"], mcq_submission], axis=1)
 
     return mcq_formatted
 
@@ -267,9 +266,7 @@ def _saq_func(query: str, tokenizer, model, debug: bool):
 
     answer_text = _extract_answer_from_text(generated)
     if debug:
-        print(f"\nSAQ Prompt: {tokenizer.decode(prompt[0])}")
-        print(f"\nSAQ generation: {generated}")
-        print(f"\nSAQ answer: {answer_text}")
+        tqdm.write(f"\rSAQ Prompt: {tokenizer.decode(prompt[0])}\nSAQ generation: {generated}\nSAQ answer: {answer_text}", end='\n')
     return answer_text
 
 def _answer_n_saq(tokenizer, model, n: int, path, debug: bool):
@@ -289,7 +286,11 @@ def _answer_n_saq(tokenizer, model, n: int, path, debug: bool):
 
     # Get answers
     preds = []
+    debug_i = 0
     for q in tqdm(saq["en_question"], desc="Processing SAQ"):
+        if debug_i >= 10:
+            debug = False
+        debug_i += 1
         answer = _saq_func(q, tokenizer, model, debug)
         preds.append(answer)
 
