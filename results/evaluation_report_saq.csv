@@ -1,401 +1,401 @@
 ID,predicted_answer,valid_answers,achieved_score,max_score,is_correct,semi_correct
-Jod-ch-51,car,"{'car': 4, 'bus': 3, 'train': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Ca-sp-45,beach,"{'beach': 4, 'national parks': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Kik-in-38,idk,"{'beijing guoan vs tianjin teda': 1, 'idk': 7, 'not-applicable': 1, 'no-answer': 1}",7,7,True,True
-New-ch-16,bend it like beckham,"{'bend it like beckham': 3, 'ferrari': 1, 'chariots of fire': 1, 'The Brothers Grimsby': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-New-su-33,formal attire,"{'formal attire': 2, 'shirt': 1, 'trousers': 1, 'appropriate': 1, 'not inappropriately': 1, 'not dressed in a strange or unusual way': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Al-en-02,nuts,"{'crisps': 3, 'nuts': 2, 'chips': 1, 'pork scratchings': 1, 'curry': 1, 'burger': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
-Na-ko-24,popcorn,"{'popcorn': 2, 'roasted sausage': 1, 'energy bar': 1, 'idk': 1, '没有去过体育馆观看比赛': 1, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Ne-ar-37,apple,"{'apple': 3, 'watermelon': 2, 'orange': 1, 'grape': 1, 'idk': 1, 'no-answer': 1, 'not-applicable': 0}",3,3,True,True
-Ca-sp-45,seaside,"{'lake district': 1, 'spain': 1, 'beach': 1, 'countryside ': 1, 'seaside': 1, 'cornwall': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,1,True,True
-New-ch-66,1000000,"{'1000000': 2, '0': 2, '5000000': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-en-18,idk,"{'chips': 2, 'horn': 2, 'shawl': 1, 'corn': 1, 'cheese puffs': 1, 'drum': 1, 'non-alcoholic beverage': 1, 'seeds': 1, 'fan hat': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Ji-ko-22,clothing,"{'clothes': 2, 'gift': 1, 'treat friends/family to a meal': 1, 'shopping': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,2,False,False
-New-ch-54,apple,"{'apple': 2, 'raspberry': 1, 'tomato': 1, 'strawberries': 1, 'bananas': 1, 'no-answer': 1, 'not-applicable': 1, 'idk': 0}",2,2,True,True
-New-su-82,formal wedding dress,"{'formal wedding dress': 3, 'white dresses': 1, 'dress': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Ne-ar-38,instant noodles,"{'instant noodles': 3, 'meat': 1, 'no-answer': 1, 'idk': 1, 'not-applicable': 1}",3,3,True,True
-New-gr-89,tea,"{'champagne': 4, 'wine': 2, 'prosecco': 1, 'cava': 1, 'beer': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",0,4,False,False
-Ji-ko-27,sweets,"{'sweets': 3, 'natural flower': 2, 'chocolate': 1, 'saffron': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Jod-ch-42,video games,"{'playing video games': 2, 'drinking': 1, 'partying': 1, 'Athletics': 1, 'dating': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,2,False,False
-Ta-pe-17,soccer,"{'athletics': 5, 'soccer': 2, 'swimming': 2, 'cycling': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,5,False,True
-New-az-73,100,"{'100': 3, '200': 2, '30': 1, '150': 1, '500': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
-New-am-08,not-applicable,"{'not-applicable': 5, 'idk': 3, 'no-answer': 0}",5,5,True,True
-Ji-ko-15,0.5,"{'1': 3, '0.5': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
-Ta-pe-11,25,"{'25': 2, '30': 2, '24': 1, 'no-answer': 3, 'idk': 0, 'not-applicable': 0}",2,3,False,True
-Na-ko-30,idk,"{'fortnite': 1, 'FIFA': 1, 'idk': 2, 'no-answer': 1, 'not-applicable': 0}",2,2,True,True
-New-en-07,idk,"{'saman golriz program': 1, 'idk': 3, 'no-answer': 2, 'not-applicable': 0}",3,3,True,True
-New-ch-70,islamic thought,"{'family planning': 1, 'persian language': 1, 'english language': 1, 'religious studies': 1, ""imam's final discourse"": 1, 'religious': 1, 'islamic thought': 1, 'history of islamic revolution': 1, 'early islamic history': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,1,True,True
-Na-ko-40,1,"{'1': 6, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",6,6,True,True
-Ta-pe-45,idk,"{'bbq': 1, 'not-applicable': 2, ""It's not generally celebrated but pagan groups and New Agers might have Spelt bread, mead and a gigantic hog roast"": 1, 'idk': 2, 'no-answer': 0}",2,2,True,True
-New-en-56,french,"{'hindi': 1, 'urdu': 1, 'polish': 1, 'french': 1, 'spanish': 1, 'pakistani': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,1,True,True
-New-ch-80,qingming festival,"{'the first day of the lunar new year': 2, 'lunar new year': 1, 'christmas': 1, 'the fifteenth day of the lunar month': 1, ""buddha's birthday"": 1, 'qingming festival': 1, 'double ninth festival': 1, 'not-applicable': 1, 'idk': 0, 'no-answer': 0}",1,2,False,True
-Kik-in-11,idk,"{'westminster abbey': 2, 'cathedrals': 2, ""St Paul's"": 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Gu-ch-09,volleyball,"{'dance': 1, 'card game': 1, 'walking': 1, 'badminton': 1, 'volleyball': 1, 'ping pong': 1, 'track and field': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,1,True,True
-New-su-42,islam,"{'islam': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-gr-88,no-answer,"{'bai': 2, 'tea': 1, 'no-answer': 2, 'idk': 0, 'not-applicable': 0}",2,2,True,True
-Gu-ch-08,basketball,"{'soccer': 4, 'baseball': 3, 'basketball': 3, 'American Football': 3, 'wrestling': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,4,False,True
-New-ch-09,hot pot,"{'hot pot': 3, 'tangyuan': 2, 'dumplings': 1, 'beef soup': 1, 'mutton soup': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-New-su-81,suit,"{'suit': 4, 'tang suit': 1, 'chinese-style dress': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
-New-ha-09,spatula,"{'spatula': 3, 'air fryer': 1, 'whisk': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
-New-ch-73,sports,"{'sports': 2, 'golf': 1, 'nightclubs': 1, 'technology clubs': 1, 'music clubs': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-su-01,chips,"{'chips': 2, 'cake': 1, 'cheese puff': 1, 'ice cream': 1, 'snack': 1, 'coke': 1, 'seed': 1, 'fava beans': 1, 'juice': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Ni-en-09,5,"{'5': 5, '6': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Na-ko-37,london,"{'florida': 4, 'HI': 2, 'california': 2, 'NY': 1, 'alaska': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
-Ne-ar-18,17:00,"{'17:00': 5, '15:00': 1, '18:00': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-en-12,skewers,"{'pizza': 4, 'hamburger': 3, 'kebab': 2, 'fast food': 1, 'fried chicken': 1, 'pasta': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
-New-az-27,basketball,"{'soccer': 4, 'racing': 1, 'NCA A Football': 1, 'American Football': 1, 'basketball': 1, 'idk': 3, 'no-answer': 0, 'not-applicable': 0}",1,4,False,True
-New-ch-66,1000,"{'1000': 2, '5000': 1, '2000': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
-New-ha-13,basil,"{'basil': 2, 'mint': 1, 'fresh herbs': 1, 'parsley': 1, 'leek': 1, 'lettuce': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
-New-az-39,america,"{'america': 4, 'uk': 2, 'australia': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-ch-27,mohammad ali,"{'muhammad ali': 4, 'Mayweather': 2, 'mike tyson': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
-New-pe-49,mosque,"{'church': 5, 'mosque': 2, 'temple': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,5,False,True
-New-am-53,gilan,"{'gilan': 2, 'north': 2, 'mazandaran': 1, 'lahijan': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Th-en-03,national football league,"{'national football league': 5, 'mlb': 1, 'nba': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Ca-sp-14,tea,"{'tea': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-spme-68,bubble tea,"{'bubble tea': 2, 'juice': 2, 'wahaha': 1, 'soda water': 1, 'yakult': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Th-en-27,oil,"{'oil': 2, 'car': 1, 'agriculture': 1, 'oil and gas industry': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Jod-ch-56,65,"{'65': 5, '62': 1, '63': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Ni-en-20,25,"{'25': 2, '24': 1, '20': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
-Ne-ar-16,sunday,"{'saturday': 5, 'sunday': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-ch-09,stew,"{'stew': 2, 'hot sausage roll': 1, 'roast dinner': 1, 'soup': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-su-50,farming,"{'shepherds': 2, 'farming': 1, 'hospitality': 1, 'idk': 2, 'no-answer': 1, 'not-applicable': 1}",1,2,False,True
-New-en-19,Yankees stadium,"{'Yankees stadium': 2, 'MSG': 1, 'NY': 1, 'Mercedes-Benz Stadium': 1, 'wrigley field': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Jo-sp-14,chess,"{'chess': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-en-11,sprouts,"{'sprouts': 4, 'cabbage': 2, 'broccoli': 1, 'okra': 1, 'beetroot': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Jod-ch-46,0.5,"{'0.5': 4, 'not-applicable': 1, 'idk': 0, 'no-answer': 0}",4,4,True,True
-Ne-ar-26,microsoft,"{'microsoft': 2, 'google': 2, ""McDonald's"": 1, 'nike': 1, 'amazon': 1, 'apple': 1, 'target': 1, 'ge': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Ne-ar-10,kebab,"{'kebab': 2, 'gheimeh': 2, 'broth': 1, 'idk': 2, 'not-applicable': 2, 'no-answer': 0}",2,2,True,True
-New-gr-15,trifle,"{'trifle': 2, 'pudding': 1, 'jelly': 1, 'cake and custard': 1, 'rice pudding': 1, 'treacle sponge': 1, 'bread and butter pudding': 1, 'crumble': 1, 'brownie': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-ch-74,dormitory,"{'dormitory': 5, 'with family': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-en-38,tech,"{'tech': 2, 'freelance jobs': 1, 'restaurant industry': 1, 'office job (business)': 1, 'bio-technology': 1, 'creative industries': 1, 'software engineering': 1, 'design': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-ch-74,dorms,"{'dorms': 3, 'at home': 1, 'apartments': 1, 'off campus apartments': 1, 'not-applicable': 1, 'idk': 0, 'no-answer': 0}",3,3,True,True
-Gu-ch-08,soccer,"{'soccer': 4, 'rugby': 2, 'egg and spoon': 1, 'netball': 1, 'cricket': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-An-ar-34,volleyball,"{'volleyball': 4, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
-Th-en-35,dinner,"{'dinner': 5, 'lunch': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Al-en-36,not-applicable,"{'pumpkin': 1, 'not-applicable': 4, 'idk': 0, 'no-answer': 0}",4,4,True,True
-New-en-75,12,"{'12': 3, '10': 1, '9': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Al-en-37,turkey,"{'turkey': 5, 'christmas pudding': 2, 'mince pie': 1, 'fruit cake': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-ko-09,dine together,"{'dine together': 3, 'travel': 2, 'karaoke': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-New-gr-29,olympic games,"{'olympic games': 2, 'china open': 1, 'world cup': 1, 'nba': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-ch-23,idk,"{'jim butler': 1, 'idk': 6, 'no-answer': 0, 'not-applicable': 0}",6,6,True,True
-New-su-86,white house,"{'white house': 5, 'capitol building': 2, 'Parthenon': 1, 'the library of congress': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-ch-14,porridge,"{'porridge': 5, 'chicken soup': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Ne-ar-31,ghormeh sabzi,"{'ghormeh sabzi': 3, 'gheimeh': 2, 'koobideh kebab': 2, 'rice with kebab': 1, 'kashk-e-bademjan': 1, 'kebab': 1, 'chicken': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Kik-in-38,idk,"{'beijing guoan vs tianjin teda': 1, 'idk': 7, 'not-applicable': 1, 'no-answer': 1}",7,7,True,True
-Ca-sp-41,care homes,"{'care homes': 5, 'sheltered accomodation': 1, 'with relatives': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-gr-89,champagne,"{'champagne': 4, 'wine': 2, 'prosecco': 1, 'cava': 1, 'beer': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
-An-ar-09,2,"{'2': 5, '3': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Ji-ko-07,tencent,"{'tencent': 2, 'alibaba': 2, 'huawei': 2, 'jd.com, inc.': 1, 'no-answer': 1, 'idk': 1, 'not-applicable': 0}",2,2,True,True
-Ne-ar-17,09:00,"{'09:00': 4, '08:00': 2, '07:00': 1, '08:30': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-en-76,imam khomeini airport,"{'imam khomeini airport': 5, 'mehrabad': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Ji-ko-28,first month,"{'first month': 2, 'birth feast': 1, 'hundred days': 1, 'idk': 1, 'no-answer': 1, 'not-applicable': 0}",2,2,True,True
-Ta-pe-11,24,"{'25': 2, '30': 2, '24': 1, 'no-answer': 3, 'idk': 0, 'not-applicable': 0}",1,3,False,True
-New-ch-64,12,"{'15': 1, '25': 1, '30': 1, '5': 1, '7': 1, 'idk': 2, 'no-answer': 1, 'not-applicable': 0}",0,2,False,False
-New-pe-54,jewelry and gold,"{'jewelry and gold': 4, 'flower': 2, 'scarf': 1, 'shawl': 1, 'clothing': 1, 'home appliances': 1, 'perfume': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Jod-ch-41,drinking,"{'shopping': 2, 'travel': 2, 'online game': 1, 'murder mystery game': 1, 'karaoke': 1, 'friends gathering': 1, 'movie': 1, 'play mahjong': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",0,2,False,False
-New-pe-06,braised chicken with rice,"{'ghormeh sabzi': 5, 'gheimeh': 3, 'fesenjan': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
-Tmp-ar-04,do homework,"{'do homework': 4, 'play marbles game': 1, 'go to the amusement park': 1, 'eat': 1, 'watch cctv-1': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Kik-in-41,idk,"{'idk': 7, 'Not interested': 1, 'not-applicable': 1, 'no-answer': 0}",7,7,True,True
-Ni-en-11,3,"{'3': 4, '4': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-gr-13,tea,"{'coffee': 5, 'tea': 4, 'fruit juice': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,5,False,True
-New-pe-59,2,"{'2': 4, '1': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Ki-pe-32,roast dinner,"{'buffet': 1, 'cake': 1, 'roast dinner': 1, 'curry': 1, 'pizza': 1, 'no-answer': 2, 'idk': 0, 'not-applicable': 0}",1,2,False,True
-New-su-77,not-applicable,"{'money': 1, 'not-applicable': 4, 'idk': 2, 'no-answer': 0}",4,4,True,True
-Na-ko-41,flowers,"{'flowers': 5, 'condolence card': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-spme-01,not-applicable,"{'not-applicable': 5, 'idk': 0, 'no-answer': 0}",5,5,True,True
-New-en-10,white cheese,"{'tabrizi': 2, 'liqvan': 1, 'cream cheese': 1, 'breakfast': 1, 'white cheese': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,2,False,True
-New-ch-32,microsoft,"{'wps': 3, 'microsoft': 3, 'wechat': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Jo-sp-18,10,"{'10': 2, '15': 1, '115': 1, '116': 1, '11': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-pe-45,not-applicable,"{'not-applicable': 5, 'idk': 3, 'no-answer': 0}",5,5,True,True
-New-pe-53,clothes,"{'socks': 4, 'flower': 1, 'clothes': 1, 'perfume': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",1,4,False,True
-New-en-76,houston,"{'imam khomeini airport': 5, 'mehrabad': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
-Jo-sp-14,chess,"{'chess': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Ji-ko-33,study hall,"{'shopping passage': 1, 'cafe': 1, 'they stay at home': 1, 'no-answer': 3, 'idk': 0, 'not-applicable': 0}",0,3,False,False
-New-su-60,no-answer,"{'burger': 1, 'steak': 1, 'no-answer': 4, 'idk': 1, 'not-applicable': 0}",4,4,True,True
-Na-ko-26,soccer,"{'soccer': 2, 'rugby': 2, 'bowls': 2, 'walking': 1, 'hiking': 1, 'darts': 1, 'cricket': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Kik-in-44,soccer,"{'soccer': 4, 'rugby': 2, 'cricket': 1, 'athletics ': 1, 'tennis': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-su-33,formal attire,"{'formal attire': 2, 'shirt': 1, 'trousers': 1, 'appropriate': 1, 'not inappropriately': 1, 'not dressed in a strange or unusual way': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-An-ar-43,sports bar,"{'sports bar': 4, 'house': 2, 'stadium': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-su-01,crisps,"{'sweets': 2, 'chips': 1, 'crisps': 1, 'fizzy pop': 1, 'Cheestrings ': 1, 'idk': 1, 'not-applicable': 1, 'no-answer': 0}",1,2,False,True
-New-ch-31,doctor,"{'doctor': 4, 'engineering': 2, 'lawyer': 1, 'teaching': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
-Gu-ch-07,hamed haddadi,"{'samad nikkhah bahrami': 2, 'hamed haddadi': 2, 'aydin nikkhah bahrami': 1, 'idk': 4, 'no-answer': 1, 'not-applicable': 0}",2,4,False,True
-New-as-15,lemonade,"{'lemonade': 4, 'iced tea': 2, 'water': 1, 'beer': 1, 'gatorade': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Na-ko-19,lang ping,"{'lang ping': 4, 'wei qiuyue': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Jod-ch-62,civil servant,"{'civil servant': 3, 'investment bank': 1, 'doctor': 1, 'software engineer': 1, 'be an official (civil servant)': 1, 'doing business (being a boss)': 1, 'white-collar (office worker)': 1, 'idk': 1, 'no-answer': 1, 'not-applicable': 0}",3,3,True,True
-Na-ko-04,porridge,"{'porridge': 2, 'honey water': 1, 'peanuts': 1, 'tea': 1, 'noodles': 1, 'milk': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Na-ko-16,idk,"{'lionel messi': 2, 'christian pulisic': 1, 'landon donovan': 1, 'cristiano ronaldo': 1, 'idk': 2, 'not-applicable': 1, 'no-answer': 0}",2,2,True,True
-Ji-ko-41,sneakers,"{'sneakers': 4, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
-Gu-ch-15,basketball,"{'basketball': 4, 'soccer': 2, 'badminton': 1, 'swimming': 1, 'video game': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Jod-ch-62,lawyer,"{'investor': 3, 'doctor': 2, 'lawyer': 2, 'business': 2, 'trades (plumber': 1, 'electrician)': 1, 'restaurant (waiter': 1, 'dishes': 1, 'cook)': 1, 'law enforcement': 1, 'firefighting': 1, 'military': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
-New-en-75,15,"{'16': 2, '15': 2, '12': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-pe-83,poker,"{'poker': 3, 'uno': 2, 'snap': 1, 'blackjack': 1, 'cards against humanity': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Ne-ar-36,turkey,"{'turkey': 2, 'mashed potatoes': 2, 'gravy': 2, 'steak or fancy meat': 1, 'xmas dinner': 1, 'stuffing': 1, 'sweet potatoes': 1, 'green bean casserole': 1, 'cranberry sauce': 1, 'and pumpkin pie': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
-New-as-80,national costume,"{'casual clothes': 2, 'traditional costumes': 1, 'modern clothing': 1, 'regional costumes': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",0,2,False,False
-Kik-in-08,not-applicable,"{'not-applicable': 5, 'idk': 2, 'no-answer': 0}",5,5,True,True
-New-spme-05,candy,"{'chocolate': 2, 'soda': 1, 'candy': 1, ""hershey's"": 1, ""Resse's Puffs"": 1, 'cookies': 1, 'tart candies': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",1,2,False,True
-Al-en-06,rice and stew,"{'pizza': 4, 'sandwich': 2, 'hamburger': 2, 'turkey': 1, 'potatoes': 1, 'chicken': 1, 'fishstick': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
-New-pe-11,salt,"{'black pepper': 2, 'onion powder': 1, 'paprika': 1, 'pepper': 1, 'salt': 1, 'no-answer': 1, 'idk': 1, 'not-applicable': 0}",1,2,False,True
-New-ch-14,chicken noodle soup,"{'soup': 2, 'chicken noodle soup': 2, 'banana': 1, 'ginger ale': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-am-15,not-applicable,"{'casseroles': 1, 'soups': 1, 'stews': 1, 'no-answer': 2, 'not-applicable': 2, 'idk': 0}",2,2,True,True
-Kik-in-01,nowruz,"{'lunar new year': 4, 'october 1st': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
-Jod-ch-06,beer,"{'beer': 4, 'ale': 1, 'gin': 1, 'wine': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-ch-45,idk,"{'carpet store': 1, 'cafe': 1, 'digital industry': 1, 'clothing industry': 1, 'no-answer': 1, 'idk': 1, 'not-applicable': 0}",1,1,True,True
-New-ko-03,idk,"{'twinkle twinkle little star': 3, 'row row row your boat': 2, 'incy wincy spider': 1, 'happy birthday': 1, 'wheels on the bus': 1, 'baby shark': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
-Al-en-38,chocolate,"{'chocolate': 4, 'candies': 1, 'cupcakes': 1, 'cookies': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Ta-pe-45,dumplings,"{'dumplings': 5, 'tangyuan': 1, 'lamb': 1, 'fish': 1, 'ribs': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Na-ko-04,no-answer,"{'soup': 1, 'tomato juice': 1, 'advil': 1, 'water': 1, 'liquid iv': 1, 'no-answer': 2, 'idk': 1, 'not-applicable': 0}",2,2,True,True
-Th-en-37,23,"{'30': 2, '22': 1, '21': 1, '18': 1, '25': 1, '23': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",1,2,False,True
+Th-en-22,depression,"{'depression of the 30s': 5, '9/11': 1, 'katrina': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
 New-in-33,idk,"{'kerman': 2, 'sistan and baluchestan': 2, 'khorasan': 1, 'isfahan': 1, 'central regions': 1, 'kermanshah': 1, 'kurdistan': 1, 'idk': 2, 'no-answer': 1, 'not-applicable': 0}",2,2,True,True
-Ni-en-31,not-applicable,"{'apple': 2, 'chocolate': 1, 'pizza': 1, 'steak': 1, 'rice': 1, 'not-applicable': 2, 'idk': 0, 'no-answer': 0}",2,2,True,True
-New-am-59,idk,"{'animal husbandry': 2, 'straw carpet weaving': 1, 'idk': 5, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Th-en-38,lunar new year,"{'lunar new year': 5, 'mid-autumn festival': 2, 'new year': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Ji-ko-39,piano,"{'piano': 5, 'guitar': 1, 'violin': 1, 'harmonica': 1, 'electronic keyboard': 1, 'vertical flute': 1, 'erhu': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Kik-in-07,red packet,"{'red packet': 5, 'sweet': 1, 'snacks': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Ji-ko-39,piano,"{'piano': 5, 'guitar': 1, 'violin': 1, 'harmonica': 1, 'electronic keyboard': 1, 'vertical flute': 1, 'erhu': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Kik-in-37,persepolis against esteghlal,"{'persepolis against esteghlal': 4, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-as-05,tea,"{'tea': 5, 'juice': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Jo-sp-36,6,"{'6': 4, '8': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-ha-19,horse,"{'horse': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Na-ko-37,great wall,"{'great wall': 2, 'west lake': 2, 'dali ancient town': 2, 'forbidden city': 2, 'hainan island': 1, 'terracotta warriors': 1, 'the bund, shanghai': 1, 'shanghai': 1, 'beijing': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-gr-76,not-applicable,"{'apple': 1, 'not-applicable': 4, 'idk': 0, 'no-answer': 0}",4,4,True,True
-Ta-pe-25,esteghlal vs persepolis,"{'esteghlal vs persepolis': 5, 'sepahan against zob ahan': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-su-60,no-answer,"{'burger': 1, 'steak': 1, 'no-answer': 4, 'idk': 1, 'not-applicable': 0}",4,4,True,True
-Jo-sp-09,polo,"{'polo': 2, 'cricket': 2, 'lacrosse': 2, 'soccer': 1, 'golf': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-en-56,english,"{'english': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Gu-ch-16,4,"{'4': 5, '5': 1, '6': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-An-ar-09,2,"{'2': 5, '3': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-en-68,detention,"{'detention': 5, 'expulsion': 4, 'extra work': 1, 'school inform parents': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Al-en-40,park,"{'park': 5, 'amusement park': 1, 'forest park': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-en-01,popcorn,"{'popcorn': 5, 'slushies': 1, 'candy': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Kik-in-15,gowns,"{'gowns': 5, 'cap': 1, 'dress': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-ch-78,knitting,"{'knitting': 3, 'evening with friends': 1, 'crafts': 1, 'shop': 1, 'swim': 1, 'book club': 1, 'walking': 1, 'exercising': 1, 'bocce ball': 1, 'water aerobics': 1, 'sewing': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
-New-spme-37,engineering,"{'medical': 4, 'engineering': 2, 'programming': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
-New-ch-27,idk,"{'ehsan rouzbahani': 2, 'muhammad ali clay': 1, 'not-applicable': 1, 'idk': 1, 'no-answer': 0}",1,2,False,True
-Al-en-43,mahjong,"{'mahjong': 3, 'watch tv': 2, 'dou dizhu': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-New-am-02,ghormeh sabzi,"{'ghormeh sabzi': 2, 'kebab': 1, 'dizi': 1, 'rice with kebab': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Ji-ko-38,medical,"{'medical': 5, 'experimental': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-as-64,thanksgiving,"{'thanksgiving': 4, 'Xmas': 2, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
-An-ar-43,pub,"{'pub': 4, 'house': 2, 'stadium': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Th-en-01,baseball,"{'baseball': 2, 'volleyball': 1, 'swimming': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
-Th-en-11,david beckham,"{'ian wright': 1, 'Gary Lineker': 1, 'erling haaland': 1, 'harry kane': 1, 'david beckham': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,1,True,True
-Kik-in-02,travel,"{'travel': 2, 'stay at home': 1, 'fireworks': 1, 'military parade': 1, 'watch the parade': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
-Kik-in-01,easter,"{'easter': 3, 'christmas': 2, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Jo-sp-01,rugby,"{'rugby': 3, 'cricket': 2, 'golf': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Al-en-06,pizza,"{'pizza': 4, 'sandwich': 2, 'hamburger': 2, 'turkey': 1, 'potatoes': 1, 'chicken': 1, 'fishstick': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Ca-sp-38,semi-detached,"{'semi-detached': 3, 'terraced': 2, '3 bedroom semi': 1, 'brick built': 1, 'flat': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-New-am-34,home,"{'home': 4, 'tutoring class': 2, 'school': 1, 'library': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Jo-sp-02,hockey,"{'wrestling': 3, 'fitness': 2, 'weightlifting': 1, 'kabaddi': 1, 'running': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",0,3,False,False
-Nu-in-40,new york city,"{'NY': 4, 'new york city': 2, 'los angeles': 2, 'boston': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
-Th-en-43,2,"{'2': 4, '1': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Kik-in-07,not-applicable,"{'easter eggs': 1, 'not-applicable': 4, 'idk': 1, 'no-answer': 0}",4,4,True,True
-Kik-in-40,lin dan,"{'lin dan': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-am-54,tabriz,"{'tabriz': 2, 'kurdistan': 2, 'north': 1, 'lorestan': 1, 'chaharmahal and bakhtiari': 1, 'caspian sea coast': 1, 'azerbaijan': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Al-en-19,english,"{'english': 5, 'french': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-am-59,idk,"{'animal husbandry': 2, 'straw carpet weaving': 1, 'idk': 5, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Ni-en-06,6,"{'6': 4, '7': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-ch-31,doctor,"{'doctor': 4, 'engineering': 2, 'lawyer': 1, 'teaching': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
-New-az-12,south,"{'south': 3, 'north': 2, 'kish': 1, 'qeshm': 1, 'gilan province': 1, 'mazandaran province': 1, 'khuzestan province': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-New-en-49,trump,"{'trump': 3, 'bush': 1, 'kardashian': 1, 'Kennedy': 1, 'kardashians': 1, 'Obama': 1, 'not-applicable': 1, 'idk': 0, 'no-answer': 0}",3,3,True,True
-Ki-pe-36,chinese,"{'indian': 3, 'chinese': 2, 'curry': 1, 'italian': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
-Jod-ch-37,soccer,"{'soccer': 4, 'tennis': 3, 'rowing': 1, 'hockey': 1, 'formula 1': 1, 'badminton': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Sa-en-32,ant & dec's saturday night takeaway,"{""ant & dec's saturday night takeaway"": 2, 'EastEnders': 1, 'coronation street': 1, 'emmerdale': 1, ""britain's got talent"": 1, ""michael mcintyre's the wheel"": 1, 'strictly come dancing': 1, ""i'm a celebrity"": 1, 'doctor who': 1, 'sherlock holmes': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-in-03,kebab,"{'kebab': 3, 'rice with kebab': 1, 'broad bean rice with meat': 1, 'ghormeh sabzi': 1, 'gheimeh': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
-Nu-in-40,london,"{'london': 5, 'manchester': 1, 'birmingham': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-spme-27,high school,"{'high school': 4, 'associates': 1, 'college': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-su-34,choir,"{'choir': 2, 'art performance': 1, 'extracurricular music class': 1, 'radio calisthenics': 1, 'short video challenge': 1, 'listen to music and copy lyrics': 1, 'choir competition': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-in-34,daqing,"{'daqing': 3, 'liaoning': 1, 'xinjiang': 1, 'northeast': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Sa-en-31,cat,"{'dog': 5, 'cat': 3, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,5,False,True
-New-en-47,lawn,"{'lawn': 3, 'shed': 2, 'trees': 1, 'flowers': 1, 'wooden fences': 1, 'brick walls': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-New-en-08,no-answer,"{'shirin asal': 3, 'shooniz': 2, 'parmida': 1, 'farmand': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",1,3,False,True
-Kik-in-38,idk,"{'beijing guoan vs tianjin teda': 1, 'idk': 7, 'not-applicable': 1, 'no-answer': 1}",7,7,True,True
-New-in-80,disneyland,"{'Disney World': 4, 'disneyland': 1, 'universal studios': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",1,4,False,True
-An-ar-02,university dining hall,"{'university dining hall': 5, 'buffet': 1, 'cafeteria': 1, 'sandwich shop': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Kik-in-36,idk,"{'li tie': 1, 'li fenglou': 1, 'fan zhiyi': 1, 'bora milutinovic': 1, 'idk': 7, 'no-answer': 0, 'not-applicable': 0}",7,7,True,True
-Al-en-43,board games,"{'board games': 3, 'crafting': 2, 'watching television': 2, 'video games': 1, 'shopping': 1, 'reading': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
-Gu-ch-08,basketball,"{'soccer': 4, 'baseball': 3, 'basketball': 3, 'American Football': 3, 'wrestling': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,4,False,True
-New-su-60,rice,"{'rice': 5, 'corn': 1, 'steamed bun': 1, 'meat dish': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Th-en-19,shenzhen,"{'shenzhen': 3, 'suzhou': 3, 'jiangsu-zhejiang': 1, 'yiwu': 1, 'hangzhou': 1, 'wuhan': 1, 'dongguan': 1, 'shanghai': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Ji-ko-09,pizza,"{'burgers': 2, 'pizza': 2, 'sandwiches': 1, 'hotdogs': 1, 'barbeque': 1, 'steak': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Ta-pe-42,dumplings,"{'dumplings': 4, 'pen cai': 1, 'eight treasures rice': 1, 'sweet fermented rice balls': 1, 'fish': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Ta-pe-30,idk,"{'match of the day': 5, 'grandstand': 1, 'soccer saturday': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",1,5,False,True
-New-su-51,fishing,"{'fishing': 4, 'freelance (business)': 1, 'selling': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-en-59,canada,"{'canada': 4, 'america': 4, 'australia': 3, 'uk': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Ta-pe-17,athletics,"{'athletics': 5, 'soccer': 2, 'swimming': 2, 'cycling': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Na-ko-37,kish island,"{'kish island': 2, 'caspian sea coast': 2, 'mazandaran': 1, 'gilan': 1, 'shiraz': 1, 'persian gulf coasts': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Th-en-22,cultural revolution,"{'depression of the 30s': 5, '9/11': 1, 'katrina': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
-Na-ko-37,florida,"{'florida': 4, 'HI': 2, 'california': 2, 'NY': 1, 'alaska': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Ji-ko-37,school uniform,"{'school uniform': 5, 'sportswear': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-as-58,tea,"{'tea': 5, 'coffee': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Ta-pe-32,bonfire night,"{'5th november': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
-Kik-in-10,persepolis,"{'persepolis': 2, 'visit to ancient sites': 1, 'naqsh-e jahan square isfahan': 1, 'khaju bridge': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Ta-pe-42,no-answer,"{'party snacks': 1, 'spring rolls': 1, 'cakes': 1, 'no-answer': 4, 'idk': 1, 'not-applicable': 0}",4,4,True,True
-An-ar-08,10,"{'9': 2, '10': 2, '11': 2, '8': 1, '15': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-am-74,rock & roast,"{'rock & roast': 4, 'the jinxing show': 2, 'roast!': 1, 'day day up': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Kik-in-24,chips,"{'chips': 4, 'french fries': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Ta-pe-30,match of the day,"{'match of the day': 5, 'grandstand': 1, 'soccer saturday': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-ch-26,idk,"{'skiing': 1, 'not-applicable': 2, 'idk': 2, 'no-answer': 2}",2,2,True,True
-Th-en-15,skiing,"{'skiing': 4, 'skating': 3, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-en-47,fruit tree,"{'fruit tree': 2, 'satellite dish': 1, 'old tools': 1, 'equipment': 1, 'no-answer': 1, 'معمولا باغ پشتی وجود ندارد': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
-New-ch-80,easter,"{'easter': 4, 'christmas': 4, 'ramadan': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Ni-en-06,5,"{'5': 4, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Ki-pe-32,dishes,"{'stir-fry': 1, 'cold dish': 1, 'dim sum': 1, 'rice': 1, 'dishes': 1, 'plenty of meat and fish': 1, 'chicken': 1, 'duck': 1, 'fish': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",1,1,True,True
-New-ko-06,the boy who cried wolf,"{'hasani': 1, 'one thousand and one nights': 1, 'the boy who cried wolf': 1, 'shahnameh': 1, 'rostam and sohrab': 1, 'rumbling pumpkin': 1, 'shangool mangool grape berry': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,1,True,True
-New-en-04,Gordon Ramsay,"{'Gordon Ramsay': 5, 'rachael ray': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-su-42,christianity,"{'christianity': 5, 'islam': 1, 'catholicism ': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-am-27,idk,"{'serena williams': 3, 'venus williams': 1, 'caitlin clark': 1, 'idk': 4, 'no-answer': 1, 'not-applicable': 0}",4,4,True,True
-Ni-en-21,16,"{'16': 5, '18': 2, '14': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Th-en-43,1,"{'1': 4, '2': 3, '3': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-ha-66,church,"{'church': 2, 'beach': 1, 'las vegas': 1, 'silverado resort': 1, 'california': 1, 'no-answer': 1, 'idk': 1, 'not-applicable': 0}",2,2,True,True
-Na-ko-28,idk,"{'Michael David Edwards': 1, 'david beckham': 1, 'eve muirhead': 1, 'idk': 3, 'not-applicable': 1, 'no-answer': 1}",3,3,True,True
-Na-ko-25,running,"{'long jump': 5, 'running': 3, 'high jump': 2, '800 meters running': 1, 'relay race': 1, 'long-distance running': 1, 'sprint': 1, 'tug of war': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,5,False,True
-An-ar-34,basketball,"{'soccer': 3, 'basketball': 3, 'volleyball': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
-New-su-86,houses of parliament,"{'houses of parliament': 4, '10 downing street': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-su-58,cow,"{'cow': 5, 'donkey': 3, 'horse': 1, 'sheep': 1, 'chicken': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Kik-in-35,cycling,"{'cycling': 1, 'indoor exercise': 1, 'running': 1, 'tennis': 1, 'golf': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",1,1,True,True
-New-su-81,suit,"{'suit': 4, 'tang suit': 1, 'chinese-style dress': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
-New-spme-78,birthday song,"{'birthday song': 4, 'not-applicable': 1, 'idk': 0, 'no-answer': 0}",4,4,True,True
-Ne-ar-20,civil servant,"{'doctor': 3, 'civil servant': 3, 'teacher': 2, 'state-owned enterprise job': 1, 'lawyer': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Gu-ch-09,netball,"{'soccer': 3, 'netball': 3, 'tennis': 1, 'hockey': 1, 'cricket': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Jo-sp-01,baseball,"{'baseball': 3, 'basketball': 2, 'football': 1, 'lacrosse': 1, 'soccer': 1, 'american football': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-New-en-75,16,"{'16': 2, '15': 2, '12': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-en-01,popcorn,"{'popcorn': 5, 'slushies': 1, 'candy': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Sa-en-32,idk,"{'dorehami': 2, 'art contest': 1, 'comedy shows': 1, 'khandevaneh': 1, 'idk': 2, 'no-answer': 1, 'not-applicable': 0}",2,2,True,True
-New-az-26,jet li,"{'jet li': 3, 'liu qinghua': 1, 'chang zhizhao': 1, 'wu jing': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Th-en-12,basketball,"{'basketball': 3, 'swimming': 2, 'american football': 2, 'gymnastics': 1, 'baseball': 1, ""Women's Soccer"": 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Na-ko-43,not-applicable,"{'sleep': 1, 'enjoy a quiet morning': 1, 'not-applicable': 2, 'idk': 0, 'no-answer': 1}",2,2,True,True
-New-ch-04,pizza,"{'chips': 2, 'pizza': 2, 'kebabs': 1, 'chicken': 1, 'biscuits': 1, 'crisps': 1, 'chocolate': 1, 'toast': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-spme-60,sunday,"{'sunday': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-ch-39,taobao,"{'taobao': 5, 'jd.com': 4, 'pinduoduo': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Jod-ch-51,car,"{'car': 4, 'bus': 3, 'train': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Jo-sp-09,skiing,"{'tennis': 5, 'skiing': 2, 'horse riding': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,5,False,True
-Ki-pe-34,tea,"{'tea': 5, 'coffee': 1, 'lion': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-pe-47,idk,"{'idk': 5, 'not-applicable': 1, 'no-answer': 0}",5,5,True,True
-Na-ko-08,orange,"{'orange': 5, 'tangerine': 3, 'apple': 2, 'sweet lemon': 1, 'banana': 1, 'pomegranate': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Kik-in-17,not-applicable,"{'dates': 1, 'not-applicable': 3, 'idk': 2, 'no-answer': 0}",3,3,True,True
-Jod-ch-56,67,"{'67': 3, '65': 1, '63': 1, '66': 1, '55': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-New-am-73,not-applicable,"{'not-applicable': 5, 'idk': 1, 'no-answer': 0}",5,5,True,True
-New-ko-05,barbies,"{'barbies': 3, 'dolls': 1, 'baby dolls': 1, 'hair design': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Ca-sp-41,children's home,"{""children's home"": 3, 'rural area': 2, 'nursing home': 1, 'home': 1, 'hiring nursing staff to take care': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Jod-ch-01,knife,"{'fork': 5, 'spoon': 4, 'knife': 4, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,5,False,True
-New-pe-02,rock candy,"{'rock candy': 4, 'fish & chips': 1, 'pasty': 1, 'fudge': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Ne-ar-05,lunar new year,"{'lunar new year': 5, 'national day': 2, 'mid-autumn festival': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Th-en-48,a*,"{'a*': 3, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Ne-ar-24,tehran,"{'tehran': 5, 'isfahan': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-ch-08,turmeric,"{'turmeric': 3, 'pepper': 3, 'salt': 1, 'fried onions': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Ji-ko-27,fruit basket,"{'health care products': 2, 'fruit basket': 1, 'milk': 1, 'alcohol': 1, 'food': 1, 'money': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,2,False,True
-Al-en-36,not-applicable,"{'pumpkin': 1, 'not-applicable': 4, 'idk': 0, 'no-answer': 0}",4,4,True,True
-Ji-ko-27,flowers,"{'wine': 1, 'lottery tickets': 1, 'food': 1, 'clothing': 1, 'cake': 1, 'candy': 1, 'flowers': 1, 'chocolate': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,1,True,True
-Na-ko-23,soccer,"{'basketball': 3, 'soccer': 2, 'American Football': 2, 'baseball': 1, 'idk': 1, 'not-applicable': 1, 'no-answer': 1}",2,3,False,True
-Kik-in-16,hot water,"{'tea': 5, 'herbal tea': 1, 'chocolate milk': 1, 'coffee': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
-New-gr-58,teachers,"{'teachers': 4, 'restaurant work': 1, 'civil servents': 1, 'manufacturing workers': 1, 'PHDs': 1, 'fast food': 1, 'internships': 1, 'federal employment': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-in-34,south,"{'south': 4, 'assaluyeh': 1, 'bandar abbas': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-in-78,wechat pay,"{'alipay': 5, 'wechat pay': 3, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,5,False,True
-Al-en-33,not-applicable,"{'gathering': 1, 'dress up': 1, 'not-applicable': 3, 'idk': 0, 'no-answer': 0}",3,3,True,True
-Th-en-05,volleyball,"{'futsal': 2, 'karate': 1, 'football': 1, 'idk': 6, 'not-applicable': 1, 'no-answer': 0}",0,6,False,False
-Ki-pe-51,15:00,"{'17:00': 5, '16:00': 1, '18:00': 1, '17:30': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
-New-gr-29,football,"{'fifa world cup': 4, 'uefa champions league': 1, 'football': 1, 'olympic': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,4,False,True
-New-ch-84,black,"{'black': 2, 'blue': 1, 'red': 1, 'white': 1, 'no-answer': 2, 'idk': 0, 'not-applicable': 0}",2,2,True,True
-Ni-en-03,18,"{'18': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Ne-ar-34,rice,"{'rice': 3, 'bread': 1, 'meat': 1, 'onion': 1, 'yogurt': 1, 'coke': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-An-ar-08,6,"{'7': 3, '6': 2, '5': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
-Ne-ar-43,biscuit,"{'biscuit': 4, 'rich tea biscuit': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Ki-pe-17,high school,"{'undergraduate': 3, 'high school': 2, 'diploma': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
-New-su-10,no-answer,"{'ice cream': 1, 'no-answer': 4, 'idk': 0, 'not-applicable': 0}",4,4,True,True
-Ji-ko-29,16,"{'21st': 5, '16': 2, '18': 2, '15th': 1, '1': 1, '13th': 1, '30th': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,5,False,True
-New-en-69,jalal al-e ahmad,"{'jalal al-e ahmad': 2, 'dehkhoda': 1, 'shamlou': 1, 'sohrab sepehri': 1, 'jamalzadeh': 1, 'no-answer': 1, 'idk': 1, 'not-applicable': 0}",2,2,True,True
-Na-ko-45,sanya,"{'sanya': 3, 'hainan': 2, 'yunnan': 2, 'maldives': 1, 'thailand': 1, 'xiamen': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-New-gr-76,ham,"{'ham': 4, 'scalloped potatoes': 1, 'green beans': 1, 'deviled eggs': 1, 'eggs': 1, 'chocolate eggs': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-en-38,IT,"{'freelance job': 2, 'self employment': 1, 'no-answer': 2, 'idk': 1, 'not-applicable': 0}",0,2,False,False
-New-am-41,year 11,"{'year 11': 2, 'year 6': 1, ""We didn't have grades when I was at school - it was age - therefore 16"": 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-gr-21,ping pong,"{'ping pong': 4, 'tennis': 3, 'badminton': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Gu-ch-31,6,"{'6': 2, '5': 1, '4': 1, '8': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-ch-51,hotel,"{'hotel': 5, 'villa': 3, 'ecotourism': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-pe-53,socks,"{'socks': 4, 'flower': 1, 'clothes': 1, 'perfume': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
-Jod-ch-12,tomato soup,"{'barley soup': 2, 'potage': 2, 'noodle soup': 1, 'mushroom soup': 1, 'tomato soup': 1, 'porridge': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,2,False,True
-Th-en-21,salary,"{'five insurances and one fund': 3, 'weekends off': 2, 'annual leave': 2, 'marriage and maternity leave': 1, 'salary': 1, 'housing allowance': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,3,False,True
-New-su-88,rap,"{'pop': 4, 'rap': 3, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,4,False,True
-New-in-63,University of Cambridge,"{'university of oxford': 3, 'University of Nottingham': 1, 'University of Cambridge': 1, 'University of Manchester': 1, 'Keele University': 1, ""St George's, University of London"": 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",1,3,False,True
-Jo-sp-21,12:00,"{'12:00': 4, '12:30': 2, '13:00': 1, '11:30': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-ko-05,doll,"{'doll': 3, 'barbie': 2, 'home appliances': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Th-en-12,soccer,"{'soccer': 3, 'rugby': 2, 'cricket': 2, 'tennis': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Jo-sp-01,volleyball,"{'basketball': 3, 'soccer': 2, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
-Ca-sp-42,12,"{'12': 3, '8': 2, '0': 1, '16': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-New-az-73,100,"{'100': 3, '200': 2, '30': 1, '150': 1, '500': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
-Sa-en-7,chips,"{'chips': 2, 'popcorn': 1, 'Cheez-Its': 1, 'ritz crackers': 1, 'ice cream': 1, 'cookies': 1, 'm&m': 1, 'hershey': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
-New-ch-01,chicken,"{'chicken': 3, 'beef': 3, 'burgers': 1, 'sausages': 1, 'lamb': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-New-en-68,suspension,"{'detention': 4, 'suspension': 4, 'expulsion': 3, 'corporal punishment': 1, 'iss': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Al-en-33,trick or treat,"{'children trick or treat': 5, 'carve pumpkins': 1, 'dress up in costumes': 1, 'scary films': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
-New-az-70,cocktail,"{'red wine': 3, 'cocktail': 2, 'rio': 1, 'milk beer': 1, 'bai': 1, 'idk': 1, 'no-answer': 1, 'not-applicable': 0}",2,3,False,True
-Kik-in-02,not-applicable,"{'not-applicable': 5, 'idk': 0, 'no-answer': 0}",5,5,True,True
-New-su-01,idk,"{'sweets': 2, 'chips': 1, 'crisps': 1, 'fizzy pop': 1, 'Cheestrings ': 1, 'idk': 1, 'not-applicable': 1, 'no-answer': 0}",1,2,False,True
-Th-en-48,100,"{'a+': 3, 'a': 2, '100': 2, 'S': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
-Ca-sp-45,north,"{'north': 2, 'kish': 1, 'north coast of the country': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
-Ne-ar-32,toast,"{'cereal': 4, 'toast': 3, 'eggs': 2, 'coffee': 1, 'bacon': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,4,False,True
-New-as-07,grilled fish,"{'fish & chips': 3, 'chips': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
-Al-en-06,chips,"{'chips': 2, 'mash': 1, 'burger': 1, 'pizza': 1, 'idk': 1, 'no-answer': 1, 'not-applicable': 0}",2,2,True,True
-New-pe-66,painting,"{'painting': 3, 'olympiad math': 1, 'mathematics': 1, 'piano': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-New-gr-47,30,"{'30': 4, '15': 2, '10': 1, '20': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Jo-sp-13,swimming,"{'swimming': 5, 'waterpolo': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Ne-ar-24,shanghai,"{'shanghai': 5, 'beijing': 2, 'guangzhou': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-ch-31,doctor,"{'doctor': 4, 'engineering': 2, 'lawyer': 1, 'teaching': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
-New-ch-23,noshad alamiyan,"{'noshad alamiyan': 2, 'alamian': 1, 'nima alamian': 1, 'نمیدانم': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-New-en-59,mexico,"{'canada': 4, 'mexico': 3, 'United Kingdom': 2, 'spain': 1, 'costa rica': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,4,False,True
-New-am-08,not-applicable,"{'not-applicable': 5, 'idk': 3, 'no-answer': 0}",5,5,True,True
-New-spme-65,not-applicable,"{'not-applicable': 5, 'idk': 0, 'no-answer': 0}",5,5,True,True
-New-su-24,football,"{'football': 3, 'volleyball': 2, 'dodgeball': 1, 'walking in the park': 1, 'run': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Na-ko-29,idk,"{'idk': 5, 'no-answer': 2, 'نمیدانم': 1, 'not-applicable': 0}",5,5,True,True
-New-as-07,chips,"{'fish & chips': 3, 'chips': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
-New-su-15,tea,"{'tea': 2, 'coke': 2, 'water': 1, 'pepsi': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
-New-ch-38,london,"{'london': 4, 'scotland': 1, 'wales': 1, 'kent': 1, 'portsmouth': 1, 'liverpool': 1, 'bristol': 1, 'dover': 1, 'north east': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Ca-sp-14,tea,"{'tea': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-ch-17,bungee jumping,"{'bungee jumping': 4, 'rock climbing': 1, 'diving': 1, 'parachuting': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-gr-47,15,"{'30': 4, '15': 2, '10': 1, '20': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
-New-en-26,three lions,"{'defense': 2, 'let´s go': 1, 'u s a': 1, 'u.s.a.!': 1, 'yankees suck!': 1, 'idk': 3, 'no-answer': 1, 'not-applicable': 0}",0,3,False,False
-Kik-in-37,shanghai sipg vs shanghai shenhua,"{'evergrande vs. luneng': 2, 'shanghai sipg vs shanghai shenhua': 1, 'shandong luneng vs shanghai shenhua': 1, 'zhejiang team vs qingdao hainiu': 1, 'idk': 4, 'no-answer': 0, 'not-applicable': 0}",1,4,False,True
-Nu-in-11,08:00,"{'08:00': 4, '09:00': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Na-ko-44,idk,"{'monday': 1, 'easter': 1, 'christmas eve': 1, 'idk': 3, 'no-answer': 1, 'not-applicable': 0}",3,3,True,True
-Na-ko-44,idk,"{'monday': 1, 'easter': 1, 'christmas eve': 1, 'idk': 3, 'no-answer': 1, 'not-applicable': 0}",3,3,True,True
-New-pe-49,church,"{'church': 5, 'mosque': 2, 'temple': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Th-en-09,premier league,"{'premier league': 3, 'FA Cup': 2, 'wimbledon': 1, 'cheltenham festival': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Ki-pe-39,sandwiches,"{'sandwiches': 4, 'fruit': 2, 'cake': 1, 'pork pie': 1, 'salad': 1, 'cold meat': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-am-74,graham norton,"{'graham norton': 3, 'the jeremy kyle show': 1, 'piers morgan live': 1, 'loose women': 1, 'Alan Carr: Chatty Man': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
-Jo-sp-02,shuttlecock kicking,"{'chinese chess': 2, 'guandan': 1, 'fishing': 1, 'swimming': 1, 'shuttlecock kicking': 1, 'jump rope': 1, 'square dance': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,2,False,True
-Jod-ch-51,subway,"{'metro': 4, 'private car': 3, 'bus': 3, 'public transport': 1, 'shared bicycle': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
-Ji-ko-29,60,"{'80': 1, '90': 1, '20': 1, '60': 1, '18': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,1,True,True
-New-su-45,09/10,"{'09/10': 2, 'not-applicable': 1, 'idk': 0, 'no-answer': 0}",2,2,True,True
-New-pe-47,05/04,"{'05/04': 1, 'idk': 3, 'not-applicable': 3, 'no-answer': 1}",1,3,False,True
-Na-ko-11,hotdog,"{'hotdog': 3, 'burger': 1, 'fries': 1, 'popcorn': 1, 'burgers': 1, 'chips': 1, 'chili': 1, 'wings': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-New-az-69,bai,"{'bai': 4, 'beer': 2, 'erguotou': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Ca-sp-08,salt,"{'salt': 3, 'potato': 2, 'meat': 1, 'sugar': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-New-ch-75,90,"{'90': 4, '60': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-spme-04,corn,"{'corn': 3, 'soybeans': 3, 'sugar': 1, 'wheat': 1, 'cotton': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
-Sa-en-16,manchester united,"{'persepolis': 4, 'real madrid': 1, 'manchester united': 1, 'barcelona': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,4,False,True
-New-su-60,rice and stew,"{'rice': 5, 'corn': 1, 'steamed bun': 1, 'meat dish': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
-Ji-ko-03,shanghai,"{'shanghai': 4, 'beijing': 2, 'hong kong': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-su-24,soccer,"{'soccer': 5, 'rounders': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-am-72,idk,"{'tintin': 2, 'me and my dad': 1, 'idk': 4, 'no-answer': 2, 'not-applicable': 0}",4,4,True,True
-An-ar-09,2,"{'2': 5, '3': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Gu-ch-07,yao ming,"{'yao ming': 4, 'zhizhi wang': 1, 'jianlian yi': 1, 'mu tiezhu': 1, 'zheng haixia': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
 New-ch-30,idk,"{'hassan taftian': 1, 'ehsan hadadi': 1, 'idk': 6, 'no-answer': 0, 'not-applicable': 0}",6,6,True,True
-Th-en-21,health insurance,"{'vacation': 3, 'healthcare': 3, 'benefits': 1, '401(k)': 1, 'financial stability': 1, 'sick days off': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
-Ta-pe-42,herb rice with fish,"{'herb rice with fish': 4, 'fish': 1, 'noodle rice': 1, 'herb frittata': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Ne-ar-20,teaching,"{'teaching': 3, 'IT technician ': 1, 'office work': 1, 'lawyer': 1, 'police': 1, 'civil servant': 1, 'idk': 0, 'no-answer': 1, 'not-applicable': 0}",3,3,True,True
-Ne-ar-26,oil company,"{'oil company': 2, 'mapna': 1, 'khatam al-anbiya headquarters': 1, 'no-answer': 2, 'idk': 0, 'not-applicable': 0}",2,2,True,True
-Ki-pe-17,high school,"{'undergraduate': 3, 'high school': 2, 'diploma': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
-New-pe-83,durak,"{'poker': 3, 'uno': 2, 'snap': 1, 'blackjack': 1, 'cards against humanity': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
-Al-en-19,spanish,"{'spanish': 5, 'french': 3, 'german': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Ji-ko-38,medical,"{'medical': 5, 'experimental': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-Al-en-37,turkey,"{'turkey': 5, 'christmas pudding': 2, 'mince pie': 1, 'fruit cake': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-gr-06,pizza,"{'pizza': 4, 'burgers': 2, 'salads': 1, 'ramen noodles': 1, 'french fries': 1, 'wings': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-en-59,canada,"{'canada': 4, 'america': 4, 'australia': 3, 'uk': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-pe-66,sports,"{'sports': 4, 'soccer': 2, 'art programs': 1, 'STEM programs': 1, 'theater': 1, 'music': 1, 'performing arts': 1, 'art and craft': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-New-spme-60,sunday,"{'sunday': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
-New-as-14,hot pot,"{'hot pot': 3, 'noodle soup': 2, 'no-answer': 1, 'not-applicable': 1, 'idk': 0}",3,3,True,True
-Na-ko-45,london,"{'london': 3, 'scotland': 1, 'the cotswolds': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
-New-ko-03,row row row your boat,"{'twinkle twinkle little star': 3, 'row row row your boat': 2, 'incy wincy spider': 1, 'happy birthday': 1, 'wheels on the bus': 1, 'baby shark': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
-New-as-76,monopoly,"{'monopoly': 4, 'charades': 2, 'chess': 1, 'beach cricket': 1, 'soccer': 1, 'card games': 1, 'scrabble': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
-Tmp-ar-04,doing homework,"{'doing homework': 2, 'playing with peers in the park': 1, 'watching tv': 1, 'sleep': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
-Sa-en-32,idk,"{'dorehami': 2, 'art contest': 1, 'comedy shows': 1, 'khandevaneh': 1, 'idk': 2, 'no-answer': 1, 'not-applicable': 0}",2,2,True,True
+Gu-ch-11,wrestling,"{'wrestling': 5, 'weightlifting': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Ca-sp-43,2,"{'2': 4, '4': 1, '6': 1, '12': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Ni-en-17,40,"{'40': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Ki-pe-34,tea,"{'tea': 5, 'coffee': 1, 'lion': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Al-en-09,cotton candy,"{'cotton candy': 4, 'popcorn': 1, 'gummies': 1, 'french fries': 1, 'olivier salad': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-gr-15,trifle,"{'trifle': 2, 'pudding': 1, 'jelly': 1, 'cake and custard': 1, 'rice pudding': 1, 'treacle sponge': 1, 'bread and butter pudding': 1, 'crumble': 1, 'brownie': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-as-20,basketball,"{'basketball': 5, 'hockey': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Jo-sp-21,12:00,"{'12:00': 4, '12:30': 2, '13:00': 1, '11:30': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Al-en-19,english,"{'english': 5, 'french': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+An-ar-34,basketball,"{'soccer': 3, 'basketball': 3, 'volleyball': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
+Ki-pe-17,university,"{'secondary': 3, 'university': 2, 'college': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
+New-am-08,not-applicable,"{'not-applicable': 5, 'idk': 3, 'no-answer': 0}",5,5,True,True
+Jod-ch-12,barley soup,"{'barley soup': 2, 'potage': 2, 'noodle soup': 1, 'mushroom soup': 1, 'tomato soup': 1, 'porridge': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-spme-04,potatoes,"{'rapeseed': 1, 'wheat': 1, 'poultry': 1, 'idk': 4, 'no-answer': 2, 'not-applicable': 0}",0,4,False,False
+Ji-ko-03,tehran,"{'tehran': 3, 'isfahan': 2, 'south': 1, 'karaj': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-ko-01,idk,"{'peppa pig': 3, 'paw patrol': 1, 'bluey': 1, 'amazing world of gumball': 1, 'no-answer': 1, 'idk': 1, 'not-applicable': 0}",1,3,False,True
+Ji-ko-41,black shoes,"{'black shoes': 3, 'trainers': 1, 'formal': 1, 'ballet flats': 1, 'black leather': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Th-en-11,idk,"{'ali daei': 5, 'ali karimi': 2, 'rezazadeh': 1, 'gholamreza takhti': 1, 'hassan yazdani': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
+New-ch-07,no-answer,"{'peanuts': 3, 'braised food': 2, 'beef': 1, 'pork': 1, 'steamed bun': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
+Ca-sp-09,fruit,"{'cake': 3, 'mooncake': 1, 'osmanthus cake': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",0,3,False,False
+New-am-72,idk,"{'tintin': 2, 'me and my dad': 1, 'idk': 4, 'no-answer': 2, 'not-applicable': 0}",4,4,True,True
+New-ko-10,delivery work,"{'uber': 3, 'social media influencer': 1, 'mlm': 1, 'postmates': 1, 'instacart': 1, 'some type of sales': 1, 'waiter': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
+New-su-83,cake,"{'cake': 3, 'wedding breakfast': 1, 'buffet': 1, 'beef': 1, 'chicken': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
+Kik-in-02,not-applicable,"{'not-applicable': 5, 'idk': 0, 'no-answer': 0}",5,5,True,True
+An-ar-03,no-answer,"{'3': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
+Ne-ar-37,banana,"{'apple': 3, 'watermelon': 2, 'orange': 1, 'grape': 1, 'idk': 1, 'no-answer': 1, 'not-applicable': 0}",0,3,False,False
+Ji-ko-34,school,"{'school service': 4, 'with parents': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",0,4,False,False
+New-su-71,money,"{'toy': 4, 'money': 2, 'clothes': 1, 'gold': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+Ne-ar-33,13:00,"{'12:00': 4, '13:00': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+New-spme-37,engineering,"{'medical': 4, 'engineering': 2, 'programming': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+New-su-83,cake,"{'cake': 3, 'wedding breakfast': 1, 'buffet': 1, 'beef': 1, 'chicken': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
+Th-en-51,mathematics,"{'mathematics': 5, 'biology': 2, 'chemistry': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Ta-pe-32,new year,"{'july 4th': 4, ""new year's eve"": 2, 'new year': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,4,False,True
+Ji-ko-45,music,"{'music': 1, 'alcohol': 1, 'social interaction': 1, 'food': 1, 'entertainment': 1, 'weather': 1, 'idk': 5, 'no-answer': 0, 'not-applicable': 0}",1,5,False,True
+New-su-01,chocolate,"{'sweets': 2, 'chips': 1, 'crisps': 1, 'fizzy pop': 1, 'Cheestrings ': 1, 'idk': 1, 'not-applicable': 1, 'no-answer': 0}",0,2,False,False
+Ji-ko-09,pizza,"{'burgers': 2, 'pizza': 2, 'sandwiches': 1, 'hotdogs': 1, 'barbeque': 1, 'steak': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+Jo-sp-02,badminton,"{'wrestling': 3, 'fitness': 2, 'weightlifting': 1, 'kabaddi': 1, 'running': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",0,3,False,False
+Ta-pe-37,clock striking midnight,"{'haft-seen': 3, 'sabzeh': 3, 'haji firouz': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
+New-ha-07,dumplings,"{'dumplings': 4, 'steamed bun': 1, 'noodles': 1, 'sweet and sour chicken': 1, 'lao gan ma chili sauce': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Na-ko-25,running,"{'long jump': 5, 'running': 3, 'high jump': 2, '800 meters running': 1, 'relay race': 1, 'long-distance running': 1, 'sprint': 1, 'tug of war': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,5,False,True
+Ni-en-21,16,"{'16': 5, '18': 2, '14': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Ta-pe-11,25,"{'25': 2, '30': 2, '24': 1, 'no-answer': 3, 'idk': 0, 'not-applicable': 0}",2,3,False,True
+New-pe-74,0,"{'free': 4, '3 million': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
+Na-ko-38,no-answer,"{'honeymoon travel': 1, 'kitchen appliances': 1, 'jewelry': 1, 'rings': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",1,1,True,True
+Jod-ch-46,1,"{'1': 3, '15': 1, '30': 1, '0.5': 1, '0.3': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
 Ne-ar-44,cake,"{'cake': 2, 'milk': 1, 'bread': 1, 'coffee mate': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
-Ne-ar-31,hamburger,"{'hamburger': 3, 'pizza': 2, 'hotdog': 2, 'tacos': 1, 'steak': 1, 'fried chicken': 1, 'turkey': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Jo-sp-31,15:00,"{'15:30': 4, '15:00': 2, '16:30': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+New-ko-08,retail,"{'restaurants': 3, 'retail': 2, 'on campus': 1, 'barista': 1, 'school store': 1, 'fast food establishments': 1, 'nanny': 1, 'babysitting': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
+Kik-in-05,not-applicable,"{'not-applicable': 4, 'idk': 1, 'no-answer': 1}",4,4,True,True
+An-ar-03,3,"{'3': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Gu-ch-05,walk,"{'walk': 3, 'practice tai chi': 3, 'square dance': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-az-21,colorado,"{'scotland': 3, 'idk': 2, 'not-applicable': 2, 'no-answer': 0}",0,3,False,False
+Th-en-41,27,"{'27': 2, '31': 1, '30': 1, '32': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+Jo-sp-31,15:00,"{'15:30': 4, '15:00': 2, '16:30': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+Jod-ch-57,67,"{'65': 4, '67': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,4,False,True
+New-su-88,pop,"{'pop': 4, 'rap': 3, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Ne-ar-20,civil servant,"{'doctor': 3, 'civil servant': 3, 'teacher': 2, 'state-owned enterprise job': 1, 'lawyer': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-ch-66,2000,"{'1000': 2, '5000': 1, '2000': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",1,2,False,True
+Al-en-18,mathematics,"{'mathematics': 5, 'english': 2, 'chinese': 1, 'physics': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-su-86,white house,"{'white house': 5, 'capitol building': 2, 'Parthenon': 1, 'the library of congress': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Al-en-21,mathematics,"{'science': 4, 'mathematics': 4, 'english': 3, 'stem': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-ch-78,walking,"{'knitting': 3, 'evening with friends': 1, 'crafts': 1, 'shop': 1, 'swim': 1, 'book club': 1, 'walking': 1, 'exercising': 1, 'bocce ball': 1, 'water aerobics': 1, 'sewing': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",1,3,False,True
+Ji-ko-25,Thanksgiving,"{'Thanksgiving': 4, 'Independence Day': 1, 'Xmas': 1, 'Memorial Day': 1, ""Mother's Day"": 1, ""Father's Day"": 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-am-74,idk,"{'rock & roast': 4, 'the jinxing show': 2, 'roast!': 1, 'day day up': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+New-gr-13,coffee,"{'coffee': 5, 'tea': 4, 'fruit juice': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-ch-04,chips,"{'chips': 2, 'pizza': 2, 'kebabs': 1, 'chicken': 1, 'biscuits': 1, 'crisps': 1, 'chocolate': 1, 'toast': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-pe-11,salt,"{'black pepper': 2, 'onion powder': 1, 'paprika': 1, 'pepper': 1, 'salt': 1, 'no-answer': 1, 'idk': 1, 'not-applicable': 0}",1,2,False,True
+New-gr-47,15,"{'30': 4, '15': 2, '10': 1, '20': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+New-az-12,cornwall,"{'cornwall': 3, 'whitby': 1, 'scarborough': 1, 'scotland': 1, 'the english riviera': 1, 'dorset': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-su-71,money,"{'toy': 4, 'money': 2, 'clothes': 1, 'gold': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+Na-ko-18,volleyball,"{'volleyball': 3, 'soccer': 2, 'field hockey': 2, 'tennis': 1, 'basketball': 1, 'gymnastics': 1, 'track': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-am-02,hot pot,"{'fish & chips': 3, 'pie': 2, 'sunday dinner': 2, 'roast dinner': 1, 'roast potatoes ': 1, 'mashed potato': 1, 'chinese takeaway': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
+Gu-ch-16,4,"{'4': 5, '5': 1, '6': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Al-en-16,6,"{'6': 4, '5': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Ta-pe-32,5th november,"{'5th november': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Ne-ar-43,sugar,"{'sugar': 4, 'milk': 3, 'honey': 2, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
+Ji-ko-19,roses,"{'roses': 3, 'lillies': 1, 'not-applicable': 1, 'idk': 1, 'no-answer': 0}",3,3,True,True
+Ji-ko-35,private school,"{'private school': 2, 'foreign language school': 1, 'kindergarten': 1, 'international exchange': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-en-05,instant noodles,"{'shaxian delicacies': 1, 'instant noodles': 1, 'steamed stuffed bun': 1, 'steamed bun': 1, 'porridge': 1, 'fried dough stick': 1, 'soy milk': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,1,True,True
+Jo-sp-31,16:00,"{'15:00': 2, '16:00': 2, '2:30 PM': 1, '15:30': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-az-49,2,"{'2': 5, '3': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-in-33,central,"{'shanxi': 3, 'liaoning': 1, 'panzhihua': 1, 'inner mongolia': 1, 'western': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
+New-en-72,google,"{'google': 2, 'zoom': 1, 'ChatGPT': 1, 'no-answer': 2, 'idk': 0, 'not-applicable': 0}",2,2,True,True
+Jod-ch-01,knife,"{'fork': 5, 'spoon': 4, 'knife': 4, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,5,False,True
+New-gr-76,not-applicable,"{'apple': 1, 'not-applicable': 4, 'idk': 0, 'no-answer': 0}",4,4,True,True
+New-en-10,not-applicable,"{'tabrizi': 2, 'liqvan': 1, 'cream cheese': 1, 'breakfast': 1, 'white cheese': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,2,False,False
+New-az-69,bai,"{'bai': 4, 'beer': 2, 'erguotou': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Jod-ch-06,beer,"{'beer': 4, 'ale': 1, 'gin': 1, 'wine': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-gr-82,classical,"{'classical': 3, 'rock & roll': 1, 'brass band': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
+Ji-ko-35,parochial,"{'private tutor': 3, 'private schools': 1, 'language school': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",0,3,False,False
+Ne-ar-18,17:00,"{'17:00': 5, '15:00': 1, '18:00': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-en-72,google,"{'google': 2, 'zoom': 1, 'ChatGPT': 1, 'no-answer': 2, 'idk': 0, 'not-applicable': 0}",2,2,True,True
+Na-ko-41,idk,"{'flowers': 3, 'food': 2, 'idk': 2, 'not-applicable': 1, 'no-answer': 1}",2,3,False,True
+Na-ko-04,idk,"{'soup': 1, 'tomato juice': 1, 'advil': 1, 'water': 1, 'liquid iv': 1, 'no-answer': 2, 'idk': 1, 'not-applicable': 0}",1,2,False,True
+New-am-04,yogurt with shallots,"{'yogurt with shallots': 2, 'mirza ghasemi': 1, 'kashk-e-bademjan': 1, 'borani': 1, 'not-applicable': 1, 'idk': 0, 'no-answer': 0}",2,2,True,True
+Ne-ar-36,kebab,"{'kebab': 2, 'chelo kebab koobideh': 1, 'chicken kebab': 1, 'herb rice with fish': 1, 'broad bean rice with meat': 1, 'chicken': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
+Ji-ko-35,boarding school,"{'boarding school': 2, 'no-answer': 2, 'idk': 1, 'not-applicable': 0}",2,2,True,True
+Gu-ch-32,12,"{'12': 4, '13': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Na-ko-19,saeid marouf,"{'saeid marouf': 3, 'seyyed mohammad mousavi': 1, 'amir ghafour': 1, 'idk': 5, 'no-answer': 0, 'not-applicable': 0}",3,5,False,True
+Na-ko-16,david beckham,"{'david beckham': 2, 'marcus rashford': 1, 'bobby moore': 1, 'wayne rooney': 1, 'harry kane': 1, 'bukayo saka': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
+New-ko-04,car,"{'car': 5, 'ball': 2, 'sword': 1, 'gun': 1, 'football': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-ch-02,08:00,"{'07:00': 2, '08:30': 1, '06:00': 1, '08:00': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,2,False,True
+New-spme-60,Sunday,"{'Sunday': 5, 'wednesday': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-en-75,12,"{'12': 3, '10': 1, '9': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-ch-15,curry,"{'curry': 2, 'sandwiches': 1, 'sausage rolls': 1, 'salads': 1, 'pizza': 1, 'lasagne': 1, 'cooked meat': 1, 'cold meat': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-am-77,christmas,"{'christmas': 5, 'easter': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Kik-in-45,soccer,"{'football pitch': 4, 'track': 1, 'cricket pitch': 1, 'tennis court': 1, 'basketball court': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
+Th-en-27,tech,"{'tech': 3, 'retail': 1, 'agriculture': 1, 'steel': 1, 'automobiles': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+An-ar-34,volleyball,"{'volleyball': 4, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
+Na-ko-18,volleyball,"{'volleyball': 3, 'soccer': 2, 'field hockey': 2, 'tennis': 1, 'basketball': 1, 'gymnastics': 1, 'track': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-am-73,idk,"{'cocomelon': 3, 'idk': 5, 'no-answer': 1, 'not-applicable': 0}",5,5,True,True
+New-en-18,idk,"{'chips': 2, 'horn': 2, 'shawl': 1, 'corn': 1, 'cheese puffs': 1, 'drum': 1, 'non-alcoholic beverage': 1, 'seeds': 1, 'fan hat': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+Na-ko-07,beef,"{'chicken': 4, 'beef': 3, 'lamb': 1, 'pork': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,4,False,True
+Jod-ch-06,beer,"{'beer': 4, 'ale': 1, 'gin': 1, 'wine': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-ch-80,nowruz,"{'Ressurection Sunday': 4, 'memorial day': 1, 'Xmas': 1, 'not-applicable': 1, 'idk': 0, 'no-answer': 0}",0,4,False,False
+Sa-en-13,durian,"{'durian': 2, 'coriander': 2, 'radish': 1, 'zongzi': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
+Ni-en-09,5,"{'5': 5, '6': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Ta-pe-23,running,"{'running': 4, 'biking': 1, 'soccer': 1, 'weight lifting': 1, 'sit-ups': 1, 'push-ups': 1, 'jogging': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Ca-sp-41,care homes,"{'care homes': 5, 'sheltered accomodation': 1, 'with relatives': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Ni-en-15,12,"{'11': 3, '12': 2, '6': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
+Na-ko-40,1,"{'1': 6, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",6,6,True,True
+New-su-15,tea,"{'tea': 2, 'coke': 2, 'water': 1, 'pepsi': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
+Nu-in-04,3,"{'3': 4, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-en-04,Gordon Ramsay,"{'Gordon Ramsay': 5, 'rachael ray': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Th-en-12,soccer,"{'soccer': 3, 'rugby': 2, 'cricket': 2, 'tennis': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-en-90,shangri-la,"{'hilton': 4, 'marriott': 2, 'comfort inn': 1, 'hyatt': 1, 'holiday inn': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
+New-ko-05,dolls,"{'dolls': 3, 'barbies': 3, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-as-20,ping pong,"{'ping pong': 3, 'badminton': 2, 'e-sports': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-as-29,soccer,"{'soccer': 5, 'ping pong': 3, 'basketball': 3, 'badminton': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-ch-51,apartment,"{'hotel': 5, 'villa': 3, 'ecotourism': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
+Ca-sp-42,12,"{'12': 3, '8': 2, '0': 1, '16': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-am-54,midlands,"{'MW': 3, 'south': 3, 'SW': 1, 'corn belt': 1, 'southeast': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
+New-ch-26,not-applicable,"{'skiing': 1, 'not-applicable': 2, 'idk': 2, 'no-answer': 2}",2,2,True,True
+Jo-sp-19,north china plain,"{'henan': 2, 'northeast': 2, 'guangdong': 1, 'north china plain': 1, 'the middle-lower yangtze plain': 1, 'idk': 1, 'no-answer': 1, 'not-applicable': 0}",1,2,False,True
+Jod-ch-60,8,"{'8': 5, '9': 2, '10': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-su-45,no-answer,"{'04/19': 1, 'idk': 6, 'not-applicable': 1, 'no-answer': 0}",0,6,False,False
+New-en-05,sandwich,"{'beans on toast': 3, 'cheese sandwich': 1, 'pasta': 1, 'pizza': 1, 'chips': 1, 'sandwich': 1, 'ready meal from the supermarket': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,3,False,True
+New-gr-58,teacher,"{'cleaner': 1, 'teacher': 1, 'farmer': 1, 'physical labor jobs': 1, 'salesperson': 1, 'builder': 1, 'temporary worker': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,1,True,True
+Sa-en-7,cheese puff,"{'crisps': 4, 'cheesepuff': 3, 'fruit leather': 1, 'sunflower seeds': 1, 'seed': 1, 'peanut (snack)': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
+New-az-69,beer,"{'beer': 4, 'lager': 3, 'wine': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Nu-in-20,06/01,"{'06/01': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-pe-49,church,"{'church': 5, 'mosque': 2, 'temple': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Al-en-01,fruit,"{'fruit': 3, 'sandwich': 1, 'cake and milk': 1, 'bread and cheese': 1, 'eggs': 1, 'cereal': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
+New-ha-66,hotel,"{'hotel': 5, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-as-58,coffee,"{'tea': 3, 'coffee': 3, 'bubble tea': 2, 'coke': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Ta-pe-45,dumplings,"{'dumplings': 5, 'tangyuan': 1, 'lamb': 1, 'fish': 1, 'ribs': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Al-en-38,chocolate,"{'chocolate': 4, 'candies': 1, 'cupcakes': 1, 'cookies': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-spme-37,business,"{'finance': 2, 'politics': 1, 'law': 1, 'IT': 1, 'business': 1, 'engineering': 1, 'mathematics': 1, 'idk': 3, 'no-answer': 0, 'not-applicable': 0}",1,3,False,True
+Jod-ch-16,spring festival,"{'lunar new year': 5, 'mid-autumn festival': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
+New-su-71,money,"{'toy': 4, 'money': 2, 'clothes': 1, 'gold': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+Th-en-09,premier league,"{'premier league': 3, 'FA Cup': 2, 'wimbledon': 1, 'cheltenham festival': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-ch-23,idk,"{'jim butler': 1, 'idk': 6, 'no-answer': 0, 'not-applicable': 0}",6,6,True,True
+Kik-in-34,baseball,"{'basketball': 5, 'american football': 5, 'baseball': 4, 'soccer': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,5,False,True
+Th-en-01,baseball,"{'baseball': 2, 'volleyball': 1, 'swimming': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
+New-en-49,the royal family,"{'the royal family': 5, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-az-26,idk,"{'bruce lee': 1, 'jon jones': 1, 'conor mcgregor': 1, 'no-answer': 3, 'idk': 3, 'not-applicable': 0}",3,3,True,True
+Ca-sp-08,wheat,"{'wheat': 2, 'cheese': 1, 'bacon': 1, 'milk': 1, 'beef': 1, 'flour': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+Al-en-02,pretzels,"{'nuts': 2, 'pretzels': 1, 'barbeque': 1, 'fried onions': 1, 'hamburger': 1, 'wings': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,2,False,True
+New-en-38,tech,"{'tech': 2, 'freelance jobs': 1, 'restaurant industry': 1, 'office job (business)': 1, 'bio-technology': 1, 'creative industries': 1, 'software engineering': 1, 'design': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-ch-09,hot pot,"{'hot pot': 3, 'tangyuan': 2, 'dumplings': 1, 'beef soup': 1, 'mutton soup': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Jod-ch-58,doctor,"{'medicine': 5, 'firefighter': 1, 'lawyer': 1, 'teacher': 1, 'military': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
+Al-en-01,goldfish crackers,"{'fruit': 3, 'sandwich': 1, 'cake and milk': 1, 'bread and cheese': 1, 'eggs': 1, 'cereal': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",0,3,False,False
+New-su-81,tuxedo,"{'suits': 4, 'tuxedo': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,4,False,True
+New-az-49,1,"{'2': 3, '1': 2, '3': 1, 'idk': 1, 'no-answer': 1, 'not-applicable': 0}",2,3,False,True
+Th-en-12,basketball,"{'basketball': 3, 'swimming': 2, 'american football': 2, 'gymnastics': 1, 'baseball': 1, ""Women's Soccer"": 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-as-07,grilled salmon,"{'fish & chips': 3, 'chips': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
+Th-en-44,hot pot,"{'hot pot': 2, 'barbecue': 1, 'mochi': 1, 'dumplings': 1, 'fish': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
+Th-en-27,manufacturing,"{'tertiary industry': 1, 'service': 1, 'production': 1, 'infrastructure': 1, 'agriculture': 1, 'manufacturing': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",1,1,True,True
+Ki-pe-39,sandwiches,"{'sandwiches': 4, 'fruit': 2, 'cake': 1, 'pork pie': 1, 'salad': 1, 'cold meat': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-ha-13,cabbage,"{'carrots': 3, 'potato': 2, 'salad': 1, 'beetroot': 1, 'Broccoli': 1, 'peas': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",0,3,False,False
+New-spme-05,candy,"{'chocolate': 2, 'soda': 1, 'candy': 1, ""hershey's"": 1, ""Resse's Puffs"": 1, 'cookies': 1, 'tart candies': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",1,2,False,True
+New-ch-04,pizza,"{'chips': 2, 'pizza': 2, 'kebabs': 1, 'chicken': 1, 'biscuits': 1, 'crisps': 1, 'chocolate': 1, 'toast': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+Ta-pe-30,Monday Night Football,"{'match of the day': 5, 'grandstand': 1, 'soccer saturday': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
+Ta-pe-42,herb rice with fish,"{'herb rice with fish': 4, 'fish': 1, 'noodle rice': 1, 'herb frittata': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Kik-in-36,idk,"{'li tie': 1, 'li fenglou': 1, 'fan zhiyi': 1, 'bora milutinovic': 1, 'idk': 7, 'no-answer': 0, 'not-applicable': 0}",7,7,True,True
+New-as-14,hot pot,"{'hot pot': 3, 'noodle soup': 2, 'no-answer': 1, 'not-applicable': 1, 'idk': 0}",3,3,True,True
+Jod-ch-38,volleyball,"{'football': 5, 'volleyball': 2, 'wrestling': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,5,False,True
+Ji-ko-31,home,"{'home': 4, 'library': 2, 'school': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Ta-pe-23,jogging,"{'jogging': 2, 'running': 2, 'cardio': 1, 'exercise machines': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
 New-as-01,wheat,"{'potato': 3, 'wheat': 2, 'beef': 1, 'lamb': 1, 'leek': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
+New-pe-20,volleyball,"{'surfing': 2, 'swimming': 1, 'volleyball': 1, 'building sandcastles': 1, 'beach volleyball': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,2,False,True
+Ji-ko-24,swimming pool,"{'park playground': 3, 'Disneyland': 1, 'Disney World': 1, 'soccer (field)': 1, 'pool': 1, 'YMCA': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
+New-az-49,1,"{'2': 3, '1': 2, '3': 1, 'idk': 1, 'no-answer': 1, 'not-applicable': 0}",2,3,False,True
+New-su-42,no-answer,"{'christianity': 2, 'catholic': 1, 'not-applicable': 2, 'no-answer': 1, 'idk': 0}",1,2,False,True
+New-en-75,16,"{'16': 2, '15': 2, '12': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+Na-ko-30,fifa,"{'football': 2, 'fifa': 1, 'idk': 1, 'نمیدانم': 1, 'no-answer': 1, 'not-applicable': 0}",1,2,False,True
+Na-ko-25,running,"{'long jump': 5, 'running': 3, 'high jump': 2, '800 meters running': 1, 'relay race': 1, 'long-distance running': 1, 'sprint': 1, 'tug of war': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,5,False,True
+Ne-ar-25,oil and gas,"{'oil industry': 3, 'brokerage': 1, 'medical': 1, 'idk': 3, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
+New-su-24,football,"{'football': 3, 'volleyball': 2, 'dodgeball': 1, 'walking in the park': 1, 'run': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Na-ko-07,beef,"{'chicken': 4, 'beef': 3, 'lamb': 1, 'pork': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,4,False,True
+Sa-en-31,dog,"{'dog': 5, 'cat': 3, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Ne-ar-26,apple,"{'microsoft': 2, 'google': 2, ""McDonald's"": 1, 'nike': 1, 'amazon': 1, 'apple': 1, 'target': 1, 'ge': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,2,False,True
+New-ch-08,salt,"{'salt': 5, 'pepper': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Ne-ar-43,biscuit,"{'biscuit': 4, 'rich tea biscuit': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-spme-27,high school,"{'high school': 4, 'associates': 1, 'college': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Jod-ch-42,hiking,"{'playing video games': 2, 'drinking': 1, 'partying': 1, 'Athletics': 1, 'dating': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,2,False,False
+New-ch-81,wine,"{'wine': 2, 'treats': 1, 'baked goods': 1, 'food': 1, 'toaster': 1, 'flowers': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
+Ji-ko-27,flowers,"{'wine': 1, 'lottery tickets': 1, 'food': 1, 'clothing': 1, 'cake': 1, 'candy': 1, 'flowers': 1, 'chocolate': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,1,True,True
+Na-ko-43,not-applicable,"{'sleep': 1, 'enjoy a quiet morning': 1, 'not-applicable': 2, 'idk': 0, 'no-answer': 1}",2,2,True,True
+Ji-ko-26,get married,"{'work': 1, 'college graduate': 1, 'buy a house': 1, 'get married': 1, 'not-applicable': 1, 'idk': 0, 'no-answer': 0}",1,1,True,True
+Ca-sp-21,8,"{'7': 5, '8': 3, '6': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,5,False,True
+Ta-pe-42,no-answer,"{'party snacks': 1, 'spring rolls': 1, 'cakes': 1, 'no-answer': 4, 'idk': 1, 'not-applicable': 0}",4,4,True,True
+New-gr-24,long jump,"{'running': 4, 'athletics': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
+New-en-50,smith,"{'smith': 4, 'jones': 1, 'brown': 1, 'mcdonald': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Ca-sp-08,bread,"{'bread': 3, 'rice': 3, 'onion': 1, 'garlic': 1, 'beans': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-ch-01,beef,"{'chicken': 3, 'beef': 3, 'burgers': 1, 'sausages': 1, 'lamb': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Sa-en-32,idk,"{'dorehami': 2, 'art contest': 1, 'comedy shows': 1, 'khandevaneh': 1, 'idk': 2, 'no-answer': 1, 'not-applicable': 0}",2,2,True,True
+Ji-ko-26,marriage,"{'finding a job': 2, 'living independently': 1, 'no-answer': 3, 'idk': 1, 'not-applicable': 0}",0,3,False,False
+Ne-ar-17,08:00,"{'09:00': 4, '08:00': 2, '07:00': 1, '08:30': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+An-ar-08,7,"{'7': 3, '6': 2, '5': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-in-03,kebab,"{'kebab': 3, 'rice with kebab': 1, 'broad bean rice with meat': 1, 'ghormeh sabzi': 1, 'gheimeh': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
+Jo-sp-09,golf,"{'golf': 3, 'polo': 1, 'formula one': 1, 'American Football': 1, 'tennis': 1, 'skiing': 1, 'lacrosse': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Ca-sp-45,beach,"{'beach': 4, 'national parks': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Kik-in-45,soccer field,"{'football pitch': 4, 'track': 1, 'cricket pitch': 1, 'tennis court': 1, 'basketball court': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
+New-ch-78,garden,"{'knitting': 3, 'evening with friends': 1, 'crafts': 1, 'shop': 1, 'swim': 1, 'book club': 1, 'walking': 1, 'exercising': 1, 'bocce ball': 1, 'water aerobics': 1, 'sewing': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",0,3,False,False
+Al-en-35,decorate trees,"{'not-applicable': 5, 'idk': 0, 'no-answer': 0}",0,5,False,False
+New-ko-04,action figures,"{'video games': 2, 'action figures': 1, 'water guns': 1, 'swords': 1, 'balls': 1, 'sports toys': 1, 'cars': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,2,False,True
+Ne-ar-34,bread,"{'rice': 3, 'bread': 1, 'meat': 1, 'onion': 1, 'yogurt': 1, 'coke': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,3,False,True
+New-en-47,vegetables,"{'vegetable planting area': 2, 'vegetables': 1, 'fruit': 1, 'grass': 1, 'soil': 1, 'brick': 1, 'vegetable jar': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,2,False,True
+New-ch-32,microsoft office,"{'office': 3, 'microsoft word': 1, 'microsoft excel': 1, 'adobe acrobat': 1, 'idk': 1, 'no-answer': 1, 'not-applicable': 0}",0,3,False,False
+New-in-34,shandong,"{'scotland': 4, 'north east': 1, 'aberdeen': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
+Ta-pe-30,match of the day,"{'match of the day': 5, 'grandstand': 1, 'soccer saturday': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Ji-ko-37,school uniform,"{'school uniform': 5, 'sportswear': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-ko-02,idk,"{'lamaze': 2, 'childbirth education classes': 1, 'headphones on the belly bump': 1, 'idk': 4, 'no-answer': 1, 'not-applicable': 0}",4,4,True,True
+Kik-in-38,idk,"{'beijing guoan vs tianjin teda': 1, 'idk': 7, 'not-applicable': 1, 'no-answer': 1}",7,7,True,True
+Jo-sp-13,swimming,"{'swimming': 5, 'waterpolo': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Ca-sp-45,beach,"{'beach': 4, 'national parks': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-spme-65,not-applicable,"{'not-applicable': 5, 'idk': 0, 'no-answer': 0}",5,5,True,True
+New-su-34,guitar,"{'guitar': 3, 'playing in a band': 1, 'music production': 1, 'recorder': 1, 'choir': 1, 'piano': 1, 'clarinet': 1, 'violin': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-en-19,wembley,"{'wembley': 4, 'white hart lane': 1, 'Wimbledon stadium': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Jo-sp-37,12,"{'12': 2, '10': 2, '8': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+Ne-ar-05,nowruz,"{'lunar new year': 5, 'national day': 2, 'mid-autumn festival': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
+New-su-09,olive oil,"{'olive oil': 3, 'vegetable oil': 2, 'sunflower': 1, 'canola': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Sa-en-7,crisps,"{'crisps': 4, 'cheesepuff': 3, 'fruit leather': 1, 'sunflower seeds': 1, 'seed': 1, 'peanut (snack)': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Na-ko-45,sanya,"{'sanya': 3, 'hainan': 2, 'yunnan': 2, 'maldives': 1, 'thailand': 1, 'xiamen': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Jo-sp-43,1,"{'1': 4, '0': 1, '3': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-en-69,hafiz,"{'jalal al-e ahmad': 2, 'dehkhoda': 1, 'shamlou': 1, 'sohrab sepehri': 1, 'jamalzadeh': 1, 'no-answer': 1, 'idk': 1, 'not-applicable': 0}",0,2,False,False
+New-en-11,not-applicable,"{'sprouts': 4, 'cabbage': 2, 'broccoli': 1, 'okra': 1, 'beetroot': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
+Th-en-53,prom,"{'prom': 2, 'homecoming': 1, 'marching band': 1, 'chorus': 1, 'dances': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
+Al-en-33,dress up in costumes,"{'children trick or treat': 5, 'carve pumpkins': 1, 'dress up in costumes': 1, 'scary films': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,5,False,True
+Gu-ch-09,soccer,"{'soccer': 3, 'netball': 3, 'tennis': 1, 'hockey': 1, 'cricket': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Ji-ko-38,medicine,"{'medicine': 4, 'veterinary': 1, 'law': 1, 'dentistry': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-su-50,shepherd,"{'shepherds': 2, 'farming': 1, 'hospitality': 1, 'idk': 2, 'no-answer': 1, 'not-applicable': 1}",0,2,False,False
+New-ch-38,bandar abbas,"{'chabahar': 2, 'qeshm': 2, 'tehran': 1, 'shiraz': 1, 'isfahan': 1, 'kurdistan': 1, 'aras': 1, 'anzali': 1, 'bandar abbas': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",1,2,False,True
+Jo-sp-21,12:00,"{'12:00': 4, '12:30': 2, '13:00': 1, '11:30': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Ji-ko-40,play,"{'go to the toilet': 1, 'chat': 1, 'play': 1, 'sleep': 1, 'do homework': 1, 'study': 1, 'sports': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,1,True,True
+Kik-in-31,boxing,"{'karate': 2, 'jiu jitsu': 1, 'kickboxing': 1, 'boxing': 1, 'no-answer': 2, 'idk': 1, 'not-applicable': 0}",1,2,False,True
+New-ko-02,idk,"{'lamaze': 2, 'childbirth education classes': 1, 'headphones on the belly bump': 1, 'idk': 4, 'no-answer': 1, 'not-applicable': 0}",4,4,True,True
+Sa-en-1,kentucky fried chicken,"{'kentucky fried chicken': 4, ""mcdonald's"": 3, 'mixue ice cream & tea': 1, 'shaxian delicacies': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Ji-ko-19,no-answer,"{'carnation': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
+Al-en-19,english,"{'english': 5, 'french': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-su-58,cow,"{'cow': 5, 'donkey': 3, 'horse': 1, 'sheep': 1, 'chicken': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Na-ko-40,1,"{'1': 6, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",6,6,True,True
+Ta-pe-23,running,"{'running': 4, 'biking': 1, 'soccer': 1, 'weight lifting': 1, 'sit-ups': 1, 'push-ups': 1, 'jogging': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Na-ko-45,london,"{'london': 3, 'scotland': 1, 'the cotswolds': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
+Ji-ko-41,sneakers,"{'sneakers': 4, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
+Th-en-01,volleyball,"{'baseball': 2, 'volleyball': 1, 'swimming': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",1,2,False,True
+Na-ko-44,Thanksgiving,"{'before nowruz': 3, 'first of mehr': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
+New-spme-76,not-applicable,"{'azadi street': 1, 'not-applicable': 4, 'idk': 1, 'no-answer': 0}",4,4,True,True
+New-en-55,islam,"{'islam': 4, 'shia islam': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-in-01,starbucks,"{'starbucks': 4, ""Dunkin' Donuts"": 2, 'coffee bean': 1, 'tea leaf': 1, 'blue bottle': 1, 'dutch bros': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-en-72,idk,"{'wikipedia': 2, 'ChatGPT': 1, 'cliffnotes': 1, 'google drive': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-ch-39,taobao,"{'taobao': 5, 'jd.com': 4, 'pinduoduo': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-az-73,200,"{'100': 3, '200': 2, '30': 1, '150': 1, '500': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,3,False,True
+New-spme-78,happy birthday to you,"{'happy birthday to you': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-pe-06,beef,"{'beef': 2, 'chili': 1, 'gumbo (cajun style)': 1, 'chicken stew': 1, 'idk': 1, 'no-answer': 1, 'not-applicable': 0}",2,2,True,True
+New-en-56,spanish,"{'spanish': 4, 'mandarin': 1, 'german': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
+Gu-ch-41,1,"{'1': 4, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
+Na-ko-23,idk,"{'basketball': 3, 'soccer': 2, 'American Football': 2, 'baseball': 1, 'idk': 1, 'not-applicable': 1, 'no-answer': 1}",1,3,False,True
+New-en-41,steve jobs,"{'bill gates': 4, 'jeff bezos': 2, 'steve jobs': 1, 'mark cuban': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,4,False,True
+Th-en-36,go to the park,"{'zoo': 2, 'go to the park': 2, 'walks': 1, 'soccer': 1, 'swimming pool': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+Na-ko-26,golf,"{'soccer': 2, 'rugby': 2, 'bowls': 2, 'walking': 1, 'hiking': 1, 'darts': 1, 'cricket': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,2,False,False
+New-ha-07,burgers,"{'burgers': 2, ""mcdonald's"": 1, 'barbeque': 1, 'mac & cheese': 1, 'french fries': 1, 'no-answer': 1, 'idk': 1, 'not-applicable': 0}",2,2,True,True
+Jod-ch-46,1,"{'1': 3, '15': 1, '30': 1, '0.5': 1, '0.3': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Ca-sp-41,son's home,"{'care homes': 5, 'sheltered accomodation': 1, 'with relatives': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
+Ta-pe-32,chaharshanbe suri,"{'chaharshanbe suri': 4, 'one week before nowruz': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-su-75,car,"{'suv': 3, 'car': 3, 'truck': 1, 'sedan': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Na-ko-44,christmas eve,"{'monday': 1, 'easter': 1, 'christmas eve': 1, 'idk': 3, 'no-answer': 1, 'not-applicable': 0}",1,3,False,True
+Ji-ko-44,north,"{'oxford': 3, 'cambridge': 3, 'st andrews': 1, 'idk': 3, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
+New-ch-44,3 months,"{'3 months': 4, 'one month': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-ch-70,idk,"{'none': 1, 'idk': 2, 'not-applicable': 1, 'no-answer': 1}",2,2,True,True
+Th-en-09,fifa world cup,"{'premier league': 3, 'FA Cup': 2, 'wimbledon': 1, 'cheltenham festival': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
+Gu-ch-06,basketball,"{'basketball': 4, 'soccer': 3, 'ping pong': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Ni-en-09,5,"{'5': 5, '6': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Gu-ch-32,13,"{'12': 4, '13': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,4,False,True
+Ki-pe-17,university,"{'secondary': 3, 'university': 2, 'college': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
+Ta-pe-45,not-applicable,"{'not-applicable': 4, 'idk': 0, 'no-answer': 1}",4,4,True,True
+New-su-09,olive oil,"{'olive oil': 3, 'vegetable oil': 2, 'sunflower': 1, 'canola': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-az-27,soccer,"{'soccer': 4, 'racing': 1, 'NCA A Football': 1, 'American Football': 1, 'basketball': 1, 'idk': 3, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Jod-ch-15,crab,"{'crab': 2, 'fish': 1, 'salmon': 1, 'lobster': 1, 'prawn': 1, 'seabass': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-am-15,not-applicable,"{'casseroles': 1, 'soups': 1, 'stews': 1, 'no-answer': 2, 'not-applicable': 2, 'idk': 0}",2,2,True,True
+New-ko-07,chrysanthemum,"{'chrysanthemum': 3, 'flower wreath': 2, 'pork': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-ko-06,shahnameh,"{'hasani': 1, 'one thousand and one nights': 1, 'the boy who cried wolf': 1, 'shahnameh': 1, 'rostam and sohrab': 1, 'rumbling pumpkin': 1, 'shangool mangool grape berry': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,1,True,True
+Jod-ch-09,18:00,"{'18:00': 4, '19:00': 1, '18:30': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Th-en-03,premier league,"{'premier league': 4, 'EFL Championship': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Na-ko-16,fan zhiyi,"{'wu lei': 3, 'fan zhiyi': 2, 'wei shihao': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
+Ta-pe-45,not-applicable,"{'not-applicable': 4, 'idk': 0, 'no-answer': 1}",4,4,True,True
+Jod-ch-07,1.5,"{'2': 4, '1.5': 2, '1': 1, '2.5': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+Th-en-43,2,"{'2': 4, '1': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Ki-pe-43,white bread,"{'Wonder Bread': 2, 'white bread': 2, 'wheat bread': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+Al-en-21,english,"{'science': 4, 'mathematics': 4, 'english': 3, 'stem': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,4,False,True
+Ki-pe-30,sunday,"{'saturday': 5, 'sunday': 5, 'public hoilday': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Al-en-01,fruit,"{'fruit': 3, 'sandwich': 1, 'cake and milk': 1, 'bread and cheese': 1, 'eggs': 1, 'cereal': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
+New-ch-14,chicken noodle soup,"{'soup': 2, 'chicken noodle soup': 2, 'banana': 1, 'ginger ale': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-am-74,the one show,"{'rock & roast': 4, 'the jinxing show': 2, 'roast!': 1, 'day day up': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
+Th-en-39,monopoly,"{'monopoly': 4, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
+Sa-en-13,marmite,"{'marmite': 3, 'onion': 1, 'Brussels sprouts ': 1, 'sushi': 1, 'pineapple on pizza': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Jod-ch-42,travel,"{'playing video games': 2, 'drinking': 1, 'partying': 1, 'Athletics': 1, 'dating': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,2,False,False
+New-as-76,mahjong,"{'mahjong': 2, 'shuttlecock kicking': 1, 'jump rope': 1, 'chinese chess': 1, 'dou dizhu': 1, 'not-applicable': 1, 'idk': 0, 'no-answer': 0}",2,2,True,True
+New-az-73,200,"{'100': 3, '200': 2, '30': 1, '150': 1, '500': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,3,False,True
+New-pe-85,america,"{'america': 2, 'japan': 2, 'maldives': 2, 'australia': 1, 'turkey': 1, 'southeast asia': 1, 'singapore': 1, 'malaysia': 1, 'thailand': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+An-ar-09,2,"{'2': 5, '3': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-ch-78,swimming,"{'swimming': 2, 'walking (rambling)': 2, 'cooking': 1, 'fitness classes': 1, 'pub lunches': 1, 'wrestling': 1, 'soccer': 1, 'marathons': 1, 'going out for lunch': 1, 'shopping': 1, 'bingo': 1, 'zumba': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-gr-47,15,"{'30': 4, '15': 2, '10': 1, '20': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+New-su-71,money,"{'toy': 4, 'money': 2, 'clothes': 1, 'gold': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+New-spme-15,gatorade,"{'gatorade': 5, 'powerade': 1, 'red bull': 1, 'monster': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Ne-ar-38,ghormeh sabzi,"{'gheimeh': 4, 'sacrificial meat': 1, 'stew': 1, 'lentil rice': 1, 'barberry rice with chicken': 1, 'ghromeh sabzi': 1, 'chicken stew with rice': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,4,False,False
+Ta-pe-25,esteghlal vs persepolis,"{'esteghlal vs persepolis': 5, 'sepahan against zob ahan': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-en-07,MasterChef,"{'chopped': 3, 'MasterChef': 3, 'top chef': 1, ""hell's kitchen"": 1, 'iron chef': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",3,3,True,True
+Ki-pe-36,mexican,"{'mexican': 2, 'chinese': 2, 'italian': 2, 'mexico': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-spme-04,pistachio,"{'pistachio': 4, 'saffron': 2, 'wheat': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Ca-sp-11,sunday,"{'sunday': 5, 'saturday': 1, 'friday': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-spme-78,happy birthday to you,"{'happy birthday to you': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Kik-in-16,hot chocolate,"{'hot coffee': 5, 'hot chocolate': 3, 'tea': 1, 'water': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,5,False,True
+New-su-81,suit,"{'suit': 4, 'tang suit': 1, 'chinese-style dress': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",4,4,True,True
+Ji-ko-28,first month,"{'first month': 2, 'birth feast': 1, 'hundred days': 1, 'idk': 1, 'no-answer': 1, 'not-applicable': 0}",2,2,True,True
+Gu-ch-15,American Football,"{'American Football': 5, 'basketball': 3, 'baseball': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Al-en-19,spanish,"{'spanish': 5, 'french': 3, 'german': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Na-ko-22,korea,"{'spain': 2, 'france': 2, 'germany': 1, 'america': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",0,2,False,False
+New-su-33,formal attire,"{'formal attire': 2, 'shirt': 1, 'trousers': 1, 'appropriate': 1, 'not inappropriately': 1, 'not dressed in a strange or unusual way': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-ch-71,30,"{'30': 5, '20': 1, '40': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-pe-53,chocolate,"{'socks': 4, 'beer': 2, 'aftershave': 1, 'card': 1, 'presents': 1, 'clothes': 1, 'chocolate': 1, 'football tickets': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,4,False,True
+Na-ko-29,idk,"{'idk': 5, 'no-answer': 2, 'نمیدانم': 1, 'not-applicable': 0}",5,5,True,True
+Th-en-41,30,"{'30': 2, '27': 1, '26': 1, '22': 1, '25': 1, '28': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+Ne-ar-10,not-applicable,"{'not-applicable': 5, 'idk': 3, 'no-answer': 0}",5,5,True,True
+Na-ko-43,not-applicable,"{'sleep': 1, 'enjoy a quiet morning': 1, 'not-applicable': 2, 'idk': 0, 'no-answer': 1}",2,2,True,True
+Na-ko-43,not-applicable,"{'sleep': 1, 'enjoy a quiet morning': 1, 'not-applicable': 2, 'idk': 0, 'no-answer': 1}",2,2,True,True
+Jo-sp-18,10,"{'10': 2, '15': 1, '115': 1, '116': 1, '11': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+Kik-in-17,not-applicable,"{'dates': 1, 'not-applicable': 3, 'idk': 2, 'no-answer': 0}",3,3,True,True
+Ca-sp-41,assisted living,"{'assisted living': 5, 'family': 4, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Na-ko-45,las vegas,"{'las vegas': 2, 'palm springs': 1, 'bahamas': 1, 'hawaii': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-pe-59,2,"{'2': 4, '1': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-az-21,dizin,"{'dizin': 2, 'shemshak': 2, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
+New-az-27,volleyball,"{'volleyball': 2, 'futsal': 1, 'badminton': 1, 'football': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+Na-ko-28,idk,"{'Michael David Edwards': 1, 'david beckham': 1, 'eve muirhead': 1, 'idk': 3, 'not-applicable': 1, 'no-answer': 1}",3,3,True,True
+Kik-in-44,rugby,"{'soccer': 4, 'rugby': 2, 'cricket': 1, 'athletics ': 1, 'tennis': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+An-ar-08,9,"{'9': 2, '10': 2, '11': 2, '8': 1, '15': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-am-73,idk,"{'cocomelon': 3, 'idk': 5, 'no-answer': 1, 'not-applicable': 0}",5,5,True,True
+New-az-05,not-applicable,"{'shiraz': 1, 'not-applicable': 3, 'no-answer': 1, 'idk': 0}",3,3,True,True
+Ne-ar-26,oil company,"{'oil company': 2, 'mapna': 1, 'khatam al-anbiya headquarters': 1, 'no-answer': 2, 'idk': 0, 'not-applicable': 0}",2,2,True,True
+Th-en-45,watching tv,"{'watching tv': 3, 'picnic': 1, 'cafe hopping': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Ji-ko-27,fruit,"{'sweets': 3, 'natural flower': 2, 'chocolate': 1, 'saffron': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
+Na-ko-11,chips,"{'hotdog': 3, 'burger': 1, 'fries': 1, 'popcorn': 1, 'burgers': 1, 'chips': 1, 'chili': 1, 'wings': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,3,False,True
+New-az-11,watermelon,"{'watermelon': 4, 'sour plum': 1, 'apricot': 1, 'strawberry': 1, 'cantaloupe': 1, 'green plum': 1, 'mandarine': 1, 'orange': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-in-01,starbucks,"{'starbucks': 4, ""Dunkin' Donuts"": 2, 'coffee bean': 1, 'tea leaf': 1, 'blue bottle': 1, 'dutch bros': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-as-58,coffee,"{'tea': 3, 'coffee': 3, 'bubble tea': 2, 'coke': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-ch-07,no-answer,"{'peanuts': 3, 'braised food': 2, 'beef': 1, 'pork': 1, 'steamed bun': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
+Jod-ch-07,1.5,"{'2': 4, '1.5': 2, '1': 1, '2.5': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+New-gr-88,tea,"{'tea': 4, 'chocolate milk': 1, 'water': 1, 'coke': 1, 'orange juice': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Nu-in-20,not-applicable,"{'06/09': 1, '06/08': 1, '06/14': 1, 'not-applicable': 2, 'no-answer': 1, 'idk': 1}",2,2,True,True
+Al-en-09,popcorn,"{'cotton candy': 4, 'popcorn': 1, 'gummies': 1, 'french fries': 1, 'olivier salad': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,4,False,True
+New-pe-66,sports,"{'sports': 4, 'soccer': 2, 'art programs': 1, 'STEM programs': 1, 'theater': 1, 'music': 1, 'performing arts': 1, 'art and craft': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+Ca-sp-08,potato,"{'salt': 3, 'potato': 2, 'meat': 1, 'sugar': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
+New-az-26,idk,"{'bruce lee': 1, 'jon jones': 1, 'conor mcgregor': 1, 'no-answer': 3, 'idk': 3, 'not-applicable': 0}",3,3,True,True
+New-spme-68,juice,"{'bubble tea': 2, 'juice': 2, 'wahaha': 1, 'soda water': 1, 'yakult': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+Kik-in-16,tea,"{'tea': 5, 'herbal tea': 1, 'chocolate milk': 1, 'coffee': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Ca-sp-19,vodka,"{'beer': 4, 'vodka': 2, 'wkd': 1, 'shots': 1, 'wine': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,4,False,True
+New-as-30,baseball,"{'american football': 4, 'baseball': 3, 'basketball': 2, 'soccer': 1, 'tennis': 1, 'volleyball': 1, 'hockey': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,4,False,True
+Ji-ko-15,0.5,"{'1': 3, '0.5': 2, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
+New-as-05,water,"{'water': 3, 'coffee': 3, 'juice': 2, 'soda': 2, 'iced tea': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Ni-en-40,all i want for christmas is you,"{'all i want for christmas is you': 3, 'deck the halls': 1, 'jingle bell': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Ji-ko-31,home,"{'home': 4, 'library': 2, 'school': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-ch-73,sports,"{'sports': 2, 'golf': 1, 'nightclubs': 1, 'technology clubs': 1, 'music clubs': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+Na-ko-38,no-answer,"{'honeymoon travel': 1, 'kitchen appliances': 1, 'jewelry': 1, 'rings': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",1,1,True,True
+New-ch-81,wine,"{'wine': 2, 'treats': 1, 'baked goods': 1, 'food': 1, 'toaster': 1, 'flowers': 1, 'no-answer': 1, 'idk': 0, 'not-applicable': 0}",2,2,True,True
+Jo-sp-36,12,"{'12': 4, '16': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",4,4,True,True
+New-as-01,wheat,"{'potato': 3, 'wheat': 2, 'beef': 1, 'lamb': 1, 'leek': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,3,False,True
+An-ar-34,American Football,"{'American Football': 3, 'rugby': 1, 'basketball': 1, 'baseball': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+Jod-ch-46,1,"{'1': 3, '15': 1, '30': 1, '0.5': 1, '0.3': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+New-ch-15,instant noodles,"{'instant noodles': 3, 'dumplings': 2, 'boxed meals': 1, 'luosifen': 1, 'vegetarian chicken': 1, 'zongzi': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",3,3,True,True
+An-ar-34,soccer,"{'soccer': 5, 'rugby': 1, 'idk': 1, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-as-15,water,"{'lemonade': 4, 'iced tea': 2, 'water': 1, 'beer': 1, 'gatorade': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",1,4,False,True
+New-am-54,midwest,"{'MW': 3, 'south': 3, 'SW': 1, 'corn belt': 1, 'southeast': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,3,False,False
+Kik-in-15,graduation gown,"{'gowns': 5, 'cap': 1, 'dress': 1, 'idk': 2, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
+New-su-10,no-answer,"{'ice cream': 1, 'no-answer': 4, 'idk': 0, 'not-applicable': 0}",4,4,True,True
+Ta-pe-21,school,"{'field': 2, 'outdoor field': 1, 'youth soccer league': 1, 'school': 1, 'community park': 1, 'not-applicable': 1, 'idk': 0, 'no-answer': 0}",1,2,False,True
+New-ch-32,office,"{'office': 3, 'microsoft word': 1, 'microsoft excel': 1, 'adobe acrobat': 1, 'idk': 1, 'no-answer': 1, 'not-applicable': 0}",3,3,True,True
+New-su-10,idk,"{'chicken soup': 1, 'crucian carp soup': 1, 'dates': 1, 'nutritionally balanced food': 1, 'nutrient-rich food': 1, 'egg': 1, 'no-answer': 2, 'idk': 2, 'not-applicable': 0}",2,2,True,True
+Th-en-45,dinner,"{'television': 2, 'dinner': 2, 'playing games': 1, 'stroll': 1, 'little league events': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",2,2,True,True
+New-en-68,detention,"{'detention': 5, 'expulsion': 4, 'extra work': 1, 'school inform parents': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+An-ar-09,2,"{'2': 5, '3': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-su-60,sandwich,"{'rice': 5, 'corn': 1, 'steamed bun': 1, 'meat dish': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
+Al-en-32,turkey,"{'turkey': 5, 'ham': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+Sa-en-9,sandwiches,"{'sandwich': 5, 'watermelon': 1, 'chips': 1, 'grill hamburgers': 1, 'ice cream': 1, 'hot dogs': 1, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",0,5,False,False
+Ni-en-17,40,"{'40': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+New-ch-49,wechat,"{'wechat': 5, 'idk': 0, 'no-answer': 0, 'not-applicable': 0}",5,5,True,True
+An-ar-02,canteen,"{'canteen': 3, 'accommodation': 1, 'on campus': 1, 'no-answer': 1, 'idk': 1, 'not-applicable': 0}",3,3,True,True

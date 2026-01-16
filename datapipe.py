@@ -103,19 +103,22 @@ def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool
                 'mcqid': row.MCQID
             })
 
-    
+        question_only = prompt.split('?')[0] + '?'
+        training_examples.append({
+            'messages': [
+                {"role": "user", "content": f"Analyze the following question and identify the geographical regions associated with the options: '{question_only} \n {json.dumps(choices)}'"},
+                {"role": "assistant", "content": json.dumps(country)},
+            ],
+            'mcqid': row.MCQID
+        })
+
+
     dataset = Dataset.from_list(training_examples).shuffle(seed)
     return dataset
 
 def create_saq_prompt(question: str) -> str:
     """
-    Create a formatted prompt for SAQ questions.
-    
-    Args:
-        question: The question text
-        
-    Returns:
-        Formatted prompt string
+    Formatted prompt for training and evaluation
     """
     return f"{question} Provide ONLY the exact answer without explanation."# Provide not more than 4 word answers."
 
@@ -186,6 +189,14 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
                     {"role": "assistant", "content": best_answer},
                     {"role": "user", "content": "Why is this correct"},
                     {"role": "assistant", "content": f"Because it is a cultural question about {country}"}
+                ],
+                'id': row.ID
+            })
+        
+        training_examples.append({
+                'messages': [
+                    {"role": "user", "content": f"Identify the country of origin for this question: '{en_question}'"},
+                    {"role": "assistant", "content": country}
                 ],
                 'id': row.ID
             })

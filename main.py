@@ -75,7 +75,7 @@ class FineTuningConfig:
 
     # Eval Configuration
     gen_train_preds: bool = True
-    eval_train_samples: int = -1
+    eval_train_samples: int = 400
     gen_test_preds: bool = True
     
 
