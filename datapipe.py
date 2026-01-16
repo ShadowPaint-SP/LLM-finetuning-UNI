@@ -67,7 +67,7 @@ def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool
         prompt = row.prompt.strip()
         correct_answer = row.answer_idx.strip()
         choices = json.loads(row.choices)
-        #country = json.loads(row['choice_countries'])
+        country = json.loads(row.choice_countries)
 
         if use_all_answers:
             marker = '{"answer_choice":""}'
@@ -88,8 +88,8 @@ def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool
                     'messages': [
                         {"role": "user", "content": combined_question},
                         {"role": "assistant", "content": completion},
-                        #{"role": "user", "content": "Why is this correct"},
-                        #{"role": "assistant", "content": f"Because '{answer[letter]}' is the correct answer"}
+                        {"role": "user", "content": "Why is this correct"},
+                        {"role": "assistant", "content": f"Because '{answer[letter]}' is the correct answer"}
                     ],
                     'mcqid': row.MCQID
                 })
@@ -142,6 +142,7 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
         en_question = row.en_question.strip()
         annotations = ast.literal_eval(row.annotations)
         idks = ast.literal_eval(row.idks)
+        country = row.country
         merged_answers = {}
         
         for item in annotations:
@@ -165,7 +166,10 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
                 example = {
                     'messages': [
                         {"role": "user", "content": f"{prompt} Target Score: {merged_answers[answer]}"},
-                        {"role": "assistant", "content": answer}
+                        {"role": "assistant", "content": answer},
+                        {"role": "user", "content": "Why is this correct"},
+                        {"role": "assistant", "content": f"Because it is a cultural question about {country}"}
+
                     ],
                     'id': row.ID
                 }
@@ -179,7 +183,9 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
             training_examples.append({
                 'messages': [
                     {"role": "user", "content": prompt},
-                    {"role": "assistant", "content": best_answer}
+                    {"role": "assistant", "content": best_answer},
+                    {"role": "user", "content": "Why is this correct"},
+                    {"role": "assistant", "content": f"Because it is a cultural question about {country}"}
                 ],
                 'id': row.ID
             })
@@ -192,33 +198,124 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
     return dataset
 
 
-def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
-                          use_all_answers: bool = False, weight_sampling: bool = False, debug:bool = False):
+def augment_question(question: str, task_type: str, variation_seed: int) -> str:
     """
-    Create train/validation splits for training.
+    Create paraphrased variations of questions for data augmentation.
+    
+    Args:
+        question: Original question text
+        task_type: 'mcq' or 'saq'
+        variation_seed: Seed for random variation selection
+        
+    Returns:
+        Paraphrased question
+    """
+    random.seed(variation_seed)
+    
+    if task_type == 'mcq':
+        variations = [
+            f"Which of the following best answers: {question}?",
+            f"Regarding the following question: {question}",
+            f"What is the correct response to: {question}?",
+            f"Select the best answer for: {question}",
+            f"Choose the most appropriate option: {question}",
+        ]
+    else:  # saq
+        variations = [
+            f"Answer in detail: {question}",
+            f"Please explain: {question}",
+            f"Provide an answer to: {question}",
+            f"Explain the following: {question}",
+            f"Respond to this question: {question}",
+        ]
+    
+    return random.choice(variations)
+
+
+def augment_dataset_before_tokenization(dataset: Dataset, task_type: str, 
+                                        augmentation_factor: float = 1.5,
+                                        seed: int = 42) -> Dataset:
+    """
+    Augment dataset by creating paraphrased variations BEFORE tokenization.
+    
+    Args:
+        dataset: Original dataset with 'messages' field
+        task_type: 'mcq' or 'saq'
+        augmentation_factor: Multiplier for dataset size (e.g., 1.5 = 50% more)
+        seed: Random seed for reproducibility
+        
+    Returns:
+        Augmented dataset (still in messages format, ready for tokenization)
+    """
+    if augmentation_factor <= 1.0:
+        return dataset
+    
+    random.seed(seed)
+    original_size = len(dataset)
+    num_augmented = int(original_size * (augmentation_factor - 1.0))
+    
+    augmented_examples = list(dataset)  # Start with originals
+    
+    for i in range(num_augmented):
+        # Randomly sample from original dataset
+        idx = random.randint(0, original_size - 1)
+        original = dataset[idx]
+        
+        # Deep copy the example
+        augmented = {k: v for k, v in original.items()}
+        
+        # Get the original user question from messages
+        messages = original['messages']
+        user_message = messages[0]['content']
+        
+        # For MCQ: Extract the base question (before options if present)
+        if task_type == 'mcq':
+            # If options are in the content, extract just the question part
+            if '\n\nA.' in user_message:
+                base_question = user_message.split('\n\nA.')[0]
+                options_part = '\n\nA.' + user_message.split('\n\nA.')[1]
+            else:
+                base_question = user_message
+                options_part = ''
+            
+            # Paraphrase the question
+            paraphrased = augment_question(base_question, task_type, seed + i)
+            new_user_content = paraphrased + options_part
+        else:
+            # For SAQ: Paraphrase the entire question
+            new_user_content = augment_question(user_message, task_type, seed + i)
+        
+        # Create new messages with paraphrased question
+        new_messages = [
+            {"role": "user", "content": new_user_content}
+        ]
+        # Keep all other messages (assistant responses, follow-ups, etc.)
+        new_messages.extend(messages[1:])
+        
+        augmented['messages'] = new_messages
+        augmented_examples.append(augmented)
+    
+    return Dataset.from_list(augmented_examples)
+
+
+def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
+                          use_all_answers: bool = False, weight_sampling: bool = False, 
+                          augment_data: bool = False, augmentation_factor: float = 1.5,
+                          debug: bool = False):
+    """
+    Create train/validation splits for training with optional data augmentation.
     
     Args:
         csv_path: Path to the CSV file
         task_type: Either 'mcq' or 'saq'
-        test_size: Fraction for validation (default 0.1)
+        tokenizer: Tokenizer instance
         seed: Random seed for reproducibility
         use_all_answers: enlarge the datasets
         weight_sampling: (SAQ only) Sample proportionally to answer weights
-        
+        augment_data: If True, apply data augmentation before tokenization
+        augmentation_factor: Multiplier for augmentation (e.g., 1.5 = 50% more data)
+        debug: Print debugging information
     """
-
-    # Llama 3 spacific chat template
-    if tokenizer.chat_template is None:
-        tokenizer.chat_template = (
-            "{% set loop_messages = messages %}"
-            "{% for message in loop_messages %}"
-            #"{{ message['content'] | trim +'\n' }}"
-            "{{ message['role'] + ': ' + message['content'] | trim +'\n' }}"
-            "{% endfor %}"
-            "{% if add_generation_prompt %}"
-            "{{ '' }}"
-            "{% endif %}"
-        )
 
     if task_type.lower() == 'mcq':
         dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, use_all_answers, seed)
@@ -231,6 +328,19 @@ def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
         )
     else:
         raise ValueError(f"task_type must be 'mcq' or 'saq', got {task_type}")
+    
+    original_size = len(dataset)
+    
+    # Apply augmentation BEFORE tokenization
+    if augment_data:
+        dataset = augment_dataset_before_tokenization(
+            dataset, 
+            task_type, 
+            augmentation_factor,
+            seed
+        )
+        print(f"[AUGMENTATION] {task_type.upper()}: {original_size} → {len(dataset)} samples "
+              f"({augmentation_factor}x factor)")
     
     def tokenize_and_mask(examples):
             """Other Tokenization approach

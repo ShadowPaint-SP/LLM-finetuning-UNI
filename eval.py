@@ -212,26 +212,10 @@ def _saq_func(query: str, tokenizer, model, debug: bool):
     def _extract_answer_from_text(full_text: str) -> str:
         """Robust answer extraction with fallback strategies"""
 
-        if "[/INST]" in full_text:
-            parts = full_text.split("[/INST]")
-            if len(parts) > 1:
-                answer = parts[-1].strip()  # Get the last part (the answer)
-                print("\n\n\nweird\n\n\n")
-                # Clean up the answer
-                answer = answer.replace("</s>", "").strip()  # Remove EOS token
-                answer = answer.split("\n")[0].strip()  # Take only first line
-                
-                # Remove any trailing periods or commas
-                answer = answer.rstrip(".,").strip()
-                
-                if answer:
-                    return answer
-        else:
-            answer_text = full_text.split("\n")[0].strip()  # First line only
-            answer_text = answer_text.rstrip(".,!?").strip()  # Remove punctuation
-            
-            return answer_text
-        return "idk"
+        answer_text = full_text.split("\n")[0].strip()  # First line only
+        answer_text = answer_text.rstrip(".,!?").strip()  # Remove punctuation
+        
+        return answer_text
     
     # Create messages format
     #TODO system prompt appying or formatting

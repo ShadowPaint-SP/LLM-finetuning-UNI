@@ -206,3 +206,9 @@ gen_train_preds: bool = True
 eval_train_samples: int = 400
 gen_test_preds: bool = True
 ```
+
+
+# Llama vs Mistral
+wasnt able to identify a difference between the two models while testing
+
+saw imporvements when combining the two models to one for both tasks most likely because the datasets arnt that large.
