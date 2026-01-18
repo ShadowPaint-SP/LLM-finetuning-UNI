@@ -59,7 +59,6 @@ def _mcq_func(query: str, tokenizer, model, debug: bool):
     #TODO system prompt appying or formatting
     
     messages = [
-            #{"role": "system", "content": system_prompt},
             {"role": "user", "content": query}
     ]
     # Apply chat template
@@ -94,9 +93,6 @@ def _answer_n_mcq(tokenizer, model, n: int, path, debug: bool):
     Answer n multiple choice questions
     n=-1 <-> Answer ALL questions
     """
-
-    
-    
     mcq = pd.read_csv(path)
     # Extract sample or all
     if n != -1:
@@ -391,23 +387,44 @@ def _evaluate_saq_predictions(prediction_file):
     results_df.to_csv(output_filename, index=False)
     print(f"Detailed report saved to '{output_filename}'")
 
-
-def create_zip_for_submission(saq, mcq):
-    """Create submission files in correct format"""
-
+def create_zip_for_submission(saq, mcq, additional_files=None):
+    """
+    Create submission files in correct format and include optional extra files.
+    
+    Args:
+        saq: DataFrame for SAQ predictions
+        mcq: DataFrame for MCQ predictions
+        additional_files (list): List of paths to other files to include in the zip
+    """
     saq.to_csv("saq_prediction.tsv", sep='\t', index=False)
     mcq.to_csv("mcq_prediction.tsv", sep='\t', index=False)
     
-    # Create zip file
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
     zip_name = f"submission_{timestamp}.zip"
-    with zipfile.ZipFile(f"results/submissions/{zip_name}", mode="w", compression=zipfile.ZIP_DEFLATED) as z:
+    output_dir = "results/submissions"
+    
+    os.makedirs(output_dir, exist_ok=True)
+    zip_path = os.path.join(output_dir, zip_name)
+
+    print(f"Creating {zip_name}...")
+
+    with zipfile.ZipFile(zip_path, mode="w", compression=zipfile.ZIP_DEFLATED) as z:
         z.write("saq_prediction.tsv")
         z.write("mcq_prediction.tsv")
+        
+        if additional_files:
+            for file_path in additional_files:
+                if os.path.exists(file_path):
+                    # arcname=basename ensures files are flattened into the zip root
+                    # e.g., 'sub/dir/image.png' becomes just 'image.png' inside the zip
+                    z.write(file_path, arcname=os.path.basename(file_path))
+                    print(f"Added: {file_path}")
+                else:
+                    print(f"Warning: File not found - {file_path}")
     
-    print(f"Submission created: {zip_name}")
+    print(f"Submission successfully created: {zip_path}")
     
-    # Cleanup
+    # 4. Cleanup temporary files
     os.remove("saq_prediction.tsv")
     os.remove("mcq_prediction.tsv")
 

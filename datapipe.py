@@ -192,10 +192,10 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
                 ],
                 'id': row.ID
             })
-        
+        best_answer = max(merged_answers.items(), key=lambda x: x[1])[0]
         training_examples.append({
                 'messages': [
-                    {"role": "user", "content": f"Identify the country of origin for this question: '{en_question}'"},
+                    {"role": "user", "content": f"Identify the country of origin for this entity: '{best_answer}'"},
                     {"role": "assistant", "content": country}
                 ],
                 'id': row.ID
@@ -361,13 +361,13 @@ def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
             labels_list = []
             
             # Mistral separator
-            sep_ids = tokenizer.encode("[/INST]", add_special_tokens=False)
-            sep_len = len(sep_ids)
+            #sep_ids = tokenizer.encode("[/INST]", add_special_tokens=False)
+            #sep_len = len(sep_ids)
             
-            # Fallback for tokenizer variances
-            if not sep_ids:
-                    sep_ids = tokenizer.encode(" [/INST]", add_special_tokens=False)
-                    sep_len = len(sep_ids)
+            ## Fallback for tokenizer variances
+            #if not sep_ids:
+            #        sep_ids = tokenizer.encode(" [/INST]", add_special_tokens=False)
+            #        sep_len = len(sep_ids)
 
             for messages in examples["messages"]:
                     # Tokenize
@@ -412,7 +412,7 @@ def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
         # Get a single example from the processed dataset
         sample = dataset[0] 
         input_ids = sample['input_ids']
-        labels = sample['labels']
+        #labels = sample['labels']
 
         print(f"Total Input Length: {len(input_ids)}")
 
@@ -422,89 +422,107 @@ def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
 
         # Decode the Labels (What the model is graded on)
         # We filter out -100 because tokenizer cannot decode -100
-        valid_labels = [l for l in labels if l != -100]
-        decoded_labels = tokenizer.decode(valid_labels)
+        #valid_labels = [l for l in labels if l != -100]
+        #decoded_labels = tokenizer.decode(valid_labels)
 
-        print(f"\n[GRADED LABELS] (This is what the model learns):")
-        print(f"'{decoded_labels}'")
+        #print(f"\n[GRADED LABELS] (This is what the model learns):")
+        #print(f"'{decoded_labels}'")
         print("-------------------------------\n")
 
     return dataset
 
 
 if __name__ == "__main__":
-    print("="*70)
-    print("MCQ Dataset")
-    print("="*70)
     
-    # Create full MCQ training dataset
-    mcq_dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, True, 42)
-    print(f"Total MCQ examples: {len(mcq_dataset)}")
-    print(f"Dataset columns: {mcq_dataset.column_names}")
-    print("\nFirst MCQ example:")
-    for msg in mcq_dataset[0]['messages']:
-        print(f"  {msg['role']}: {msg['content']}")
-    
-
     tokenizer = AutoTokenizer.from_pretrained(
-            "mistralai/Mistral-7B-Instruct-v0.2",
-            cache_dir=CACHE_DIR,
-            trust_remote_code=True
-        )
-    data = create_training_data_tokenized(task_type='mcq', tokenizer=tokenizer)
-    for _ in data:
-        print(tokenizer.decode(_['input_ids']))
+        "meta-llama/Meta-Llama-3-8B-Instruct",
+        cache_dir=CACHE_DIR,
+        trust_remote_code=True
+    )
+    saq=create_training_data_tokenized('saq', tokenizer, use_all_answers=True)
+    mcq=create_training_data_tokenized('mcq', tokenizer, use_all_answers=True)
 
-    print("\n" + "="*70)
-    print("SAQ Dataset - BEST ANSWER ONLY")
-    print("="*70)
+    saq.to_csv("saq_tokenized.tsv", sep='\t', index=False)
+    mcq.to_csv("mcq_tokenized.tsv", sep='\t', index=False)
+
+    mcq=create_training_dataset_mcq(MCQ_TRAINING_PATH, True)
+    saq=create_training_dataset_saq(SAQ_TRAINING_PATH, True)
+
+    saq.to_csv("saq_data.tsv", sep='\t', index=False)
+    mcq.to_csv("mcq_data.tsv", sep='\t', index=False)
+
+    #print("="*70)
+    #print("MCQ Dataset")
+    #print("="*70)
     
-    # Strategy 1: Use only the best answer
-    saq_best = create_training_dataset_saq(
-        SAQ_TRAINING_PATH,
-        use_all_answers=False
-    )
-    print(f"Total SAQ examples (best only): {len(saq_best)}")
-    print("\nFirst SAQ example:")
-    for msg in saq_best[0]['messages']:
-        print(f"  {msg['role']}: {msg['content']}")
+    ## Create full MCQ training dataset
+    #mcq_dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, True, 42)
+    #print(f"Total MCQ examples: {len(mcq_dataset)}")
+    #print(f"Dataset columns: {mcq_dataset.column_names}")
+    #print("\nFirst MCQ example:")
+    #for msg in mcq_dataset[0]['messages']:
+    #    print(f"  {msg['role']}: {msg['content']}")
     
-    print("\n" + "="*70)
-    print("SAQ Dataset - ALL ANSWERS (unweighted)")
-    print("="*70)
+
+    #tokenizer = AutoTokenizer.from_pretrained(
+    #        "mistralai/Mistral-7B-Instruct-v0.2",
+    #        cache_dir=CACHE_DIR,
+    #        trust_remote_code=True
+    #    )
+    #data = create_training_data_tokenized(task_type='mcq', tokenizer=tokenizer)
+    #for _ in data:
+    #    print(tokenizer.decode(_['input_ids']))
+
+    #print("\n" + "="*70)
+    #print("SAQ Dataset - BEST ANSWER ONLY")
+    #print("="*70)
     
-    # Strategy 2: Use all valid answers (each appears once)
-    saq_all = create_training_dataset_saq(
-        SAQ_TRAINING_PATH,
-        use_all_answers=True,
-        weight_sampling=False
-    )
-    print(f"Total SAQ examples (all answers): {len(saq_all)}")
+    ## Strategy 1: Use only the best answer
+    #saq_best = create_training_dataset_saq(
+    #    SAQ_TRAINING_PATH,
+    #    use_all_answers=False
+    #)
+    #print(f"Total SAQ examples (best only): {len(saq_best)}")
+    #print("\nFirst SAQ example:")
+    #for msg in saq_best[0]['messages']:
+    #    print(f"  {msg['role']}: {msg['content']}")
     
-    # Show examples for the same question ID
-    first_id = saq_all[0]['id']
-    same_id_examples = [ex for ex in saq_all if ex['id'] == first_id]
-    print(f"\nExamples for question ID '{first_id}': {len(same_id_examples)} different answers")
-    for i, ex in enumerate(same_id_examples[:3]):
-        answer = ex['messages'][1]['content']
-        print(f"  Answer {i+1}: {answer}")
+    #print("\n" + "="*70)
+    #print("SAQ Dataset - ALL ANSWERS (unweighted)")
+    #print("="*70)
     
-    print("\n" + "="*70)
-    print("SAQ Dataset - ALL ANSWERS (weighted sampling)")
-    print("="*70)
+    ## Strategy 2: Use all valid answers (each appears once)
+    #saq_all = create_training_dataset_saq(
+    #    SAQ_TRAINING_PATH,
+    #    use_all_answers=True,
+    #    weight_sampling=False
+    #)
+    #print(f"Total SAQ examples (all answers): {len(saq_all)}")
     
-    # Strategy 3: Use all valid answers with repetition based on weight
-    saq_weighted = create_training_dataset_saq(
-        SAQ_TRAINING_PATH,
-        use_all_answers=True,
-        weight_sampling=True
-    )
-    print(f"Total SAQ examples (weighted): {len(saq_weighted)}")
-    print("Note: Higher-count answers are repeated more in training")
+    ## Show examples for the same question ID
+    #first_id = saq_all[0]['id']
+    #same_id_examples = [ex for ex in saq_all if ex['id'] == first_id]
+    #print(f"\nExamples for question ID '{first_id}': {len(same_id_examples)} different answers")
+    #for i, ex in enumerate(same_id_examples[:3]):
+    #    answer = ex['messages'][1]['content']
+    #    print(f"  Answer {i+1}: {answer}")
     
-    print("\n" + "="*70)
-    print("Comparison Summary")
-    print("="*70)
-    print(f"Best answer only:       {len(saq_best):,} examples")
-    print(f"All answers (equal):    {len(saq_all):,} examples")
-    print(f"All answers (weighted): {len(saq_weighted):,} examples")
+    #print("\n" + "="*70)
+    #print("SAQ Dataset - ALL ANSWERS (weighted sampling)")
+    #print("="*70)
+    
+    ## Strategy 3: Use all valid answers with repetition based on weight
+    #saq_weighted = create_training_dataset_saq(
+    #    SAQ_TRAINING_PATH,
+    #    use_all_answers=True,
+    #    weight_sampling=True
+    #)
+    #print(f"Total SAQ examples (weighted): {len(saq_weighted)}")
+    #print("Note: Higher-count answers are repeated more in training")
+    
+    #print("\n" + "="*70)
+    #print("Comparison Summary")
+    #print("="*70)
+    #print(f"Best answer only:       {len(saq_best):,} examples")
+    #print(f"All answers (equal):    {len(saq_all):,} examples")
+    #print(f"All answers (weighted): {len(saq_weighted):,} examples")

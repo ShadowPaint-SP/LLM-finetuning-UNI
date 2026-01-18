@@ -29,7 +29,8 @@ CACHE_DIR = BASE_DIR / "Model-Cache"
 @dataclass
 class EvalConfig:
     """Configuration for loading and evaluating fine-tuned models"""
-    base_model_name: str = "mistralai/Mistral-7B-Instruct-v0.2"
+    #base_model_name: str = "mistralai/Mistral-7B-Instruct-v0.2"
+    base_model_name: str = "meta-llama/Meta-Llama-3-8B-Instruct"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     cache_dir: str = str(CACHE_DIR)
     
@@ -40,17 +41,17 @@ class EvalConfig:
     
     # Checkpoint selection
     # Options: 'best', 'latest', or specific checkpoint like 'checkpoint-500'
-    task_to_evaluate: str = 'both'
-    checkpoint: Optional[str] = 'best'
+    task_to_evaluate: str = 'saq'
+    checkpoint: Optional[str] = 'checkpoint-18500'
     
     # Evaluation settings
     debug_mode: bool = True
     eval_train_samples: int = 400
     
     # Which evaluations to run
-    eval_mcq_train: bool = True
+    eval_mcq_train: bool = False
     eval_mcq_test: bool = True
-    eval_saq_train: bool = True
+    eval_saq_train: bool = False
     eval_saq_test: bool = True
 
 
@@ -262,6 +263,7 @@ class ModelLoader:
                     task=1,  # MCQ task
                     debug=self.config.debug_mode
                 )
+                mcq_preds.to_csv("mcq_prediction.tsv", sep='\t', index=False)
         
         if task_name in ['saq', 'both']:
             print("\n" + "-"*60)
@@ -288,11 +290,7 @@ class ModelLoader:
                     task=0,  # SAQ task
                     debug=self.config.debug_mode
                 )
-        
-        # Create submission zip if test predictions were generated
-        if mcq_preds is not None or saq_preds is not None:
-            print("\n→ Creating submission zip...")
-            eval.create_zip_for_submission(saq_preds, mcq_preds)
+                saq_preds.to_csv("saq_prediction.tsv", sep='\t', index=False)
         
         print(f"\n✓ Evaluation complete for {task_name.upper()}")
 
@@ -305,12 +303,6 @@ def main():
     
     # Create configuration
     config = EvalConfig(
-        debug_mode=True,
-        eval_train_samples=400,
-        eval_mcq_train=True,
-        eval_mcq_test=True,
-        eval_saq_train=True,
-        eval_saq_test=True
     )
     
     # Create loader

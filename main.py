@@ -10,9 +10,10 @@ This script implements a complete fine-tuning pipeline using:
 
 import os
 import torch # type: ignore
+import matplotlib.pyplot as plt # type: ignore
 import logging
 from pathlib import Path
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 from transformers import ( # type: ignore
     AutoTokenizer,
@@ -44,6 +45,7 @@ LOGS_DIR = BASE_DIR / "logs"
 class FineTuningConfig:
     """Configuration for fine-tuning pipeline"""
     debug_mode: bool = True
+    zip_files = []
     #model_name: str = "mistralai/Mistral-7B-Instruct-v0.2"
     model_name: str = "meta-llama/Meta-Llama-3-8B-Instruct"
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
@@ -57,9 +59,9 @@ class FineTuningConfig:
     lora_dropout: float = 0.1 # is the percentage that randomly leaves out some weight changes each time to deter overfitting
 
     # Training Configuration
-    num_epochs: int = 3
-    batch_size: int = 8 # sets how many examples are processed on each GPU/device per forward pass
-    gradient_accumulation_steps: int = 2 # simulate larger batches by accumulating gradients across multiple steps before updating weights
+    num_epochs: int = 5
+    batch_size: int = 4 # sets how many examples are processed on each GPU/device per forward pass
+    gradient_accumulation_steps: int = 1 # simulate larger batches by accumulating gradients across multiple steps before updating weights
     learning_rate: float = 2e-4 # How large should each eight update be
     warmup_steps: int = 100 # gradually increases the learning rate from zero over the first N steps (stabilizes early training)
     weight_decay: float = 0.05 # adds L2 regularization to prevent overfitting.
@@ -71,11 +73,11 @@ class FineTuningConfig:
     use_all_answers: bool = True # gives around 2% of score
     weight_sampling: bool = False
     data_augmentation: bool = False
-    augmentation_factor: float = 1.5
+    augmentation_factor: float = 10
 
     # Eval Configuration
     gen_train_preds: bool = True
-    eval_train_samples: int = 400
+    eval_train_samples: int = -1
     gen_test_preds: bool = True
     
 
@@ -180,6 +182,7 @@ class FineTuningPipeline:
         print(f"✓ {task_type.upper()} dataset ready: {len(data)} samples\n")
         return data
     
+
     def finetune(self, train_dataset: Dataset, task_name: str = "mcq") -> Trainer:
         """Fine-tune model"""
         print(f"\n{'='*60}")
@@ -212,14 +215,14 @@ class FineTuningPipeline:
             weight_decay=self.config.weight_decay,
             learning_rate=self.config.learning_rate,
             logging_dir=LOGS_DIR,
-            logging_steps=50,
+            logging_steps=200,
             eval_strategy=eval_strategy,
             eval_steps=self.config.safe_steps if val_data else None,
             save_strategy="steps",
             save_steps=self.config.safe_steps,
             save_total_limit=3,
             load_best_model_at_end=load_best_at_end,
-            gradient_checkpointing=False, # we use LoRA so dont needed
+            gradient_checkpointing=False, # we use LoRA so dont need it
             max_grad_norm=self.config.max_grad_norm,
             dataloader_pin_memory=True,
             seed=self.config.seed,
@@ -244,7 +247,68 @@ class FineTuningPipeline:
         
         self.model.save_pretrained(output_dir)
         self.tokenizer.save_pretrained(output_dir)
+
+        print("\nGenerating loss curve...")
         
+        # Extract logs from trainer state
+        history = trainer.state.log_history
+        
+        # Separate training and validation logs
+        # Hugging Face logs are a list of dicts. We filter by keys.
+        train_steps = []
+        train_loss = []
+        eval_steps = []
+        eval_loss = []
+
+        for log in history:
+            if "loss" in log and "step" in log:
+                train_steps.append(log["step"])
+                train_loss.append(log["loss"])
+            elif "eval_loss" in log and "step" in log:
+                eval_steps.append(log["step"])
+                eval_loss.append(log["eval_loss"])
+
+        # Create the plot
+        plt.figure(figsize=(10, 6))
+        
+        # Plot training loss
+        if train_steps:
+            plt.plot(train_steps, train_loss, label="Training Loss", alpha=0.8)
+            
+        # Plot validation loss (if available)
+        if eval_steps:
+            plt.plot(eval_steps, eval_loss, label="Validation Loss", marker='o', linestyle='--')
+
+        plt.yscale('log')
+        plt.title(f"Training Loss Curve - {task_name.upper()}")
+        plt.xlabel("Global Steps")
+        plt.ylabel("Loss")
+        plt.legend()
+        plt.grid(True)
+        
+        # Save plot to the same output directory
+        plot_path = os.path.join(output_dir, f"loss_curve_{task_name}.png")
+        self.config.zip_files.append(plot_path)
+        plt.savefig(plot_path, dpi=300)
+        plt.close() # Close to free memory
+        
+        print(f"✓ Loss curve saved to: {plot_path}")
+        if task_name != "saq":
+            config_path = os.path.join(output_dir, "config.txt")
+            with open(config_path, "w", encoding="utf-8") as f:
+                f.write("FineTuningConfig Settings:\n")
+                f.write("=" * 30 + "\n")
+                
+                # Convert dataclass to dict and iterate
+                for key, value in asdict(self.config).items():
+                    f.write(f"{key}: {value}\n")
+                
+                # Note: 'zip_files' in your dataclass lacks a type hint, 
+                # so asdict() might miss it. We manually check for it here just in case:
+                if hasattr(self.config, 'zip_files'):
+                    f.write(f"zip_files: {self.config.zip_files}\n")
+            self.config.zip_files.append(config_path)
+
         print(f"\n✓ Fine-tuning complete! Saved to: {output_dir}\n")
         return trainer
     
@@ -350,7 +414,7 @@ class FineTuningPipeline:
                 raise
         
         if self.config.gen_test_preds:
-            eval.create_zip_for_submission(saq_preds, mcq_preds)
+            eval.create_zip_for_submission(saq_preds, mcq_preds, self.config.zip_files)
         
         print("\n" + "="*60)
         print("✓ FINE-TUNING PIPELINE COMPLETE")
@@ -371,7 +435,8 @@ def main():
         pipeline.finetune_pipeline(tasks=['both'])
     else:
         pipeline.finetune_pipeline(tasks=['mcq', 'saq'])
-    eval.evaluate_results()
+    if config.gen_train_preds:
+        eval.evaluate_results()
 
 
 if __name__ == "__main__":
