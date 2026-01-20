@@ -24,7 +24,7 @@ from transformers import ( # type: ignore
     BitsAndBytesConfig
 )
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training # type: ignore
-from datasets import Dataset, concatenate_datasets
+from datasets import concatenate_datasets, DatasetDict
 
 import datapipe
 import eval
@@ -54,26 +54,33 @@ class FineTuningConfig:
     combined_model: bool = True
 		
     # LoRA Configuration
-    lora_r: int = 32 # Defines the precision of the output Matrix (higher rank = more parameters are trained)
-    lora_alpha: int = 64 # multiplyer applied to the weight changes when added to the original weights (scale= alpha/r)
+    lora_r: int = 8 # Defines the precision of the output Matrix (higher rank = more parameters are trained)
+    lora_alpha: int = 8 # multiplyer applied to the weight changes when added to the original weights (scale= alpha/r)
     lora_dropout: float = 0.1 # is the percentage that randomly leaves out some weight changes each time to deter overfitting
 
     # Training Configuration
-    num_epochs: int = 5
+    num_epochs: int = 8
     batch_size: int = 4 # sets how many examples are processed on each GPU/device per forward pass
     gradient_accumulation_steps: int = 1 # simulate larger batches by accumulating gradients across multiple steps before updating weights
-    learning_rate: float = 2e-4 # How large should each eight update be
+    learning_rate: float = 1e-4 # How large should each eight update be
     warmup_steps: int = 100 # gradually increases the learning rate from zero over the first N steps (stabilizes early training)
     weight_decay: float = 0.05 # adds L2 regularization to prevent overfitting.
     max_grad_norm: float = 0.3 # clips gradients to prevent extreme updates that could destabilize training
-    safe_steps: int = 100
+    safe_steps: int = 400
     val_set_size: float = 0.1 # None to disable testing set out of training data
+
     # Data Configuration
     seed: int = 42
     use_all_answers: bool = True # gives around 2% of score
-    weight_sampling: bool = False
     data_augmentation: bool = False
-    augmentation_factor: float = 10
+    augmentation_factor: float = 1.5
+
+    # RAG Configuration (NEW!)
+    use_rag: bool = True  # Enable RAG augmentation
+    rag_k: int = 3  # Number of passages to retrieve per question
+    rag_method: str = "hybrid"  # "sparse", "dense", or "hybrid"
+    rag_cache_dir: str = "rag_cache"  # Where to cache RAG indices
+    wikivoyage_path: str = DATASETS_DIR / "wikivoyage.xml"  # Path to Wikivoyage corpus
 
     # Eval Configuration
     gen_train_preds: bool = True
@@ -128,11 +135,11 @@ class FineTuningPipeline:
             self.config.model_name,
             dtype=torch.bfloat16,
             cache_dir=self.config.cache_dir,
-            #quantization_config=bnb_config,
+            quantization_config=bnb_config,
             trust_remote_code=True,
             local_files_only=True
         ).to(self.device)
-        #self.model = prepare_model_for_kbit_training(self.model,use_gradient_checkpointing=False)
+        self.model = prepare_model_for_kbit_training(self.model,use_gradient_checkpointing=False)
         print(f"✓ Model loaded from {self.config.model_name}")
         return self.model
     
@@ -164,45 +171,48 @@ class FineTuningPipeline:
         
         return self.model
     
-    def prepare_dataset(self, task_type: str) -> Dataset:
-        """Prepare dataset with optional augmentation"""
+    def prepare_dataset(self, task_type: str):
+        """Prepare dataset with optional augmentation and RAG"""
         print(f"Preparing {task_type.upper()} dataset...")
         
-        # Augmentation now handled inside datapipe
-        data = datapipe.create_training_data_tokenized(
+        dataset_dict = datapipe.create_training_data_tokenized(
             task_type=task_type,
             tokenizer=self.tokenizer,
+            seed=self.config.seed,
             use_all_answers=self.config.use_all_answers,
-            weight_sampling=self.config.weight_sampling if task_type == 'saq' else False,
             augment_data=self.config.data_augmentation,
             augmentation_factor=self.config.augmentation_factor,
-            debug=self.config.debug_mode
+            use_rag=self.config.use_rag,
+            rag_k=self.config.rag_k,
+            rag_method=self.config.rag_method,
+            rag_cache_dir=self.config.rag_cache_dir,
+            debug=self.config.debug_mode,
+            val_set_size=self.config.val_set_size
         )
         
-        print(f"✓ {task_type.upper()} dataset ready: {len(data)} samples\n")
-        return data
+        print(f"✓ {task_type.upper()} dataset ready.")
+        return dataset_dict
     
 
-    def finetune(self, train_dataset: Dataset, task_name: str = "mcq") -> Trainer:
+    def finetune(self, dataset_container, task_name: str = "mcq") -> Trainer:
         """Fine-tune model"""
         print(f"\n{'='*60}")
         print(f"Fine-tuning for {task_name.upper()}")
         print(f"{'='*60}\n")
         
-        eval_strategy = "no"
-        val_data = None
-        load_best_at_end = False
-
-        if self.config.val_set_size is not None:
-            dataset_split = train_dataset.train_test_split(
-                test_size=self.config.val_set_size,
-                seed=self.config.seed
-            )
-            train_dataset = dataset_split["train"]
-            val_data = dataset_split["test"]
-            eval_strategy = "steps"
-            load_best_at_end = True
-            print(f"Split: {len(train_dataset)} train | {len(val_data)} validation\n")
+        if isinstance(dataset_container, dict) or hasattr(dataset_container, 'keys'):
+             train_dataset = dataset_container["train"]
+             val_data = dataset_container.get("test") # Might be None
+        else:
+             # Fallback for old behavior (though we replaced it)
+             train_dataset = dataset_container
+             val_data = None
+        
+        eval_strategy = "steps" if val_data else "no"
+        load_best_at_end = True if val_data else False
+        
+        if val_data:
+            print(f"Training Samples: {len(train_dataset)} | Validation Samples: {len(val_data)}")
         
         output_dir = os.path.join(self.config.output_base_dir, f"lora_{task_name}")
         
@@ -340,14 +350,16 @@ class FineTuningPipeline:
                         eval.start_inference_process_training(
                             self.tokenizer, self.model, 
                             n_samples=self.config.eval_train_samples, 
-                            task=1, debug=self.config.debug_mode
+                            task=1, debug=self.config.debug_mode,
+                            use_rag=self.config.use_rag
                         )
                         eval._evaluate_mcq_predictions("results/mcq_train.tsv")
                     
                     if self.config.gen_test_preds:
                         mcq_preds = eval.start_inference_process_testing(
                             self.tokenizer, self.model, task=1,
-                            debug=self.config.debug_mode
+                            debug=self.config.debug_mode,
+                            use_rag=self.config.use_rag
                         )
                 
                 elif task.lower() == 'saq':
@@ -362,21 +374,26 @@ class FineTuningPipeline:
                         eval.start_inference_process_training(
                             self.tokenizer, self.model,
                             n_samples=self.config.eval_train_samples,
-                            task=0, debug=self.config.debug_mode
+                            task=0, debug=self.config.debug_mode,
+                            use_rag=self.config.use_rag
                         )
                         eval._evaluate_saq_predictions("results/saq_train.tsv")
                     
                     if self.config.gen_test_preds:
                         saq_preds = eval.start_inference_process_testing(
                             self.tokenizer, self.model, 
-                            task=0, debug=self.config.debug_mode
+                            task=0, debug=self.config.debug_mode,
+                            use_rag=self.config.use_rag
                         )
                 elif task.lower() == 'both':
                     print("\n" + "-"*60)
                     print("SAQ FINE-TUNING")
                     print("-"*60)
-                
-                    data = concatenate_datasets([self.prepare_dataset('saq'),self.prepare_dataset('mcq')]).shuffle(seed=self.config.seed)
+                    mcq_data = self.prepare_dataset('mcq')
+                    saq_data = self.prepare_dataset('saq')
+
+                    data = DatasetDict({"train": concatenate_datasets([mcq_data["train"],saq_data["train"]]).shuffle(seed=self.config.seed), 
+                                        "test": concatenate_datasets([mcq_data["test"],saq_data["test"]]).shuffle(seed=self.config.seed)})
                     self.finetune(data, task_name='both')
                     if self.config.gen_train_preds:
                         eval.start_inference_process_training(
@@ -384,14 +401,16 @@ class FineTuningPipeline:
                             self.model, 
                             n_samples=self.config.eval_train_samples, 
                             task=0,
-                            debug=self.config.debug_mode
+                            debug=self.config.debug_mode,
+                            use_rag=self.config.use_rag
                         )
                     if self.config.gen_test_preds:
                         saq_preds = eval.start_inference_process_testing(
                             self.tokenizer, 
                             self.model, 
                             task=0,
-                            debug=self.config.debug_mode
+                            debug=self.config.debug_mode,
+                            use_rag=self.config.use_rag
                         )
                     if self.config.gen_train_preds:
                         eval.start_inference_process_training(
@@ -399,14 +418,16 @@ class FineTuningPipeline:
                             self.model, 
                             n_samples=self.config.eval_train_samples, 
                             task=1,
-                            debug=self.config.debug_mode
+                            debug=self.config.debug_mode,
+                            use_rag=self.config.use_rag
                         )
                     if self.config.gen_test_preds:
                         mcq_preds = eval.start_inference_process_testing(
                             self.tokenizer, 
                             self.model, 
                             task=1,
-                            debug=self.config.debug_mode
+                            debug=self.config.debug_mode,
+                            use_rag=self.config.use_rag
                         )
             
             except Exception as e:

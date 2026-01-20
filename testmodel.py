@@ -41,12 +41,13 @@ class EvalConfig:
     
     # Checkpoint selection
     # Options: 'best', 'latest', or specific checkpoint like 'checkpoint-500'
-    task_to_evaluate: str = 'saq'
-    checkpoint: Optional[str] = 'checkpoint-18500'
+    task_to_evaluate: str = 'both'
+    checkpoint: Optional[str] = 'checkpoint-2820'
     
     # Evaluation settings
     debug_mode: bool = True
     eval_train_samples: int = 400
+    use_rag = True
     
     # Which evaluations to run
     eval_mcq_train: bool = False
@@ -250,7 +251,8 @@ class ModelLoader:
                     model,
                     n_samples=self.config.eval_train_samples,
                     task=1,  # MCQ task
-                    debug=self.config.debug_mode
+                    debug=self.config.debug_mode,
+                    use_rag=self.config.use_rag
                 )
                 print("\n→ Evaluating MCQ training predictions...")
                 eval._evaluate_mcq_predictions("results/mcq_train.tsv")
@@ -261,7 +263,8 @@ class ModelLoader:
                     tokenizer,
                     model,
                     task=1,  # MCQ task
-                    debug=self.config.debug_mode
+                    debug=self.config.debug_mode,
+                    use_rag=self.config.use_rag
                 )
                 mcq_preds.to_csv("mcq_prediction.tsv", sep='\t', index=False)
         
@@ -277,7 +280,8 @@ class ModelLoader:
                     model,
                     n_samples=self.config.eval_train_samples,
                     task=0,  # SAQ task
-                    debug=self.config.debug_mode
+                    debug=self.config.debug_mode,
+                    use_rag=self.config.use_rag
                 )
                 print("\n→ Evaluating SAQ training predictions...")
                 eval._evaluate_saq_predictions("results/saq_train.tsv")
@@ -288,7 +292,8 @@ class ModelLoader:
                     tokenizer,
                     model,
                     task=0,  # SAQ task
-                    debug=self.config.debug_mode
+                    debug=self.config.debug_mode,
+                    use_rag=self.config.use_rag
                 )
                 saq_preds.to_csv("saq_prediction.tsv", sep='\t', index=False)
         

@@ -2,66 +2,78 @@ import ast
 import json
 from pathlib import Path
 import random
-import pandas as pd # type: ignore
-from datasets import Dataset
-from transformers import ( # type: ignore
-    AutoTokenizer)
+import pandas as pd 
+import numpy as np
+from datasets import Dataset, DatasetDict
+from transformers import AutoTokenizer
+from sklearn.model_selection import train_test_split
+
+# Import RAG module
+from rag import WikivoyageRAG, augment_training_data_with_rag, setup_rag_system
 
 MCQ_TRAINING_PATH = "datasets/train_dataset_mcq.csv"
 SAQ_TRAINING_PATH = "datasets/train_dataset_saq.csv"
 BASE_DIR = Path(__file__).resolve().parent
 CACHE_DIR = BASE_DIR / "Model-Cache"
 
+# --- HELPER FUNCTIONS ---
+
 def generate_shuffled_variations(options, correct_key):
-    """
-    Generates 4 variations of the options dict, ensuring the correct answer
-    rotates through A, B, C, and D.
-    
-    Args:
-        options (dict): The original options dictionary (e.g., {'A': 'text', ...})
-        correct_key (str): The key of the correct answer in the original dict (e.g., 'A')
-        
-    Returns:
-        dict: A dictionary where keys are the NEW correct letters ('A', 'B', 'C', 'D')
-              and values are the JSON strings of the shuffled options.
-    """
-    
+    """Generates 4 variations of the options dict."""
     correct_text = options[correct_key]
     distractors = [text for key, text in options.items() if key != correct_key]
     keys = ["A", "B", "C", "D"]
     output_variations = {}
 
     for target_correct_letter in keys:
-
         current_distractors = distractors[:]
         random.shuffle(current_distractors)
         new_options = {}
         distractor_index = 0
-
         for key in keys:
             if key == target_correct_letter:
                 new_options[key] = correct_text
             else:
                 new_options[key] = current_distractors[distractor_index]
                 distractor_index += 1
-
         output_variations[target_correct_letter] = new_options
-
     return output_variations
 
-def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool = False, seed:int =42):
+def create_saq_prompt(question: str) -> str:
+    return f"{question} Provide ONLY the exact answer without explanation."
+
+def augment_question(question: str, task_type: str, variation_seed: int) -> str:
+    """Create paraphrased variations."""
+    random.seed(variation_seed)
+    if task_type == 'mcq':
+        variations = [
+            f"Which of the following best answers: {question}?",
+            f"Regarding the following question: {question}",
+            f"What is the correct response to: {question}?",
+            f"Select the best answer for: {question}",
+            f"Choose the most appropriate option: {question}",
+        ]
+    else:
+        variations = [
+            f"Answer in detail: {question}",
+            f"Please explain: {question}",
+            f"Provide an answer to: {question}",
+            f"Explain the following: {question}",
+            f"Respond to this question: {question}",
+        ]
+    return random.choice(variations)
+
+# --- CORE DATA PROCESSING FUNCTIONS ---
+
+def process_dataframe_mcq(df, use_all_answers=False, seed=42, is_validation=False):
     """
-    Create a Hugging Face Dataset ready for LoRA training (MCQ).
-    
-    Args:
-        csv_path: Path to the CSV file
-        use_all_answers: choose to only use each entry once or shuffel it to multiply the dataset by 4
-        
-    Returns:
-        Hugging Face Dataset object with 'messages' field
+    Process a DataFrame of MCQ questions into training examples.
+    is_validation: If True, disables data expansion (use_all_answers) to create a stable benchmark.
     """
-    df = pd.read_csv(csv_path)
     training_examples = []
+    
+    # Disable augmentation for validation to prevent leakage/noise
+    effective_use_all = False if is_validation else use_all_answers
 
     for row in df.itertuples():
         prompt = row.prompt.strip()
@@ -69,11 +81,13 @@ def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool
         choices = json.loads(row.choices)
         country = json.loads(row.choice_countries)
 
-        if use_all_answers:
+        # 1. Standard Q&A Pairs
+        if effective_use_all:
+            # CLEANING: Remove existing JSON markers if present
             marker = '{"answer_choice":""}'
             index = prompt.find(marker)
             if index != -1:
-                prompt = prompt[:index + len(marker)] # removing the choices to add them manually
+                prompt = prompt[:index + len(marker)]
 
             answers = generate_shuffled_variations(choices, correct_answer)
 
@@ -84,6 +98,7 @@ def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool
                     formatted_options_list.append(f"{key}. {value}")
                 formatted_options_str = "\n".join(formatted_options_list)
                 combined_question = prompt + "\n\n" + formatted_options_str
+                
                 training_examples.append({
                     'messages': [
                         {"role": "user", "content": combined_question},
@@ -94,6 +109,7 @@ def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool
                     'mcqid': row.MCQID
                 })
         else:
+            # Standard single example (used for Val set or basic training)
             completion = json.dumps({"answer_choice": correct_answer})
             training_examples.append({
                 'messages': [
@@ -103,43 +119,31 @@ def create_training_dataset_mcq(csv_path=MCQ_TRAINING_PATH, use_all_answers:bool
                 'mcqid': row.MCQID
             })
 
-        question_only = prompt.split('?')[0] + '?'
-        training_examples.append({
-            'messages': [
-                {"role": "user", "content": f"Analyze the following question and identify the geographical regions associated with the options: '{question_only} \n {json.dumps(choices)}'"},
-                {"role": "assistant", "content": json.dumps(country)},
-            ],
-            'mcqid': row.MCQID
-        })
+        # 2. Auxiliary Task (Reasoning/Country ID)
+        # Only add this for training to avoid polluting validation metrics with non-target tasks
+        if not is_validation:
+            question_only = prompt.split('?')[0] + '?'
+            training_examples.append({
+                'messages': [
+                    {"role": "user", "content": f"Analyze the following question and identify the geographical regions associated with the options: '{question_only} \n {json.dumps(choices)}'"},
+                    {"role": "assistant", "content": json.dumps(country)},
+                ],
+                'mcqid': row.MCQID
+            })
 
-
-    dataset = Dataset.from_list(training_examples).shuffle(seed)
+    dataset = Dataset.from_list(training_examples)
+    if not is_validation:
+        dataset = dataset.shuffle(seed)
     return dataset
 
-def create_saq_prompt(question: str) -> str:
+def process_dataframe_saq(df, use_all_answers=False, seed=42, is_validation=False):
     """
-    Formatted prompt for training and evaluation
+    Process a DataFrame of SAQ questions.
     """
-    return f"{question} Provide ONLY the exact answer without explanation."# Provide not more than 4 word answers."
-
-def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=False, 
-                                 weight_sampling=False, seed=42):
-    """
-    Create a Hugging Face Dataset ready for LoRA training (SAQ).
-    
-    Args:
-        csv_path: Path to the CSV file
-        use_all_answers: If True, create multiple training examples per question 
-                        (one for each valid answer). If False, use only best answer.
-        weight_sampling: If True and use_all_answers=True, repeat examples based 
-                        on their weight/count. If False, each answer appears once.
-        seed: Random seed for shuffling
-        
-    Returns:
-        Hugging Face Dataset object with 'messages' field
-    """
-    df = pd.read_csv(csv_path)
     training_examples = []
+    
+    # Disable augmentation for validation
+    effective_use_all = False if is_validation else use_all_answers
     
     for row in df.itertuples():
         en_question = row.en_question.strip()
@@ -158,31 +162,21 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
         
         prompt = create_saq_prompt(en_question)
         
-        if use_all_answers:
+        if effective_use_all:
             valid_answers = [k for k, v in merged_answers.items() if v > 0]
-            
             for answer in valid_answers:
-                repeat_count = merged_answers[answer] if weight_sampling else 1
-                
-                # Use messages format
-                #TODO if using all answers somehow teach which answer is the best by providing a score testen
-                example = {
+                training_examples.append({
                     'messages': [
                         {"role": "user", "content": f"{prompt} Target Score: {merged_answers[answer]}"},
                         {"role": "assistant", "content": answer},
                         {"role": "user", "content": "Why is this correct"},
                         {"role": "assistant", "content": f"Because it is a cultural question about {country}"}
-
                     ],
                     'id': row.ID
-                }
-
-                for _ in range(repeat_count):
-                    training_examples.append(example.copy())
-           
+                })
         else:
+            # Validation / Standard: Pick the single most frequent answer
             best_answer = max(merged_answers.items(), key=lambda x: x[1])[0]
-            
             training_examples.append({
                 'messages': [
                     {"role": "user", "content": prompt},
@@ -192,72 +186,31 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
                 ],
                 'id': row.ID
             })
-        best_answer = max(merged_answers.items(), key=lambda x: x[1])[0]
-        training_examples.append({
-                'messages': [
-                    {"role": "user", "content": f"Identify the country of origin for this entity: '{best_answer}'"},
-                    {"role": "assistant", "content": country}
-                ],
-                'id': row.ID
-            })
+        
+        # Auxiliary Task (only for training)
+        if not is_validation:
+            best_answer = max(merged_answers.items(), key=lambda x: x[1])[0]
+            if best_answer not in ['idk', 'not-applicable', 'no-answer']:
+                training_examples.append({
+                    'messages': [
+                        {"role": "user", "content": f"Identify the country of origin for this entity: '{best_answer}'"},
+                        {"role": "assistant", "content": country}
+                    ],
+                    'id': row.ID
+                })
     
     dataset = Dataset.from_list(training_examples)
-    
-    if use_all_answers and weight_sampling:
-        dataset = dataset.shuffle(seed=seed)
-    
+    if not is_validation:
+        dataset = dataset.shuffle(seed)
     return dataset
 
 
-def augment_question(question: str, task_type: str, variation_seed: int) -> str:
-    """
-    Create paraphrased variations of questions for data augmentation.
-    
-    Args:
-        question: Original question text
-        task_type: 'mcq' or 'saq'
-        variation_seed: Seed for random variation selection
-        
-    Returns:
-        Paraphrased question
-    """
-    random.seed(variation_seed)
-    
-    if task_type == 'mcq':
-        variations = [
-            f"Which of the following best answers: {question}?",
-            f"Regarding the following question: {question}",
-            f"What is the correct response to: {question}?",
-            f"Select the best answer for: {question}",
-            f"Choose the most appropriate option: {question}",
-        ]
-    else:  # saq
-        variations = [
-            f"Answer in detail: {question}",
-            f"Please explain: {question}",
-            f"Provide an answer to: {question}",
-            f"Explain the following: {question}",
-            f"Respond to this question: {question}",
-        ]
-    
-    return random.choice(variations)
-
+# --- AUGMENTATION WRAPPER ---
 
 def augment_dataset_before_tokenization(dataset: Dataset, task_type: str, 
                                         augmentation_factor: float = 1.5,
                                         seed: int = 42) -> Dataset:
-    """
-    Augment dataset by creating paraphrased variations BEFORE tokenization.
-    
-    Args:
-        dataset: Original dataset with 'messages' field
-        task_type: 'mcq' or 'saq'
-        augmentation_factor: Multiplier for dataset size (e.g., 1.5 = 50% more)
-        seed: Random seed for reproducibility
-        
-    Returns:
-        Augmented dataset (still in messages format, ready for tokenization)
-    """
+    """Paraphrase augmentation."""
     if augmentation_factor <= 1.0:
         return dataset
     
@@ -265,42 +218,32 @@ def augment_dataset_before_tokenization(dataset: Dataset, task_type: str,
     original_size = len(dataset)
     num_augmented = int(original_size * (augmentation_factor - 1.0))
     
-    augmented_examples = list(dataset)  # Start with originals
+    augmented_examples = list(dataset)
     
     for i in range(num_augmented):
-        # Randomly sample from original dataset
         idx = random.randint(0, original_size - 1)
         original = dataset[idx]
-        
-        # Deep copy the example
         augmented = {k: v for k, v in original.items()}
         
-        # Get the original user question from messages
         messages = original['messages']
         user_message = messages[0]['content']
         
-        # For MCQ: Extract the base question (before options if present)
+        # Logic to find where the question text is (especially for MCQs with options appended)
         if task_type == 'mcq':
-            # If options are in the content, extract just the question part
             if '\n\nA.' in user_message:
-                base_question = user_message.split('\n\nA.')[0]
-                options_part = '\n\nA.' + user_message.split('\n\nA.')[1]
+                parts = user_message.split('\n\nA.')
+                base_question = parts[0]
+                options_part = '\n\nA.' + parts[1]
             else:
                 base_question = user_message
                 options_part = ''
             
-            # Paraphrase the question
             paraphrased = augment_question(base_question, task_type, seed + i)
             new_user_content = paraphrased + options_part
         else:
-            # For SAQ: Paraphrase the entire question
             new_user_content = augment_question(user_message, task_type, seed + i)
         
-        # Create new messages with paraphrased question
-        new_messages = [
-            {"role": "user", "content": new_user_content}
-        ]
-        # Keep all other messages (assistant responses, follow-ups, etc.)
+        new_messages = [{"role": "user", "content": new_user_content}]
         new_messages.extend(messages[1:])
         
         augmented['messages'] = new_messages
@@ -309,220 +252,117 @@ def augment_dataset_before_tokenization(dataset: Dataset, task_type: str,
     return Dataset.from_list(augmented_examples)
 
 
-def create_training_data_tokenized(task_type: str, tokenizer, seed: int = 42,
-                          use_all_answers: bool = False, weight_sampling: bool = False, 
-                          augment_data: bool = False, augmentation_factor: float = 1.5,
-                          debug: bool = False):
-    """
-    Create train/validation splits for training with optional data augmentation.
-    
-    Args:
-        csv_path: Path to the CSV file
-        task_type: Either 'mcq' or 'saq'
-        tokenizer: Tokenizer instance
-        seed: Random seed for reproducibility
-        use_all_answers: enlarge the datasets
-        weight_sampling: (SAQ only) Sample proportionally to answer weights
-        augment_data: If True, apply data augmentation before tokenization
-        augmentation_factor: Multiplier for augmentation (e.g., 1.5 = 50% more data)
-        debug: Print debugging information
-    """
+# --- MAIN PIPELINE FUNCTION ---
 
+def create_training_data_tokenized(
+    task_type: str, 
+    tokenizer, 
+    seed: int = 42,
+    use_all_answers: bool = False, 
+    augment_data: bool = False, 
+    augmentation_factor: float = 1.5,
+    use_rag: bool = False,
+    rag_k: int = 3,
+    rag_method: str = "hybrid",
+    rag_cache_dir: str = "rag_cache",
+    debug: bool = False,
+    val_set_size: float = 0.1  # NEW ARGUMENT
+):
+    """
+    Creates LEAKAGE-FREE Train/Test splits by splitting IDs first.
+    """
+    # 1. Load Data Frame & ID Column
     if task_type.lower() == 'mcq':
-        dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, use_all_answers, seed)
+        df = pd.read_csv(MCQ_TRAINING_PATH)
+        id_col = 'MCQID'
+        process_func = process_dataframe_mcq
     elif task_type.lower() == 'saq':
-        dataset = create_training_dataset_saq(
-            SAQ_TRAINING_PATH, 
-            use_all_answers,
-            weight_sampling,
-            seed
-        )
+        df = pd.read_csv(SAQ_TRAINING_PATH)
+        id_col = 'ID'
+        process_func = process_dataframe_saq
     else:
-        raise ValueError(f"task_type must be 'mcq' or 'saq', got {task_type}")
+        raise ValueError("task_type must be 'mcq' or 'saq'")
+
+    # 2. Split unique IDs (Prevent Leakage)
+    unique_ids = df[id_col].unique()
+    if val_set_size and val_set_size > 0:
+        train_ids, val_ids = train_test_split(unique_ids, test_size=val_set_size, random_state=seed)
+    else:
+        train_ids = unique_ids
+        val_ids = []
+
+    train_df = df[df[id_col].isin(train_ids)]
+    val_df = df[df[id_col].isin(val_ids)]
+
+    print(f"[{task_type.upper()}] Splitting Data by ID: {len(train_ids)} Train IDs, {len(val_ids)} Val IDs")
+
+    # 3. Process Dataframes
+    # Train gets all augmentations (use_all_answers, etc.)
+    train_dataset = process_func(train_df, use_all_answers=use_all_answers, seed=seed, is_validation=False)
     
-    original_size = len(dataset)
-    
-    # Apply augmentation BEFORE tokenization
+    # Val gets NO augmentation (stable benchmark)
+    if len(val_df) > 0:
+        val_dataset = process_func(val_df, use_all_answers=False, seed=seed, is_validation=True)
+    else:
+        val_dataset = None
+
+    # 4. Paraphrase Augmentation (Train Only)
     if augment_data:
-        dataset = augment_dataset_before_tokenization(
-            dataset, 
-            task_type, 
-            augmentation_factor,
-            seed
+        original_len = len(train_dataset)
+        train_dataset = augment_dataset_before_tokenization(train_dataset, task_type, augmentation_factor, seed)
+        print(f"[AUGMENTATION] Train set: {original_len} -> {len(train_dataset)}")
+
+    # 5. RAG Augmentation
+    if use_rag:
+        print(f"\n[RAG] Initializing RAG system...")
+        rag = WikivoyageRAG(
+            wikivoyage_xml_path="datasets/wikivoyage.xml",
+            cache_dir=rag_cache_dir,
+            use_dense=(rag_method in ["dense", "hybrid"]),
+            use_sparse=(rag_method in ["sparse", "hybrid"]),
+            device=None 
         )
-        print(f"[AUGMENTATION] {task_type.upper()}: {original_size} → {len(dataset)} samples "
-              f"({augmentation_factor}x factor)")
-    
+        rag.initialize(force_rebuild=False)
+
+        # Apply to Train (with Randomization)
+        print("[RAG] Augmenting Train Set (Randomized Context)...")
+        train_list = list(train_dataset)
+        train_aug = augment_training_data_with_rag(
+            train_list, rag, task_type, k=rag_k, add_context_to_user=True, 
+            batch_retrieval=True
+        )
+        train_dataset = Dataset.from_list(train_aug)
+
+        # Apply to Val (Deterministic - No Randomization)
+        if val_dataset:
+            print("[RAG] Augmenting Val Set (Deterministic Context)...")
+            val_list = list(val_dataset)
+            val_aug = augment_training_data_with_rag(
+                val_list, rag, task_type, k=rag_k, add_context_to_user=True, 
+                batch_retrieval=True
+            )
+            val_dataset = Dataset.from_list(val_aug)
+
+    # 6. Tokenization
     def tokenize_and_mask(examples):
-            """Other Tokenization approach
-            should make the model focus less on training how the question looks
-            """
-            input_ids_list = []
-            labels_list = []
-            
-            # Mistral separator
-            #sep_ids = tokenizer.encode("[/INST]", add_special_tokens=False)
-            #sep_len = len(sep_ids)
-            
-            ## Fallback for tokenizer variances
-            #if not sep_ids:
-            #        sep_ids = tokenizer.encode(" [/INST]", add_special_tokens=False)
-            #        sep_len = len(sep_ids)
+        input_ids_list = []
+        labels_list = []
+        for messages in examples["messages"]:
+            input_ids = tokenizer.apply_chat_template(
+                messages, truncation=True, max_length=2048,
+                add_generation_prompt=False, padding=False,
+            )
+            input_ids_list.append(input_ids)
+            labels_list.append(input_ids) # Simple causal masking
+        return {"input_ids": input_ids_list, "labels": labels_list}
 
-            for messages in examples["messages"]:
-                    # Tokenize
-                    input_ids = tokenizer.apply_chat_template(
-                            messages,
-                            truncation=True,
-                            max_length=2048,
-                            add_generation_prompt=False,
-                            padding=False,
-                    )
-                    
-                    # Create Labels (copy of inputs)
-                    labels = list(input_ids)
-                    
-                    # Find where the answer starts (search for last [/INST])
-                    #start_idx = -1
-                    #for i in range(len(input_ids) - sep_len, -1, -1):
-                    #        if input_ids[i : i+sep_len] == sep_ids:
-                    #                start_idx = i + sep_len
-                    #                break
-                                    
-                    ## Mask the User Prompt
-                    #if start_idx != -1:
-                    #        labels[:start_idx] = [-100] * start_idx
-                            
-                    input_ids_list.append(input_ids)
-                    labels_list.append(labels)
+    print(f"Tokenizing {task_type.upper()}...")
+    train_dataset = train_dataset.map(tokenize_and_mask, batched=True, remove_columns=train_dataset.column_names)
+    if val_dataset:
+        val_dataset = val_dataset.map(tokenize_and_mask, batched=True, remove_columns=val_dataset.column_names)
 
-            return {
-                    "input_ids": input_ids_list,
-                    "labels": labels_list
-            }
-
-    dataset = dataset.map(
-        tokenize_and_mask,
-        batched=True,
-        remove_columns=dataset.column_names,
-        desc=f"Tokenizing {task_type.upper()}"
-    )
-    if debug:
-        print("\n--- DEBUGGING DATA MASKING ---")
-        # Get a single example from the processed dataset
-        sample = dataset[0] 
-        input_ids = sample['input_ids']
-        #labels = sample['labels']
-
-        print(f"Total Input Length: {len(input_ids)}")
-
-        # Decode the Inputs (What the model reads)
-        decoded_input = tokenizer.decode(input_ids)
-        print(f"\n[FULL INPUT]:\n{decoded_input[:300]}...")
-
-        # Decode the Labels (What the model is graded on)
-        # We filter out -100 because tokenizer cannot decode -100
-        #valid_labels = [l for l in labels if l != -100]
-        #decoded_labels = tokenizer.decode(valid_labels)
-
-        #print(f"\n[GRADED LABELS] (This is what the model learns):")
-        #print(f"'{decoded_labels}'")
-        print("-------------------------------\n")
-
-    return dataset
-
-
-if __name__ == "__main__":
-    
-    tokenizer = AutoTokenizer.from_pretrained(
-        "meta-llama/Meta-Llama-3-8B-Instruct",
-        cache_dir=CACHE_DIR,
-        trust_remote_code=True
-    )
-    saq=create_training_data_tokenized('saq', tokenizer, use_all_answers=True)
-    mcq=create_training_data_tokenized('mcq', tokenizer, use_all_answers=True)
-
-    saq.to_csv("saq_tokenized.tsv", sep='\t', index=False)
-    mcq.to_csv("mcq_tokenized.tsv", sep='\t', index=False)
-
-    mcq=create_training_dataset_mcq(MCQ_TRAINING_PATH, True)
-    saq=create_training_dataset_saq(SAQ_TRAINING_PATH, True)
-
-    saq.to_csv("saq_data.tsv", sep='\t', index=False)
-    mcq.to_csv("mcq_data.tsv", sep='\t', index=False)
-
-    #print("="*70)
-    #print("MCQ Dataset")
-    #print("="*70)
-    
-    ## Create full MCQ training dataset
-    #mcq_dataset = create_training_dataset_mcq(MCQ_TRAINING_PATH, True, 42)
-    #print(f"Total MCQ examples: {len(mcq_dataset)}")
-    #print(f"Dataset columns: {mcq_dataset.column_names}")
-    #print("\nFirst MCQ example:")
-    #for msg in mcq_dataset[0]['messages']:
-    #    print(f"  {msg['role']}: {msg['content']}")
-    
-
-    #tokenizer = AutoTokenizer.from_pretrained(
-    #        "mistralai/Mistral-7B-Instruct-v0.2",
-    #        cache_dir=CACHE_DIR,
-    #        trust_remote_code=True
-    #    )
-    #data = create_training_data_tokenized(task_type='mcq', tokenizer=tokenizer)
-    #for _ in data:
-    #    print(tokenizer.decode(_['input_ids']))
-
-    #print("\n" + "="*70)
-    #print("SAQ Dataset - BEST ANSWER ONLY")
-    #print("="*70)
-    
-    ## Strategy 1: Use only the best answer
-    #saq_best = create_training_dataset_saq(
-    #    SAQ_TRAINING_PATH,
-    #    use_all_answers=False
-    #)
-    #print(f"Total SAQ examples (best only): {len(saq_best)}")
-    #print("\nFirst SAQ example:")
-    #for msg in saq_best[0]['messages']:
-    #    print(f"  {msg['role']}: {msg['content']}")
-    
-    #print("\n" + "="*70)
-    #print("SAQ Dataset - ALL ANSWERS (unweighted)")
-    #print("="*70)
-    
-    ## Strategy 2: Use all valid answers (each appears once)
-    #saq_all = create_training_dataset_saq(
-    #    SAQ_TRAINING_PATH,
-    #    use_all_answers=True,
-    #    weight_sampling=False
-    #)
-    #print(f"Total SAQ examples (all answers): {len(saq_all)}")
-    
-    ## Show examples for the same question ID
-    #first_id = saq_all[0]['id']
-    #same_id_examples = [ex for ex in saq_all if ex['id'] == first_id]
-    #print(f"\nExamples for question ID '{first_id}': {len(same_id_examples)} different answers")
-    #for i, ex in enumerate(same_id_examples[:3]):
-    #    answer = ex['messages'][1]['content']
-    #    print(f"  Answer {i+1}: {answer}")
-    
-    #print("\n" + "="*70)
-    #print("SAQ Dataset - ALL ANSWERS (weighted sampling)")
-    #print("="*70)
-    
-    ## Strategy 3: Use all valid answers with repetition based on weight
-    #saq_weighted = create_training_dataset_saq(
-    #    SAQ_TRAINING_PATH,
-    #    use_all_answers=True,
-    #    weight_sampling=True
-    #)
-    #print(f"Total SAQ examples (weighted): {len(saq_weighted)}")
-    #print("Note: Higher-count answers are repeated more in training")
-    
-    #print("\n" + "="*70)
-    #print("Comparison Summary")
-    #print("="*70)
-    #print(f"Best answer only:       {len(saq_best):,} examples")
-    #print(f"All answers (equal):    {len(saq_all):,} examples")
-    #print(f"All answers (weighted): {len(saq_weighted):,} examples")
+    # Return DatasetDict
+    if val_dataset:
+        return DatasetDict({"train": train_dataset, "test": val_dataset})
+    else:
+        return DatasetDict({"train": train_dataset})

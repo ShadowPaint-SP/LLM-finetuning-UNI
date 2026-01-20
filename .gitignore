@@ -7,6 +7,10 @@ Model-Cache/
 pip_cache/
 submissions/
 tmp/
+logs/
+rag_cache/
+datasets/
+hf*
 
 # Environments
 shadowKernel
