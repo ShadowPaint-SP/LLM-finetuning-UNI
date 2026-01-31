@@ -7,7 +7,11 @@ Model-Cache/
 pip_cache/
 submissions/
 tmp/
-
+hf_cache/
+hf_home/
+rag_cache/
+logs/
+datasets/
 # Environments
 shadowKernel
 start_kernel.sh

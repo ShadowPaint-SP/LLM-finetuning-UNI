@@ -59,14 +59,14 @@ class FineTuningConfig:
     lora_dropout: float = 0.1 # is the percentage that randomly leaves out some weight changes each time to deter overfitting
 
     # Training Configuration
-    num_epochs: int = 5
+    num_epochs: int = 6
     batch_size: int = 4 # sets how many examples are processed on each GPU/device per forward pass
     gradient_accumulation_steps: int = 1 # simulate larger batches by accumulating gradients across multiple steps before updating weights
     learning_rate: float = 2e-4 # How large should each eight update be
     warmup_steps: int = 100 # gradually increases the learning rate from zero over the first N steps (stabilizes early training)
     weight_decay: float = 0.05 # adds L2 regularization to prevent overfitting.
     max_grad_norm: float = 0.3 # clips gradients to prevent extreme updates that could destabilize training
-    safe_steps: int = 100
+    safe_steps: int = 400
     val_set_size: float = 0.1 # None to disable testing set out of training data
     # Data Configuration
     seed: int = 42

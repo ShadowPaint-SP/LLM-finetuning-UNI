@@ -139,6 +139,7 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
         Hugging Face Dataset object with 'messages' field
     """
     df = pd.read_csv(csv_path)
+    df2 = pd.read_csv(MCQ_TRAINING_PATH)
     training_examples = []
     
     for row in df.itertuples():
@@ -162,13 +163,13 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
             valid_answers = [k for k, v in merged_answers.items() if v > 0]
             
             for answer in valid_answers:
-                repeat_count = merged_answers[answer] if weight_sampling else 1
+                repeat_count = 1 if country in ["IR"] else 1
                 
                 # Use messages format
                 #TODO if using all answers somehow teach which answer is the best by providing a score testen
                 example = {
                     'messages': [
-                        {"role": "user", "content": f"{prompt} Target Score: {merged_answers[answer]}"},
+                        {"role": "user", "content": f"{prompt}"}, # Target Score: {merged_answers[answer]}
                         {"role": "assistant", "content": answer},
                         {"role": "user", "content": "Why is this correct"},
                         {"role": "assistant", "content": f"Because it is a cultural question about {country}"}
@@ -193,18 +194,36 @@ def create_training_dataset_saq(csv_path=SAQ_TRAINING_PATH, use_all_answers=Fals
                 'id': row.ID
             })
         best_answer = max(merged_answers.items(), key=lambda x: x[1])[0]
+        if best_answer not in ['idk', 'not-applicable', 'no-answer']:
+            training_examples.append({
+                    'messages': [
+                        {"role": "user", "content": f"Identify the country of origin for this entity: '{best_answer}'"},
+                        {"role": "assistant", "content": country}
+                    ],
+                    'id': row.ID
+                })
+    
+    for row in df2.itertuples():
+        question = row.prompt.split('?')[0] + '?'
+        choices = json.loads(row.choices)
+        answer = choices[row.answer_idx]
+
         training_examples.append({
-                'messages': [
-                    {"role": "user", "content": f"Identify the country of origin for this entity: '{best_answer}'"},
-                    {"role": "assistant", "content": country}
-                ],
-                'id': row.ID
-            })
+                    'messages': [
+                        {"role": "user", "content": f"{question}"}, # Target Score: {merged_answers[answer]}
+                        {"role": "assistant", "content": answer},
+                        {"role": "user", "content": "Why is this correct"},
+                        {"role": "assistant", "content": f"Because it is a cultural question about {row.country}"}
+
+                    ],
+                    'id': row.MCQID
+                })
+
+
+
+                
+    dataset = Dataset.from_list(training_examples).shuffle(seed=seed)
     
-    dataset = Dataset.from_list(training_examples)
-    
-    if use_all_answers and weight_sampling:
-        dataset = dataset.shuffle(seed=seed)
     
     return dataset
 

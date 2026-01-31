@@ -1,12 +1,3 @@
-alpha: 
-base model
-
-beta: 
-our own first changes. Those include:
-- reduce answer length from 100 to 20 tokens (SAQ and MCQ)
-- change 
-
-
 # base results on plain Mistral 7B
 
 These results are from running our eval just with our system prompt over the trainingdata to see how the model performs on it by default.
